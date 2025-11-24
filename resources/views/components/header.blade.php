@@ -264,7 +264,8 @@ class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md dark:bg-zinc-900/90
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 translate-y-0"
                              x-transition:leave-end="opacity-0 translate-y-1"
-                             class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[800px] bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden z-50">
+                             class="fixed left-0 right-0 top-[80px] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-50">
+                            <div class="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
                             
                             <div class="p-8">
                                 <h2 class="text-xl font-bold text-zinc-900 dark:text-white mb-6 flex items-center gap-2">
@@ -272,7 +273,7 @@ class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md dark:bg-zinc-900/90
                                     <span class="text-xs font-normal text-zinc-500 dark:text-zinc-400 px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded-full">Категория</span>
                                 </h2>
                                 
-                                <div class="grid grid-cols-3 gap-8">
+                                <div class="grid grid-cols-4 gap-8">
                                     <template x-for="subSection in category.children" :key="subSection.label">
                                         <div class="space-y-4">
                                             <!-- Level 2 Header -->
@@ -301,6 +302,7 @@ class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md dark:bg-zinc-900/90
                                         </div>
                                     </template>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
