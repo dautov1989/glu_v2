@@ -10,21 +10,21 @@
     ]
 }" 
 class="w-full bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-zinc-900 dark:via-cyan-950 dark:to-teal-950 border-b border-cyan-100 dark:border-cyan-900/30 shadow-lg shadow-cyan-100/50 dark:shadow-cyan-900/20">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <!-- Search Container -->
         <div class="relative">
             <!-- Main Search Box -->
             <div class="relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
                 
-                <div class="relative bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl shadow-cyan-200/50 dark:shadow-cyan-900/30 border border-cyan-200/50 dark:border-cyan-700/30 overflow-hidden transition-all duration-300"
+                <div class="relative bg-white dark:bg-zinc-800 rounded-xl shadow-xl shadow-cyan-200/50 dark:shadow-cyan-900/30 border border-cyan-200/50 dark:border-cyan-700/30 overflow-hidden transition-all duration-300"
                      :class="{ 'ring-2 ring-cyan-500 dark:ring-cyan-400': isFocused }">
                     
                     <!-- Search Icon -->
-                    <div class="absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
                         <div class="relative">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
-                                 class="w-6 h-6 transition-colors duration-300"
+                                 class="w-5 h-5 transition-colors duration-300"
                                  :class="isFocused ? 'text-cyan-500 dark:text-cyan-400' : 'text-zinc-400 dark:text-zinc-500'">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
@@ -41,24 +41,24 @@ class="w-full bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-zi
                            @focus="isFocused = true"
                            @blur="setTimeout(() => isFocused = false, 200)"
                            placeholder="Поиск информации о диабете, симптомах, лечении..."
-                           class="w-full pl-16 pr-32 py-5 text-base md:text-lg bg-transparent border-0 focus:outline-none focus:ring-0 text-zinc-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500">
+                           class="w-full pl-12 pr-28 py-3 text-sm md:text-base bg-transparent border-0 focus:outline-none focus:ring-0 text-zinc-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500">
 
                     <!-- Search Button -->
-                    <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                    <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
                         <!-- Clear Button -->
                         <button x-show="searchQuery.length > 0"
                                 x-transition
                                 @click="searchQuery = ''"
-                                class="p-2 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                class="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </button>
 
                         <!-- Search Button -->
-                        <button class="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium rounded-xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2">
-                            <span class="hidden sm:inline">Найти</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+                        <button class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium rounded-lg shadow-md shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5">
+                            <span class="hidden sm:inline text-sm">Найти</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
                         </button>

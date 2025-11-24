@@ -258,38 +258,78 @@
     ]
 }" 
 @click.outside="closeMenu"
-class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md dark:bg-zinc-900/90 border-b border-zinc-200/50 dark:border-zinc-800/50 shadow-lg shadow-zinc-200/50 dark:shadow-zinc-900/50 transition-all duration-300">
+class="sticky top-0 z-50 w-full bg-gradient-to-r from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 backdrop-blur-md border-b border-cyan-200/50 dark:border-cyan-800/50 shadow-xl shadow-cyan-200/30 dark:shadow-cyan-900/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20 gap-x-8">
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                    <div class="bg-red-500 rounded-full p-1.5 text-white shadow-md shadow-red-500/30 group-hover:scale-110 transition-transform duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-                            <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.516l-1.432 3.26a5.25 5.25 0 0 0 0 4.336l1.432 3.26a.75.75 0 0 0 .5.516H6c.536 0 1.064.034 1.582.1l-.012.025c-.15.312-.292.63-.426.95-.404.972-.726 2.005-.96 3.085a.75.75 0 0 0 .659.897 7.5 7.5 0 0 0 7.208-4.816A7.5 7.5 0 0 0 21.75 12a9.716 9.716 0 0 0-4.233-8.179.75.75 0 0 0-.815 1.161 8.216 8.216 0 0 1 3.548 7.018 6 6 0 0 1-11.52 1.98.75.75 0 0 0-1.5-.03 7.502 7.502 0 0 0-3.18 5.819 7.99 7.99 0 0 1-2.948-4.964 3.75 3.75 0 0 1 0-3.098 7.99 7.99 0 0 1 2.948-4.964A8.25 8.25 0 0 1 6 4.5c.693 0 1.366.09 2.007.259a.75.75 0 0 0 .848-.66c.096-.548.23-1.08.4-1.595.166-.51.382-1.003.64-1.471a.75.75 0 0 0-.645-1.133Z" />
-                        </svg>
+                <a href="{{ route('home') }}" class="flex items-center gap-3 group relative">
+                    <!-- Icon Container with animations -->
+                    <div class="relative">
+                        <!-- Animated pulsing glow - always active -->
+                        <div class="absolute -inset-2 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 group-hover:from-purple-500 group-hover:via-pink-500 group-hover:to-rose-500 rounded-full blur-md opacity-50 animate-pulse transition-all duration-500"></div>
+                        
+                        <!-- Rotating glow - always active -->
+                        <div class="absolute -inset-1.5 bg-gradient-to-r from-cyan-400 to-blue-600 group-hover:from-purple-400 group-hover:to-pink-600 rounded-full blur opacity-40 animate-spin transition-all duration-500" style="animation-duration: 3s;"></div>
+                        
+                        <!-- Icon background with gradient -->
+                        <div class="relative bg-gradient-to-br from-cyan-500 via-blue-500 to-blue-600 group-hover:from-purple-500 group-hover:via-pink-500 group-hover:to-rose-600 rounded-full p-2 text-white shadow-xl shadow-cyan-500/50 group-hover:shadow-purple-500/60 transition-all duration-500 scale-100 group-hover:scale-110 rotate-0 group-hover:rotate-12">
+                            <!-- Icon with animation -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 transition-transform duration-300 group-hover:scale-110">
+                                <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.516l-1.432 3.26a5.25 5.25 0 0 0 0 4.336l1.432 3.26a.75.75 0 0 0 .5.516H6c.536 0 1.064.034 1.582.1l-.012.025c-.15.312-.292.63-.426.95-.404.972-.726 2.005-.96 3.085a.75.75 0 0 0 .659.897 7.5 7.5 0 0 0 7.208-4.816A7.5 7.5 0 0 0 21.75 12a9.716 9.716 0 0 0-4.233-8.179.75.75 0 0 0-.815 1.161 8.216 8.216 0 0 1 3.548 7.018 6 6 0 0 1-11.52 1.98.75.75 0 0 0-1.5-.03 7.502 7.502 0 0 0-3.18 5.819 7.99 7.99 0 0 1-2.948-4.964 3.75 3.75 0 0 1 0-3.098 7.99 7.99 0 0 1 2.948-4.964A8.25 8.25 0 0 1 6 4.5c.693 0 1.366.09 2.007.259a.75.75 0 0 0 .848-.66c.096-.548.23-1.08.4-1.595.166-.51.382-1.003.64-1.471a.75.75 0 0 0-.645-1.133Z" />
+                            </svg>
+                            
+                            <!-- Sparkle effect - always visible -->
+                            <div class="absolute top-0 right-0 w-2 h-2 bg-white rounded-full opacity-70 group-hover:opacity-100 animate-ping transition-opacity"></div>
+                        </div>
                     </div>
-                    <span class="text-2xl font-bold tracking-tight text-zinc-800 dark:text-white">
-                        Glucosa
-                    </span>
+                    
+                    <!-- Text with gradient animation - always animated -->
+                    <div class="relative overflow-hidden">
+                        <span class="text-2xl font-bold tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-cyan-600 group-hover:from-purple-600 group-hover:via-pink-600 group-hover:to-purple-600 dark:from-cyan-400 dark:via-blue-400 dark:to-cyan-400 dark:group-hover:from-purple-400 dark:group-hover:via-pink-400 dark:group-hover:to-purple-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient transition-all duration-500 group-hover:tracking-wide">
+                            Glucosa
+                        </span>
+                        
+                        <!-- Underline effect - always visible, changes color on hover -->
+                        <div class="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-cyan-500 to-blue-500 group-hover:from-purple-500 group-hover:to-pink-500 transition-all duration-500 ease-out"></div>
+                    </div>
+                    
+                    <!-- Floating particles effect - always visible -->
+                    <div class="absolute -top-1 -right-1 w-1 h-1 bg-cyan-400 group-hover:bg-purple-400 rounded-full opacity-70 animate-bounce transition-colors duration-500" style="animation-delay: 0.1s;"></div>
+                    <div class="absolute top-1 -right-2 w-1.5 h-1.5 bg-blue-400 group-hover:bg-pink-400 rounded-full opacity-70 animate-bounce transition-colors duration-500" style="animation-delay: 0.3s;"></div>
                 </a>
             </div>
 
+            <style>
+                @keyframes gradient {
+                    0%, 100% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                }
+                .animate-gradient {
+                    animation: gradient 3s ease infinite;
+                }
+            </style>
+
             <!-- Navigation -->
-            <nav class="hidden lg:flex items-center gap-6">
+            <nav class="hidden lg:flex items-center gap-4">
                 <template x-for="category in megaMenu" :key="category.id">
                     <div class="relative">
                         <button @click="toggleCategory(category.id)" 
-                                class="px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 flex items-center gap-1"
+                                class="relative px-4 py-2.5 text-base font-semibold rounded-xl transition-all duration-300 flex items-center gap-2 group"
                                 :class="{ 
-                                    'bg-cyan-50 text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400': openCategory === category.id,
-                                    'text-zinc-600 hover:text-cyan-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800': openCategory !== category.id
+                                    'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/40 hover:shadow-cyan-500/60 scale-105': openCategory === category.id,
+                                    'bg-gradient-to-r from-white to-cyan-50/50 dark:from-zinc-800 dark:to-cyan-950/30 text-zinc-700 dark:text-zinc-300 border border-cyan-200/30 dark:border-cyan-800/30 shadow-sm shadow-cyan-200/20 dark:shadow-cyan-900/10 hover:from-cyan-50 hover:to-blue-50 hover:text-cyan-600 dark:hover:from-cyan-900/30 dark:hover:to-blue-900/30 dark:hover:text-cyan-400 hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-md hover:shadow-cyan-300/30 dark:hover:shadow-cyan-800/20 hover:scale-105': openCategory !== category.id
                                 }">
-                            <span x-text="category.label"></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': openCategory === category.id }">
+                            <!-- Subtle glow effect for inactive state -->
+                            <div x-show="openCategory !== category.id" class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/5 to-blue-400/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <span class="relative z-10" x-text="category.label"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="relative z-10 w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': openCategory === category.id }">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                             </svg>
                         </button>
+
+
 
                         <!-- Mega Menu Dropdown -->
                         <div x-show="openCategory === category.id"
@@ -301,44 +341,55 @@ class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md dark:bg-zinc-900/90
                              x-transition:leave-start="opacity-100 translate-y-0"
                              x-transition:leave-end="opacity-0 translate-y-1"
                              class="fixed left-0 right-0 top-[80px] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-50">
-                            <div class="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
                             
-                            <div class="p-8">
-                                <h2 class="text-xl font-bold text-zinc-900 dark:text-white mb-6 flex items-center gap-2">
-                                    <span x-text="category.label"></span>
-                                    <span class="text-xs font-normal text-zinc-500 dark:text-zinc-400 px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded-full">Категория</span>
-                                </h2>
+                            <!-- Backdrop blur effect -->
+                            <div class="relative">
+                                <div class="absolute -inset-2 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-teal-500/10 rounded-2xl blur-xl"></div>
                                 
-                                <div class="grid grid-cols-4 gap-8">
-                                    <template x-for="subSection in category.children" :key="subSection.label">
-                                        <div class="space-y-4">
-                                            <!-- Level 2 Header -->
-                                            <h3 class="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200 border-b border-zinc-200 dark:border-zinc-700 pb-2" x-text="subSection.label"></h3>
-                                            
-                                            <!-- Level 3 & 4 List -->
-                                            <ul class="space-y-3">
-                                                <template x-for="type in subSection.children" :key="type.label">
-                                                    <li>
-                                                        <a href="#" class="text-sm font-medium text-cyan-600 dark:text-cyan-400 hover:underline block mb-1" x-text="type.label"></a>
-                                                        <!-- Level 4 -->
-                                                        <ul class="pl-0 space-y-1">
-                                                            <template x-for="detail in type.children" :key="detail.label">
-                                                                <li>
-                                                                    <a href="#" class="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors" x-text="detail.label"></a>
-                                                                </li>
-                                                            </template>
-                                                        </ul>
-                                                    </li>
-                                                </template>
-                                                <!-- If no children at level 3, just show empty state or nothing -->
-                                                <template x-if="!subSection.children || subSection.children.length === 0">
-                                                    <li class="text-xs text-zinc-400 italic">Нет подкатегорий</li>
-                                                </template>
-                                            </ul>
+                                <div class="relative bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl rounded-2xl shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/40 border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden">
+                            
+                                    <div class="p-8">
+                                        <!-- Header with gradient - centered -->
+                                        <div class="mb-8 pb-6 border-b border-cyan-200/50 dark:border-cyan-700/50 text-center">
+                                            <h2 class="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent" x-text="category.label"></h2>
                                         </div>
-                                    </template>
+                                        
+                                        <div class="grid grid-cols-4 gap-6">
+                                            <template x-for="subSection in category.children" :key="subSection.label">
+                                                <div class="group space-y-4">
+                                                    <!-- Level 2 Header - simplified hover -->
+                                                    <div class="pb-3 border-b border-cyan-200/50 dark:border-cyan-700/50">
+                                                        <h3 class="text-sm font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300 relative inline-block" x-text="subSection.label">
+                                                        </h3>
+                                                        <!-- Simple underline on hover -->
+                                                        <div class="h-0.5 w-0 bg-gradient-to-r from-cyan-500 to-blue-500 group-hover:w-full transition-all duration-300 mt-1"></div>
+                                                    </div>
+                                                    
+                                                    <!-- Level 3 & 4 List -->
+                                                    <ul class="space-y-2.5">
+                                                        <template x-for="type in subSection.children" :key="type.label">
+                                                            <li>
+                                                                <a href="#" class="text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors block" x-text="type.label"></a>
+                                                                <!-- Level 4 -->
+                                                                <ul class="pl-4 mt-1.5 space-y-1">
+                                                                    <template x-for="detail in type.children" :key="detail.label">
+                                                                        <li>
+                                                                            <a href="#" class="text-xs text-zinc-600 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors block py-0.5" x-text="detail.label"></a>
+                                                                        </li>
+                                                                    </template>
+                                                                </ul>
+                                                            </li>
+                                                        </template>
+                                                        <!-- If no children at level 3, just show empty state or nothing -->
+                                                        <template x-if="!subSection.children || subSection.children.length === 0">
+                                                            <li class="text-xs text-zinc-400 italic">Нет подкатегорий</li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
