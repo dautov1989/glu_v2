@@ -1,5 +1,45 @@
 <aside class="w-full lg:w-64 flex-shrink-0 space-y-6">
     
+    <!-- Support Us Widget -->
+    <div class="relative group">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-6 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
+            <div class="flex items-center gap-2 mb-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                    </svg>
+                </div>
+                <h3 class="text-sm font-bold bg-gradient-to-r from-cyan-700 to-blue-700 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent">Поддержите нас</h3>
+            </div>
+            <p class="text-sm text-zinc-700 dark:text-zinc-300 mb-4">Ваша поддержка помогает нам создавать полезный контент и развивать проект для всех.</p>
+            <style>
+                @keyframes gentle-glow {
+                    0%, 100% {
+                        box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.3), 0 4px 6px -4px rgba(6, 182, 212, 0.3);
+                    }
+                    50% {
+                        box-shadow: 0 25px 35px -5px rgba(6, 182, 212, 0.5), 0 12px 15px -6px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
+                    }
+                }
+                .support-button {
+                    position: relative;
+                    animation: gentle-glow 2s ease-in-out infinite;
+                    animation-delay: 1s;
+                }
+                .support-button:hover {
+                    animation: none;
+                }
+            </style>
+            <a href="https://dalink.to/glucos_a" target="_blank" rel="noopener noreferrer" class="support-button w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white text-sm font-bold py-2.5 rounded-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                <span>Поддержать проект</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
     <!-- Tip of the Day Widget -->
     <div class="relative group">
         <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -25,7 +65,7 @@
     </div>
 
     <!-- Quick HE Calculator Widget -->
-    <div class="relative group" x-data="{ grams: 50, result: 0 }" x-init="$watch('grams', value => result = (value / 12).toFixed(1))">
+    <div class="relative group" x-data="{ grams: 50, result: 4.2 }" x-init="$watch('grams', value => result = (value / 12).toFixed(1))">
         <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         <div class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-6 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
             <div class="flex items-center gap-2 mb-5">
@@ -59,92 +99,10 @@
         </div>
     </div>
 
-    <!-- Glucose Levels Reference Widget -->
-    <div class="relative group">
-        <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-6 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
-            <div class="flex items-center gap-2 mb-5">
-                <div class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
-                    </svg>
-                </div>
-                <h3 class="text-sm font-bold bg-gradient-to-r from-cyan-700 to-blue-700 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent">Норма глюкозы</h3>
-            </div>
-            
-            <div class="space-y-3">
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="text-zinc-600 dark:text-zinc-400">Натощак</span>
-                        <span class="font-semibold text-cyan-600 dark:text-cyan-400">3.9-5.5 ммоль/л</span>
-                    </div>
-                    <div class="h-2 bg-gradient-to-r from-cyan-200 to-cyan-400 rounded-full"></div>
-                </div>
-                
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="text-zinc-600 dark:text-zinc-400">Через 2ч после еды</span>
-                        <span class="font-semibold text-blue-600 dark:text-blue-400">< 7.8 ммоль/л</span>
-                    </div>
-                    <div class="h-2 bg-gradient-to-r from-blue-200 to-blue-400 rounded-full"></div>
-                </div>
-                
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="text-zinc-600 dark:text-zinc-400">Критический уровень</span>
-                        <span class="font-semibold text-zinc-600 dark:text-zinc-400">> 11.1 ммоль/л</span>
-                    </div>
-                    <div class="h-2 bg-gradient-to-r from-zinc-300 to-zinc-400 rounded-full"></div>
-                </div>
-            </div>
-            
-            <div class="mt-4 p-3 bg-cyan-50 dark:bg-cyan-950/30 rounded-lg border border-cyan-200/50 dark:border-cyan-800/30">
-                <p class="text-xs text-cyan-700 dark:text-cyan-300">
-                    ⚠️ Всегда консультируйтесь с врачом для индивидуальных рекомендаций
-                </p>
-            </div>
-        </div>
-    </div>
 
-    <!-- Popular Posts Widget -->
-    <div class="relative group">
-        <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-6 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
-            <div class="flex items-center gap-2 mb-5">
-                <div class="w-1 h-6 bg-gradient-to-b from-cyan-500 to-blue-500 rounded-full"></div>
-                <h3 class="text-sm font-bold bg-gradient-to-r from-cyan-700 to-blue-700 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent">Популярное</h3>
-            </div>
-            <div class="space-y-4">
-                @foreach([
-                    ['title' => 'Как контролировать сахар в крови без стресса', 'date' => '24 Ноя 2025'],
-                    ['title' => '10 продуктов с низким гликемическим индексом', 'date' => '23 Ноя 2025'],
-                    ['title' => 'Спорт при диабете: с чего начать', 'date' => '22 Ноя 2025']
-                ] as $post)
-                    <div class="flex gap-3 group/post cursor-pointer p-2 -mx-2 rounded-lg hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-all duration-200">
-                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 rounded-lg flex-shrink-0 overflow-hidden relative">
-                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 group-hover/post:scale-110 transition-transform duration-300"></div>
-                            <div class="absolute inset-0 flex items-center justify-center text-2xl">
-                                {{ ['🩺', '🥗', '🏃'][$loop->index] }}
-                            </div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h4 class="text-sm font-medium text-zinc-800 dark:text-zinc-200 group-hover/post:text-cyan-600 dark:group-hover/post:text-cyan-400 transition-colors line-clamp-2 mb-1">
-                                {{ $post['title'] }}
-                            </h4>
-                            <div class="flex items-center gap-1.5 text-xs text-zinc-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                                </svg>
-                                <span>{{ $post['date'] }}</span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
 
-    <!-- Newsletter Widget -->
+    <!-- Newsletter Widget (Закомментировано) -->
+    <!--
     <div class="relative group">
         <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         <div class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-6 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
@@ -166,5 +124,6 @@
             </button>
         </div>
     </div>
+    -->
 
 </aside>
