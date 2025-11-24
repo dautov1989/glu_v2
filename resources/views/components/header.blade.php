@@ -424,22 +424,58 @@ class="sticky top-0 z-50 w-full bg-gradient-to-r from-white via-cyan-50/30 to-wh
          x-transition:leave-start="opacity-100 translate-y-0"
          x-transition:leave-end="opacity-0 -translate-y-2"
          class="lg:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900" 
-         id="mobile-menu">
-        <div class="space-y-1 px-4 pb-3 pt-2">
+         id="mobile-menu"
+         x-data="{ openSubSection: null, openType: null }">
+        <div class="space-y-1 px-4 pb-3 pt-2 max-h-[70vh] overflow-y-auto">
             <template x-for="category in megaMenu" :key="category.id">
-                <div>
+                <div class="border-b border-zinc-100 dark:border-zinc-800 pb-2 mb-2">
+                    <!-- Level 1: Category -->
                     <button @click="toggleCategory(category.id)"
-                            class="w-full flex justify-between items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-zinc-600 hover:text-cyan-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800">
+                            class="w-full flex justify-between items-center px-3 py-2.5 text-base font-semibold rounded-lg transition-all"
+                            :class="openCategory === category.id ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white' : 'text-zinc-700 dark:text-zinc-300 hover:bg-cyan-50 dark:hover:bg-zinc-800'">
                         <span x-text="category.label"></span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': openCategory === category.id }">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': openCategory === category.id }">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                         </svg>
                     </button>
                     
-                    <div x-show="openCategory === category.id" x-collapse class="pl-4 space-y-1">
-                         <template x-for="subSection in category.children" :key="subSection.label">
-                            <a href="#" class="block px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400" x-text="subSection.label"></a>
-                         </template>
+                    <!-- Level 2: SubSections -->
+                    <div x-show="openCategory === category.id" x-collapse class="mt-2 space-y-1">
+                        <template x-for="subSection in category.children" :key="subSection.label">
+                            <div class="ml-3">
+                                <button @click="openSubSection = openSubSection === subSection.label ? null : subSection.label"
+                                        class="w-full flex justify-between items-center px-3 py-2 text-sm font-bold text-cyan-700 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 rounded-lg transition-colors">
+                                    <span x-text="subSection.label"></span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3 transition-transform duration-200" :class="{ 'rotate-180': openSubSection === subSection.label }">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </button>
+                                
+                                <!-- Level 3: Types -->
+                                <div x-show="openSubSection === subSection.label" x-collapse class="mt-1 ml-3 space-y-1">
+                                    <template x-for="type in subSection.children" :key="type.label">
+                                        <div>
+                                            <button @click="openType = openType === type.label ? null : type.label"
+                                                    class="w-full flex justify-between items-center px-3 py-1.5 text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                                <span x-text="type.label"></span>
+                                                <template x-if="type.children && type.children.length > 0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3 transition-transform duration-200" :class="{ 'rotate-180': openType === type.label }">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                    </svg>
+                                                </template>
+                                            </button>
+                                            
+                                            <!-- Level 4: Details -->
+                                            <div x-show="openType === type.label" x-collapse class="mt-1 ml-3 space-y-0.5">
+                                                <template x-for="detail in type.children" :key="detail.label">
+                                                    <a href="#" class="block px-3 py-1 text-xs text-zinc-600 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors" x-text="detail.label"></a>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </template>
