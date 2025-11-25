@@ -1,5 +1,8 @@
 @extends('components.layouts.app')
 
+@section('title', $category->meta_title ?? $category->title . ' | Glucosa')
+@section('meta_description', $category->meta_description ?? $category->description)
+
 @section('content')
     <div
         class="min-h-screen bg-gradient-to-br from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900">
@@ -89,23 +92,76 @@
                 </div>
             @endif
 
-            <!-- Content Section (placeholder for future articles/posts) -->
-            <div
-                class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-cyan-200/50 dark:border-cyan-800/50 shadow-lg">
-                <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-6">Материалы в этой категории</h2>
-
-                <div class="text-center py-12">
-                    <svg class="w-16 h-16 mx-auto text-zinc-300 dark:text-zinc-600 mb-4" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>
-                    <p class="text-zinc-500 dark:text-zinc-400">
-                        Материалы для этой категории скоро появятся
-                    </p>
+            <!-- Posts Grid -->
+            @if($posts->count() > 0)
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-6">Материалы в этой категории</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        @foreach($posts as $post)
+                            <article class="bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
+                                @if($post->image)
+                                    <div class="aspect-video w-full overflow-hidden">
+                                        <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                                    </div>
+                                @else
+                                    <div class="aspect-video w-full bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 flex items-center justify-center">
+                                        <svg class="w-12 h-12 text-cyan-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                        </svg>
+                                    </div>
+                                @endif
+                                
+                                <div class="p-6 flex flex-col flex-1">
+                                    <div class="flex items-center text-xs text-zinc-500 dark:text-zinc-400 mb-3 space-x-2">
+                                        <span>{{ $post->published_at->format('d.m.Y') }}</span>
+                                        <span>&bull;</span>
+                                        <span>{{ $post->views }} просмотров</span>
+                                    </div>
+                                    
+                                    <h3 class="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-3 line-clamp-2 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+                                        <a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a>
+                                    </h3>
+                                    
+                                    <p class="text-zinc-600 dark:text-zinc-400 text-sm line-clamp-3 mb-4 flex-1">
+                                        {{ $post->excerpt }}
+                                    </p>
+                                    
+                                    <div class="mt-auto pt-4 border-t border-zinc-100 dark:border-zinc-700 flex items-center justify-between">
+                                        <a href="{{ route('post.show', $post->slug) }}" class="text-cyan-600 dark:text-cyan-400 text-sm font-medium hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center">
+                                            Читать далее
+                                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                    
+                    <div class="mt-12">
+                        {{ $posts->links() }}
+                    </div>
                 </div>
-            </div>
+            @else
+                <!-- Empty State -->
+                <div class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-cyan-200/50 dark:border-cyan-800/50 shadow-lg">
+                    <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-6">Материалы в этой категории</h2>
+    
+                    <div class="text-center py-12">
+                        <svg class="w-16 h-16 mx-auto text-zinc-300 dark:text-zinc-600 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        <p class="text-zinc-500 dark:text-zinc-400">
+                            Материалы для этой категории скоро появятся
+                        </p>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

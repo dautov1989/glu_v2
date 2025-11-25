@@ -59,6 +59,14 @@ class Category extends Model
     }
 
     /**
+     * Статьи в категории
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
      * Получить все корневые категории (уровень 0)
      */
     public static function getRootCategories()

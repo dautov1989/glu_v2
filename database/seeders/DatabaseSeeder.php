@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // Заполнение категорий
         $this->call([
             CategorySeeder::class,
+            PostSeeder::class,
         ]);
 
         // User::factory(10)->create();
