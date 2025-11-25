@@ -346,13 +346,11 @@ class="sticky top-0 z-50 w-full bg-gradient-to-r from-white via-cyan-50/30 to-wh
                             <div class="relative">
                                 <div class="absolute -inset-2 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-teal-500/10 rounded-2xl blur-xl"></div>
                                 
-                                <div class="relative bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl rounded-2xl shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/40 border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden">
+                                <div class="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/40 border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden">
                             
                                     <div class="p-8">
                                         <!-- Header with gradient - centered -->
-                                        <div class="mb-8 pb-6 border-b border-cyan-200/50 dark:border-cyan-700/50 text-center">
-                                            <h2 class="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent" x-text="category.label"></h2>
-                                        </div>
+
                                         
                                         <div class="grid grid-cols-4 gap-6">
                                             <template x-for="subSection in category.children" :key="subSection.label">

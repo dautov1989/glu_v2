@@ -74,7 +74,7 @@ class="w-full bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-zi
                  x-transition:leave="transition ease-in duration-150"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 translate-y-2"
-                 class="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-zinc-800 rounded-xl shadow-2xl border border-cyan-200/50 dark:border-cyan-700/30 overflow-hidden z-10">
+                 class="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-zinc-900 rounded-xl shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/40 border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden z-50">
                 
                 <div class="p-4">
                     <div class="flex items-center gap-2 mb-3 px-2">
