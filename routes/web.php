@@ -11,6 +11,12 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Маршрут для просмотра категорий
+Route::get('/category/{slug}', function ($slug) {
+    $category = \App\Models\Category::where('slug', $slug)->firstOrFail();
+    return view('category.show', compact('category'));
+})->name('category.show');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -26,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()
-                    && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
+                && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
                 ['password.confirm'],
                 [],
             ),
