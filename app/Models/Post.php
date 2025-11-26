@@ -28,6 +28,11 @@ class Post extends Model
         'views' => 'integer',
     ];
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

@@ -74,4 +74,7 @@
             {!! nl2br(e($post->content)) !!}
         </div>
     </div>
+
+    <!-- Comments Section -->
+    <livewire:post-comments :post="$post" />
 @endsection
