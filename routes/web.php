@@ -22,9 +22,33 @@ Route::get('/category/{slug}', function ($slug) {
         ])
         ->firstOrFail();
 
-    $posts = $category->posts()->where('is_published', true)->orderBy('published_at', 'desc')->paginate(12);
+    // Получаем параметр сортировки из query string
+    $sortBy = request()->get('sort', 'date_desc');
 
-    return view('category.show', compact('category', 'posts'));
+    // Строим запрос для постов
+    $postsQuery = $category->posts()->where('is_published', true);
+
+    // Применяем сортировку
+    switch ($sortBy) {
+        case 'date_asc':
+            $postsQuery->orderBy('published_at', 'asc');
+            break;
+        case 'date_desc':
+            $postsQuery->orderBy('published_at', 'desc');
+            break;
+        case 'views':
+            $postsQuery->orderBy('views', 'desc');
+            break;
+        case 'title':
+            $postsQuery->orderBy('title', 'asc');
+            break;
+        default:
+            $postsQuery->orderBy('published_at', 'desc');
+    }
+
+    $posts = $postsQuery->paginate(12)->appends(['sort' => $sortBy]);
+
+    return view('category.show', compact('category', 'posts', 'sortBy'));
 })->name('category.show');
 
 // Маршрут для просмотра отдельной статьи
