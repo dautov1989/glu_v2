@@ -33,7 +33,7 @@
         <!-- Search Container -->
         <div class="relative">
             <!-- Main Search Box -->
-            <form action="{{ route('search') }}" method="GET" class="relative group">
+            <form action="{{ route('search') }}" method="GET" class="relative group" @click.outside="isFocused = false">
                 <div
                     class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300">
                 </div>
@@ -51,7 +51,7 @@
                                     d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
                             <!-- Pulse effect when focused -->
-                            <div x-show="isFocused" x-transition
+                            <div x-show="isFocused" x-transition x-cloak
                                 class="absolute inset-0 bg-cyan-400 rounded-full animate-ping opacity-20"></div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                     <!-- Search Button -->
                     <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
                         <!-- Loading Indicator -->
-                        <div x-show="isLoading" class="p-1.5">
+                        <div x-show="isLoading" x-cloak class="p-1.5">
                             <svg class="animate-spin h-4 w-4 text-cyan-500" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
@@ -77,7 +77,7 @@
                         </div>
 
                         <!-- Clear Button -->
-                        <button type="button" x-show="!isLoading && searchQuery.length > 0" x-transition
+                        <button type="button" x-show="!isLoading && searchQuery.length > 0" x-transition x-cloak
                             @click="searchQuery = ''; results = []"
                             class="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -100,7 +100,7 @@
                 </div>
 
                 <!-- Dropdown Results -->
-                <div x-show="isFocused && (searchQuery.length === 0 || results.length > 0)"
+                <div x-show="isFocused && (searchQuery.length === 0 || results.length > 0)" x-cloak
                     x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 translate-y-2"
                     x-transition:enter-end="opacity-100 translate-y-0"
