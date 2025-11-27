@@ -14,6 +14,10 @@ Route::get('/', function () {
 Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search');
 Route::get('/search/suggestions', [\App\Http\Controllers\SearchController::class, 'suggestions'])->name('search.suggestions');
 
+// SEO Routes
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/robots.txt', [\App\Http\Controllers\SitemapController::class, 'robots'])->name('robots');
+
 // Маршрут для просмотра категорий
 Route::get('/category/{slug}', function ($slug) {
     $category = \App\Models\Category::where('slug', $slug)

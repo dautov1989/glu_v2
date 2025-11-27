@@ -1,3 +1,27 @@
+@section('seo-meta')
+    <x-seo-meta 
+        :title="$category->meta_title ?? $category->title"
+        :description="$category->meta_description ?? $category->description"
+        :keywords="'диабет, ' . $category->title . ', статьи о диабете'"
+        type="website"
+        :url="route('category.show', $category->slug)"
+    />
+    
+    {{-- Breadcrumb Schema --}}
+    @php
+        $breadcrumbItems = [
+            ['name' => 'Главная', 'url' => route('home')]
+        ];
+        foreach($category->getBreadcrumbs() as $breadcrumb) {
+            $breadcrumbItems[] = [
+                'name' => $breadcrumb->title,
+                'url' => route('category.show', $breadcrumb->slug)
+            ];
+        }
+    @endphp
+    <x-schema-org type="breadcrumb" :data="['items' => $breadcrumbItems]" />
+@endsection
+
 @extends('components.layouts.app')
 
 @section('title', $category->meta_title ?? $category->title . ' | Glucosa')
@@ -188,12 +212,14 @@
                                 @if($post->image)
                                     <div class="aspect-[16/9] w-full overflow-hidden">
                                         <img src="{{ $post->image }}" alt="{{ $post->title }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            loading="lazy">
                                     </div>
                                 @else
                                     <div class="aspect-[16/9] w-full overflow-hidden">
                                         <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                                            loading="lazy">
                                     </div>
                                 @endif
 

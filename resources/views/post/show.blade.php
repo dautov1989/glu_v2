@@ -1,3 +1,34 @@
+@section('seo-meta')
+    <x-seo-meta :title="$post->meta_title ?? $post->title" :description="$post->meta_description ?? Str::limit(strip_tags($post->content), 160)" :keywords="'диабет, ' . $post->category->title . ', ' . $post->title"
+        type="article" :image="$post->image" :url="route('post.show', $post->slug)"
+        :publishedTime="$post->published_at->toIso8601String()" :modifiedTime="$post->updated_at->toIso8601String()" />
+
+    {{-- Article Schema --}}
+    <x-schema-org type="article" :data="[
+            'title' => $post->title,
+            'description' => $post->meta_description ?? Str::limit(strip_tags($post->content), 160),
+            'image' => $post->image ?? asset('images/medical_placeholder.png'),
+            'published_at' => $post->published_at->toIso8601String(),
+            'updated_at' => $post->updated_at->toIso8601String(),
+            'url' => route('post.show', $post->slug)
+        ]" />
+
+    {{-- Breadcrumb Schema --}}
+    @php
+        $breadcrumbItems = [
+            ['name' => 'Главная', 'url' => route('home')]
+        ];
+        foreach ($post->category->getBreadcrumbs() as $breadcrumb) {
+            $breadcrumbItems[] = [
+                'name' => $breadcrumb->title,
+                'url' => route('category.show', $breadcrumb->slug)
+            ];
+        }
+        $breadcrumbItems[] = ['name' => $post->title, 'url' => route('post.show', $post->slug)];
+    @endphp
+    <x-schema-org type="breadcrumb" :data="['items' => $breadcrumbItems]" />
+@endsection
+
 @extends('components.layouts.app')
 
 @section('title', $post->meta_title ?? $post->title . ' | Glucosa')
@@ -65,7 +96,7 @@
         <!-- Featured Image -->
         @if($post->image)
             <div class="mb-8 rounded-xl overflow-hidden">
-                <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-auto object-cover">
+                <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-auto object-cover" loading="lazy">
             </div>
         @endif
 

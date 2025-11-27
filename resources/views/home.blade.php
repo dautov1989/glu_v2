@@ -1,3 +1,14 @@
+@section('seo-meta')
+    <x-seo-meta 
+        title="Glucosa - Всё о сахарном диабете и контроле глюкозы"
+        description="Информационный портал о сахарном диабете. Полезные статьи, советы врачей, калькуляторы и практические рекомендации для контроля уровня глюкозы в крови."
+        keywords="диабет, сахарный диабет, глюкоза, уровень сахара, диабет 1 типа, диабет 2 типа, контроль глюкозы"
+        type="website"
+    />
+    <x-schema-org type="website" />
+    <x-schema-org type="organization" />
+@endsection
+
 <x-layouts.app title="Home">
     <div class="p-8 space-y-8 bg-white dark:bg-zinc-900">
         
