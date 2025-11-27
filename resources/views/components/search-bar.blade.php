@@ -1,13 +1,32 @@
 <div x-data="{ 
     searchQuery: '', 
     isFocused: false,
+    results: [],
+    isLoading: false,
     suggestions: [
         { icon: '🩺', text: 'Симптомы диабета', category: 'Симптомы' },
         { icon: '💊', text: 'Инсулинотерапия', category: 'Лечение' },
         { icon: '🥗', text: 'Диета при диабете', category: 'Питание' },
         { icon: '🏃', text: 'Спорт и физические нагрузки', category: 'Спорт' },
         { icon: '📊', text: 'Контроль уровня глюкозы', category: 'Мониторинг' }
-    ]
+    ],
+    async fetchSuggestions() {
+        if (this.searchQuery.length < 2) {
+            this.results = [];
+            return;
+        }
+        
+        this.isLoading = true;
+        try {
+            const response = await fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(this.searchQuery)}`);
+            this.results = await response.json();
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+            this.results = [];
+        } finally {
+            this.isLoading = false;
+        }
+    }
 }"
     class="w-full bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-zinc-900 dark:via-cyan-950 dark:to-teal-950 border-b border-cyan-100 dark:border-cyan-900/30 shadow-lg shadow-cyan-100/50 dark:shadow-cyan-900/20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -38,15 +57,28 @@
                     </div>
 
                     <!-- Input Field -->
-                    <input type="text" name="q" x-model="searchQuery" @focus="isFocused = true"
-                        @blur="setTimeout(() => isFocused = false, 200)"
+                    <input type="text" name="q" x-model="searchQuery" @input.debounce.300ms="fetchSuggestions()"
+                        @focus="isFocused = true" @blur="setTimeout(() => isFocused = false, 200)"
                         placeholder="Поиск информации о диабете, симптомах, лечении..."
                         class="w-full pl-12 pr-28 py-3 text-sm md:text-base bg-transparent border-0 focus:outline-none focus:ring-0 text-zinc-800 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500">
 
                     <!-- Search Button -->
                     <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                        <!-- Loading Indicator -->
+                        <div x-show="isLoading" class="p-1.5">
+                            <svg class="animate-spin h-4 w-4 text-cyan-500" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                        </div>
+
                         <!-- Clear Button -->
-                        <button type="button" x-show="searchQuery.length > 0" x-transition @click="searchQuery = ''"
+                        <button type="button" x-show="!isLoading && searchQuery.length > 0" x-transition
+                            @click="searchQuery = ''; results = []"
                             class="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                 stroke="currentColor" class="w-4 h-4">
@@ -66,49 +98,93 @@
                         </button>
                     </div>
                 </div>
-            </form>
 
-            <!-- Popular Searches / Suggestions -->
-            <div x-show="isFocused && searchQuery.length === 0" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-2"
-                class="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-zinc-900 rounded-xl shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/40 border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden z-50">
+                <!-- Dropdown Results -->
+                <div x-show="isFocused && (searchQuery.length === 0 || results.length > 0)"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-2"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 translate-y-2"
+                    class="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-zinc-900 rounded-xl shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/40 border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden z-50">
 
-                <div class="p-4">
-                    <div class="flex items-center gap-2 mb-3 px-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5 text-cyan-500">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
-                        </svg>
-                        <h3 class="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Популярные запросы</h3>
-                    </div>
-
-                    <div class="space-y-1">
-                        <template x-for="(suggestion, index) in suggestions" :key="index">
-                            <button @click="searchQuery = suggestion.text; isFocused = false"
-                                class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gradient-to-r hover:from-cyan-50 hover:to-blue-50 dark:hover:from-cyan-900/20 dark:hover:to-blue-900/20 transition-all duration-200 group">
-                                <span class="text-2xl" x-text="suggestion.icon"></span>
-                                <div class="flex-1 text-left">
-                                    <p class="text-sm font-medium text-zinc-700 dark:text-zinc-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors"
-                                        x-text="suggestion.text"></p>
-                                    <p class="text-xs text-zinc-500 dark:text-zinc-400" x-text="suggestion.category">
-                                    </p>
+                    <!-- Live Results -->
+                    <div x-show="searchQuery.length > 0 && results.length > 0" class="p-2">
+                        <div
+                            class="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                            Результаты поиска
+                        </div>
+                        <template x-for="result in results" :key="result.slug">
+                            <a :href="result.url"
+                                class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
+                                <div
+                                    class="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors"
+                                        x-text="result.title"></p>
+                                    <p class="text-xs text-zinc-500 dark:text-zinc-400 truncate"
+                                        x-text="result.category || 'Статья'"></p>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor"
-                                    class="w-4 h-4 text-zinc-400 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">
+                                    class="w-4 h-4 text-zinc-300 group-hover:text-cyan-500 transition-colors">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                        d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                 </svg>
-                            </button>
+                            </a>
                         </template>
+                        <div class="mt-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+                            <button type="button" @mousedown="$el.closest('form').submit()"
+                                class="w-full text-center py-2 text-sm text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-medium cursor-pointer">
+                                Показать все результаты
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Popular Searches (Fallback) -->
+                    <div x-show="searchQuery.length === 0" class="p-4">
+                        <div class="flex items-center gap-2 mb-3 px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 text-cyan-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
+                            </svg>
+                            <h3 class="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Популярные запросы</h3>
+                        </div>
+
+                        <div class="space-y-1">
+                            <template x-for="(suggestion, index) in suggestions" :key="index">
+                                <button type="button" @click="searchQuery = suggestion.text; isFocused = false"
+                                    class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gradient-to-r hover:from-cyan-50 hover:to-blue-50 dark:hover:from-cyan-900/20 dark:hover:to-blue-900/20 transition-all duration-200 group">
+                                    <span class="text-2xl" x-text="suggestion.icon"></span>
+                                    <div class="flex-1 text-left">
+                                        <p class="text-sm font-medium text-zinc-700 dark:text-zinc-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors"
+                                            x-text="suggestion.text"></p>
+                                        <p class="text-xs text-zinc-500 dark:text-zinc-400"
+                                            x-text="suggestion.category">
+                                        </p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="2" stroke="currentColor"
+                                        class="w-4 h-4 text-zinc-400 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                    </svg>
+                                </button>
+                            </template>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

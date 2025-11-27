@@ -12,6 +12,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search');
+Route::get('/search/suggestions', [\App\Http\Controllers\SearchController::class, 'suggestions'])->name('search.suggestions');
 
 // Маршрут для просмотра категорий
 Route::get('/category/{slug}', function ($slug) {

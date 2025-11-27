@@ -27,4 +27,34 @@ class SearchController extends Controller
 
         return view('search.results', compact('posts', 'query'));
     }
+
+    public function suggestions(Request $request)
+    {
+        $query = $request->input('q');
+
+        if (!$query || strlen($query) < 2) {
+            return response()->json([]);
+        }
+
+        $posts = Post::where('is_published', true)
+            ->where('title', 'like', "%{$query}%")
+            ->orderBy('published_at', 'desc')
+            ->limit(5)
+            ->get(['title', 'slug', 'published_at']);
+
+        // Manually load category to avoid N+1 if needed, or just select it. 
+        // For simplicity, we'll return basic data.
+        // If categories are needed, we can use with('category').
+
+        $results = $posts->map(function ($post) {
+            return [
+                'title' => $post->title,
+                'slug' => $post->slug,
+                'url' => route('post.show', $post->slug),
+                'category' => $post->category ? $post->category->name : null, // Assuming relationship exists
+            ];
+        });
+
+        return response()->json($results);
+    }
 }
