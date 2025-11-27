@@ -20,15 +20,22 @@ class PostComments extends Component
         $this->post->comments()->create([
             'user_id' => auth()->id(),
             'body' => $this->body,
+            'is_approved' => false, // Требует модерации
         ]);
 
         $this->body = '';
+
+        session()->flash('comment_pending', true);
     }
 
     public function render()
     {
         return view('livewire.post-comments', [
-            'comments' => $this->post->comments()->with('user')->latest()->get(),
+            'comments' => $this->post->comments()
+                ->with('user')
+                ->approved() // Только одобренные
+                ->latest()
+                ->get(),
         ]);
     }
 }

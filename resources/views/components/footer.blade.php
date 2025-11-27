@@ -119,6 +119,15 @@
                 <a href="#" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Политика конфиденциальности</a>
                 <span>•</span>
                 <a href="#" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Условия использования</a>
+                @auth
+                    <span>•</span>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="hover:text-red-600 dark:hover:text-red-400 transition-colors font-medium">
+                            Выйти
+                        </button>
+                    </form>
+                @endauth
             </div>
         </div>
     </div>

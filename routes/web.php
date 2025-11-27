@@ -84,4 +84,7 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
+
+    // Admin: Comment Moderation
+    Route::get('admin/comments', \App\Livewire\Admin\CommentModeration::class)->name('admin.comments');
 });
