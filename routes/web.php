@@ -15,8 +15,20 @@ Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])-
 Route::get('/search/suggestions', [\App\Http\Controllers\SearchController::class, 'suggestions'])->name('search.suggestions');
 
 // SEO Routes
-Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
-Route::get('/robots.txt', [\App\Http\Controllers\SitemapController::class, 'robots'])->name('robots');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap.xml');
+Route::get('/robots.txt', [\App\Http\Controllers\SitemapController::class, 'robots'])->name('robots.txt');
+
+// RSS Feed
+Route::get('/feed', function () {
+    $posts = \App\Models\Post::where('is_published', true)
+        ->orderBy('published_at', 'desc')
+        ->limit(20)
+        ->get();
+
+    return response()
+        ->view('feed.rss', compact('posts'))
+        ->header('Content-Type', 'application/xml');
+})->name('rss.feed');
 
 // Маршрут для просмотра категорий
 Route::get('/category/{slug}', function ($slug) {
