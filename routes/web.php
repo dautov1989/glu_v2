@@ -58,6 +58,33 @@ Route::get('/category/{slug}', function ($slug) {
     return view('category.show', compact('category', 'posts', 'sortBy'));
 })->name('category.show');
 
+// Маршрут для просмотра всех статей
+Route::get('/articles', function () {
+    $sortBy = request()->get('sort', 'date_desc');
+    $postsQuery = \App\Models\Post::where('is_published', true);
+
+    switch ($sortBy) {
+        case 'date_asc':
+            $postsQuery->orderBy('published_at', 'asc');
+            break;
+        case 'date_desc':
+            $postsQuery->orderBy('published_at', 'desc');
+            break;
+        case 'views':
+            $postsQuery->orderBy('views', 'desc');
+            break;
+        case 'title':
+            $postsQuery->orderBy('title', 'asc');
+            break;
+        default:
+            $postsQuery->orderBy('published_at', 'desc');
+    }
+
+    $posts = $postsQuery->paginate(12)->appends(['sort' => $sortBy]);
+
+    return view('articles.index', compact('posts', 'sortBy'));
+})->name('articles.index');
+
 // Маршрут для просмотра отдельной статьи
 Route::get('/post/{slug}', function ($slug) {
     $post = \App\Models\Post::where('slug', $slug)

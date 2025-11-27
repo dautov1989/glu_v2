@@ -104,6 +104,9 @@
         <div class="prose prose-zinc dark:prose-invert max-w-none">
             {!! nl2br(e($post->content)) !!}
         </div>
+
+        <!-- Related Posts -->
+        <x-related-posts :currentPost="$post" :limit="4" />
     </div>
 
     <!-- Comments Section -->
