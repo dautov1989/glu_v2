@@ -8,7 +8,13 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
-    return view('home');
+    $articlesCount = \App\Models\Post::where('is_published', true)->count();
+    $usersCount = \App\Models\User::count();
+    $latestPosts = \App\Models\Post::where('is_published', true)
+        ->orderBy('published_at', 'desc')
+        ->limit(6)
+        ->get();
+    return view('home', compact('articlesCount', 'usersCount', 'latestPosts'));
 })->name('home');
 
 Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search');
