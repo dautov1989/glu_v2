@@ -38,7 +38,7 @@
     <div class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm">
         <!-- Breadcrumbs -->
         <nav class="mb-8">
-            <ol class="flex items-center space-x-2 text-sm">
+            <ol class="flex flex-wrap items-center gap-2 text-sm">
                 <li>
                     <a href="{{ route('home') }}"
                         class="text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">
@@ -47,7 +47,7 @@
                 </li>
                 @foreach($post->category->getBreadcrumbs() as $breadcrumb)
                     <li class="flex items-center">
-                        <svg class="w-4 h-4 mx-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 mx-1 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                         <a href="{{ route('category.show', $breadcrumb->slug) }}"

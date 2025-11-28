@@ -44,9 +44,9 @@
                 @endif
 
                 <div class="p-4 flex flex-col flex-1">
-                    <div class="flex items-center text-[11px] text-zinc-400 mb-2 space-x-2">
+                    <div class="flex items-center text-[11px] text-zinc-400 mb-2 gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                         <span>{{ $post->published_at->format('d.m.Y') }}</span>
-                        <span class="w-1 h-1 bg-zinc-300 rounded-full"></span>
+                        <span class="w-1 h-1 bg-zinc-300 rounded-full flex-shrink-0"></span>
                         <span>{{ $post->views }} просмотров</span>
                     </div>
 

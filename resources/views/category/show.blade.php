@@ -28,12 +28,17 @@
 @section('meta_description', $category->meta_description ?? $category->description)
 
 @section('content')
-    <div
-        class="min-h-screen bg-gradient-to-br from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900">
+    <div x-data x-init="
+        if (window.innerWidth < 768) {
+            setTimeout(() => {
+                $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    " class="min-h-screen bg-gradient-to-br from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Breadcrumbs -->
             <nav class="mb-6">
-                <ol class="flex items-center space-x-2 text-sm text-zinc-500 dark:text-zinc-400">
+                <ol class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
                     <li>
                         <a href="{{ route('home') }}"
                             class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
@@ -224,9 +229,9 @@
                                 @endif
 
                                 <div class="p-4 flex flex-col flex-1">
-                                    <div class="flex items-center text-[11px] text-zinc-400 mb-2 space-x-2">
+                                    <div class="flex items-center text-[11px] text-zinc-400 mb-2 gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                                         <span>{{ $post->published_at->format('d.m.Y') }}</span>
-                                        <span class="w-1 h-1 bg-zinc-300 rounded-full"></span>
+                                        <span class="w-1 h-1 bg-zinc-300 rounded-full flex-shrink-0"></span>
                                         <span>{{ $post->views }} просмотров</span>
                                     </div>
 

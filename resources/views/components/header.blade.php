@@ -13,7 +13,7 @@
     },
     megaMenu: @js($megaMenuCategories ?? [])
 }" @click.outside="closeMenu"
-    class="sticky top-0 z-50 w-full bg-gradient-to-r from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 backdrop-blur-md border-b border-cyan-200/50 dark:border-cyan-800/50 shadow-xl shadow-cyan-200/30 dark:shadow-cyan-900/20 transition-all duration-300">
+    class="sticky top-0 z-50 w-full bg-gradient-to-r from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 backdrop-blur-md border-b border-cyan-200/50 dark:border-cyan-800/50 shadow-md shadow-cyan-200/20 dark:shadow-cyan-900/10 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20 gap-x-8">
             <!-- Logo -->

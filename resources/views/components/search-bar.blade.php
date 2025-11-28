@@ -28,17 +28,15 @@
         }
     }
 }"
-    class="w-full bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-zinc-900 dark:via-cyan-950 dark:to-teal-950 border-b border-cyan-100 dark:border-cyan-900/30 shadow-lg shadow-cyan-100/50 dark:shadow-cyan-900/20">
+    class="w-full bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-zinc-900 dark:via-cyan-950 dark:to-teal-950 border-b border-cyan-100 dark:border-cyan-900/30">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <!-- Search Container -->
         <div class="relative">
             <!-- Main Search Box -->
             <form action="{{ route('search') }}" method="GET" class="relative group" @click.outside="isFocused = false">
-                <div
-                    class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300">
-                </div>
 
-                <div class="relative bg-white dark:bg-zinc-800 rounded-xl shadow-xl shadow-cyan-200/50 dark:shadow-cyan-900/30 border border-cyan-200/50 dark:border-cyan-700/30 overflow-hidden transition-all duration-300"
+
+                <div class="relative bg-white dark:bg-zinc-800 rounded-xl border border-cyan-200 dark:border-cyan-700 overflow-hidden transition-all duration-300"
                     :class="{ 'ring-2 ring-cyan-500 dark:ring-cyan-400': isFocused }">
 
                     <!-- Search Icon -->
@@ -107,7 +105,7 @@
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-2"
-                    class="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-zinc-900 rounded-xl shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/40 border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden z-50">
+                    class="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-cyan-200/50 dark:border-cyan-800/50 overflow-hidden z-50">
 
                     <!-- Live Results -->
                     <div x-show="searchQuery.length > 0 && results.length > 0" class="p-2">
