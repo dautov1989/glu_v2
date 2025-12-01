@@ -107,6 +107,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | API Key
+    |--------------------------------------------------------------------------
+    |
+    | This key is used to authenticate API requests from external services
+    | like n8n. Set this to a random, secure string in your .env file.
+    |
+    */
+
+    'api_key' => env('APP_API_KEY'),
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Maintenance Mode Driver
     |--------------------------------------------------------------------------
     |
