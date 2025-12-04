@@ -34,4 +34,8 @@ Route::middleware(['api.key', 'throttle:60,1'])->group(function () {
     Route::get('/posts/{id}', [PostController::class, 'show']);
     Route::put('/posts/{id}', [PostController::class, 'update']);
     Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
+    // Smart Content Suggestions
+    Route::get('/content/suggest', [\App\Http\Controllers\Api\ContentController::class, 'suggest']);
+    Route::post('/content/mark-used/{id}', [\App\Http\Controllers\Api\ContentController::class, 'markUsed']);
 });

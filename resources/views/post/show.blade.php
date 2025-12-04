@@ -103,7 +103,7 @@
         <!-- Content -->
         @inject('linker', 'App\Services\Seo\InternalLinker')
         <div class="prose prose-zinc dark:prose-invert max-w-none">
-            {!! $linker->link(nl2br(e($post->content))) !!}
+            {!! $linker->link($post->content) !!}
         </div>
 
         <!-- Related Posts -->
