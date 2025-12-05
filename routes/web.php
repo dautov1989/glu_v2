@@ -139,4 +139,15 @@ Route::middleware(['auth'])->group(function () {
 
     // Admin: Comment Moderation
     Route::get('admin/comments', \App\Livewire\Admin\CommentModeration::class)->name('admin.comments');
+
+    // Admin: Affiliate Links
+    Route::prefix('admin/affiliate-links')->name('admin.affiliate-links.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'store'])->name('store');
+        Route::get('/{affiliateLink}/edit', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'edit'])->name('edit');
+        Route::put('/{affiliateLink}', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'update'])->name('update');
+        Route::delete('/{affiliateLink}', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'destroy'])->name('destroy');
+        Route::post('/{affiliateLink}/toggle', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'toggleActive'])->name('toggle');
+    });
 });

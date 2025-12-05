@@ -44,6 +44,21 @@ class ContentController extends Controller
             ->pluck('title')
             ->toArray();
 
+        // 4. Get active affiliate links for this category
+        $affiliateLinks = \App\Models\AffiliateLink::active()
+            ->forCategory($category->id)
+            ->get()
+            ->map(function ($link) {
+                return [
+                    'id' => $link->id,
+                    'product_name' => $link->product_name,
+                    'anchor_text' => $link->anchor_text,
+                    'url' => $link->affiliate_url,
+                    'placement_hint' => $link->placement_hint,
+                ];
+            })
+            ->toArray();
+
         return response()->json([
             'success' => true,
             'task' => 'Придумать заголовок и написать статью',
@@ -53,6 +68,7 @@ class ContentController extends Controller
                 'hierarchy' => $hierarchy,
                 'existing_articles' => $existingTitles,
             ],
+            'affiliate_links' => $affiliateLinks,
             'requirements' => [
                 'output_format' => 'JSON',
                 'json_structure' => [
@@ -73,6 +89,9 @@ class ContentController extends Controller
                     'В поле content не включать заголовок h1 (он будет взят из поля title)',
                     'meta_description должно быть кратким и информативным',
                     'meta_keywords должны быть релевантными теме статьи',
+                    'Если есть партнерские ссылки (affiliate_links), вставить 1-2 ссылки естественно в текст',
+                    'Для партнерских ссылок использовать: <a href="URL" target="_blank" rel="nofollow sponsored">anchor_text</a>',
+                    'Учитывать placement_hint для выбора места вставки ссылки',
                     'Использовать простой и понятный язык',
                     'Включать практические советы',
                     'Не использовать переносы строк (\n) в HTML, только теги'
