@@ -5,318 +5,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Tester - glu_v2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        [x-cloak] {
+            display: none !important;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .card h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 600;
-        }
-
-        input,
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-            font-family: monospace;
-        }
-
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .response {
-            background: #f5f5f5;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .response pre {
-            margin: 0;
+        pre {
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .status.success {
-            background: #4caf50;
-            color: white;
-        }
-
-        .status.error {
-            background: #f44336;
-            color: white;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .success-box {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .success-box strong {
-            color: #2e7d32;
         }
     </style>
 </head>
 
-<body>
-    <div class="container">
-        <h1>🧪 API Tester</h1>
+<body class="bg-gray-100 min-h-screen p-6 font-sans" x-data="apiTester()">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">🧪 API Tester</h1>
+            <p class="text-gray-600">Comprehensive testing tool for glu_v2 API</p>
+        </header>
 
-        <div class="success-box">
-            <strong>✅ Используйте HTTPS!</strong> Herd автоматически перенаправляет на HTTPS.
-        </div>
-
-        <div class="grid">
-            <div class="card">
-                <h2>🧪 GET /test</h2>
-                <p style="color: #666; margin-bottom: 15px;">Проверка работы API (без аутентификации)</p>
-                <button onclick="testApi()">Проверить API</button>
-                <div id="testResponse" class="response" style="display: none;"></div>
-            </div>
-
-            <div class="card">
-                <h2>📁 GET /categories</h2>
-                <p style="color: #666; margin-bottom: 15px;">Получить список категорий</p>
-                <button onclick="getCategories()">Выполнить запрос</button>
-                <div id="categoriesResponse" class="response" style="display: none;"></div>
-            </div>
-
-            <div class="card">
-                <h2>📋 GET /posts</h2>
-                <p style="color: #666; margin-bottom: 15px;">Получить список статей</p>
-                <button onclick="getPosts()">Выполнить запрос</button>
-                <div id="postsResponse" class="response" style="display: none;"></div>
+        <!-- Configuration -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4 flex items-center">
+                <span class="text-2xl mr-2">⚙️</span> Configuration
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">API Key</label>
+                    <input type="text" x-model="apiKey"
+                        class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter API Key">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Base URL</label>
+                    <input type="text" x-model="baseUrl"
+                        class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="https://glu_v2.test/api">
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <h2>📝 POST /posts - Создать статью</h2>
-            <div class="grid">
-                <div class="input-group">
-                    <label for="postTitle">Заголовок *:</label>
-                    <input type="text" id="postTitle" placeholder="Как контролировать глюкозу">
+        <!-- Tabs -->
+        <div class="mb-6 border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                <button @click="activeTab = 'general'"
+                    :class="{'border-blue-500 text-blue-600': activeTab === 'general', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'general'}"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    General & Categories
+                </button>
+                <button @click="activeTab = 'content'"
+                    :class="{'border-blue-500 text-blue-600': activeTab === 'content', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'content'}"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    🤖 AI Content
+                </button>
+                <button @click="activeTab = 'posts'"
+                    :class="{'border-blue-500 text-blue-600': activeTab === 'posts', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'posts'}"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    📝 Posts CRUD
+                </button>
+            </nav>
+        </div>
+
+        <!-- General Tab -->
+        <div x-show="activeTab === 'general'" x-cloak class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Test Connection -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold mb-2">🔌 Test Connection</h3>
+                <p class="text-gray-500 text-sm mb-4">GET /test (No Auth)</p>
+                <button @click="makeRequest('/test', 'GET', null, false)"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Ping API</button>
+                <div x-show="responses['/test']"
+                    class="mt-4 bg-gray-50 p-3 rounded text-xs font-mono overflow-auto max-h-40">
+                    <pre x-text="JSON.stringify(responses['/test'], null, 2)"></pre>
                 </div>
-                <div class="input-group">
-                    <label for="postCategory">ID категории *:</label>
-                    <input type="number" id="postCategory" placeholder="1">
+            </div>
+
+            <!-- Get Categories -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold mb-2">📂 Get Categories</h3>
+                <p class="text-gray-500 text-sm mb-4">GET /categories</p>
+                <button @click="makeRequest('/categories')"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Fetch
+                    Categories</button>
+                <div x-show="responses['/categories']"
+                    class="mt-4 bg-gray-50 p-3 rounded text-xs font-mono overflow-auto max-h-60">
+                    <pre x-text="JSON.stringify(responses['/categories'], null, 2)"></pre>
                 </div>
             </div>
-            <div class="input-group">
-                <label for="postContent">Содержание * (минимум 100 символов):</label>
-                <textarea id="postContent" placeholder="Введите содержание статьи..."></textarea>
+        </div>
+
+        <!-- Content Tab -->
+        <div x-show="activeTab === 'content'" x-cloak class="space-y-6">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">🧠 Smart Suggestion (n8n)</h3>
+                        <p class="text-gray-500 text-sm mb-4">GET /content/suggest - Get context for AI article
+                            generation</p>
+                    </div>
+                    <button @click="makeRequest('/content/suggest')"
+                        class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition shadow-lg">
+                        Generate Suggestion
+                    </button>
+                </div>
+
+                <div x-show="responses['/content/suggest']" class="mt-6">
+                    <div
+                        class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-auto max-h-[500px]">
+                        <pre x-text="JSON.stringify(responses['/content/suggest'], null, 2)"></pre>
+                    </div>
+                </div>
             </div>
-            <div class="input-group">
-                <label>
-                    <input type="checkbox" id="postPublished"> Опубликовать сразу
-                </label>
+        </div>
+
+        <!-- Posts Tab -->
+        <div x-show="activeTab === 'posts'" x-cloak class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- List Posts -->
+            <div class="bg-white rounded-xl shadow-md p-6 lg:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">📚 List Posts</h3>
+                    <button @click="makeRequest('/posts')"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Refresh
+                        List</button>
+                </div>
+                <div x-show="responses['/posts']"
+                    class="bg-gray-50 p-3 rounded text-xs font-mono overflow-auto max-h-60">
+                    <pre x-text="JSON.stringify(responses['/posts'], null, 2)"></pre>
+                </div>
             </div>
-            <button onclick="createPost()">Создать статью</button>
-            <div id="createPostResponse" class="response" style="display: none;"></div>
+
+            <!-- Create Post -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold mb-4">✨ Create Post</h3>
+                <div class="space-y-3">
+                    <input type="text" x-model="newPost.title" placeholder="Title" class="w-full p-2 border rounded">
+                    <input type="number" x-model="newPost.category_id" placeholder="Category ID"
+                        class="w-full p-2 border rounded">
+                    <textarea x-model="newPost.content" placeholder="Content (HTML allowed)"
+                        class="w-full p-2 border rounded h-32"></textarea>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" x-model="newPost.is_published" class="rounded text-blue-600">
+                        <span>Publish immediately</span>
+                    </label>
+                    <button @click="createPost()"
+                        class="w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Create
+                        Post</button>
+                </div>
+                <div x-show="responses['create_post']"
+                    class="mt-4 bg-gray-50 p-3 rounded text-xs font-mono overflow-auto max-h-40">
+                    <pre x-text="JSON.stringify(responses['create_post'], null, 2)"></pre>
+                </div>
+            </div>
+
+            <!-- Single Post Operations -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold mb-4">🔧 Single Post Operations</h3>
+                <div class="flex space-x-2 mb-4">
+                    <input type="number" x-model="targetPostId" placeholder="Post ID" class="flex-1 p-2 border rounded">
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <button @click="makeRequest(`/posts/${targetPostId}`, 'GET', null, true, 'get_post')"
+                        class="bg-gray-600 text-white px-3 py-2 rounded hover:bg-gray-700">Get</button>
+                    <button @click="updatePost()"
+                        class="bg-yellow-600 text-white px-3 py-2 rounded hover:bg-yellow-700">Update</button>
+                    <button @click="makeRequest(`/posts/${targetPostId}`, 'DELETE', null, true, 'delete_post')"
+                        class="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700">Delete</button>
+                </div>
+
+                <!-- Update Fields -->
+                <div class="space-y-3 border-t pt-4">
+                    <p class="text-xs text-gray-500">Update Data:</p>
+                    <input type="text" x-model="updateData.title" placeholder="New Title"
+                        class="w-full p-2 border rounded text-sm">
+                    <textarea x-model="updateData.content" placeholder="New Content"
+                        class="w-full p-2 border rounded h-20 text-sm"></textarea>
+                </div>
+
+                <div x-show="responses['single_post_op']"
+                    class="mt-4 bg-gray-50 p-3 rounded text-xs font-mono overflow-auto max-h-40">
+                    <pre x-text="JSON.stringify(responses['single_post_op'], null, 2)"></pre>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        const API_KEY = 'ad064f1e19dec7de49426c54c16b439f38795d39cde1da15c848cd0442098dd7';
-        const BASE_URL = 'https://glu_v2.test/api';
+        function apiTester() {
+            return {
+                activeTab: 'general',
+                apiKey: 'ad064f1e19dec7de49426c54c16b439f38795d39cde1da15c848cd0442098dd7',
+                baseUrl: 'https://glu_v2.test/api',
+                responses: {},
+                newPost: {
+                    title: '',
+                    category_id: 1,
+                    content: '',
+                    is_published: true
+                },
+                targetPostId: '',
+                updateData: {
+                    title: '',
+                    content: ''
+                },
 
-        async function makeRequest(endpoint, method = 'GET', body = null, requireAuth = true) {
-            const options = {
-                method: method,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                async makeRequest(endpoint, method = 'GET', body = null, requireAuth = true, responseKey = null) {
+                    const key = responseKey || endpoint;
+                    this.responses[key] = { status: 'Loading...' };
+
+                    const headers = {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    };
+
+                    if (requireAuth) {
+                        headers['X-API-Key'] = this.apiKey;
+                    }
+
+                    try {
+                        const res = await fetch(`${this.baseUrl}${endpoint}`, {
+                            method,
+                            headers,
+                            body: body ? JSON.stringify(body) : null
+                        });
+
+                        const data = await res.json();
+                        this.responses[key] = data;
+
+                        // Auto-fill update fields if getting a post
+                        if (method === 'GET' && endpoint.includes('/posts/') && data.data) {
+                            this.updateData.title = data.data.title;
+                            this.updateData.content = data.data.content;
+                        }
+
+                    } catch (error) {
+                        this.responses[key] = { error: error.message };
+                    }
+                },
+
+                async createPost() {
+                    if (!this.newPost.title || !this.newPost.content) {
+                        alert('Please fill in title and content');
+                        return;
+                    }
+                    await this.makeRequest('/posts', 'POST', this.newPost, true, 'create_post');
+                },
+
+                async updatePost() {
+                    if (!this.targetPostId) {
+                        alert('Please enter a Post ID');
+                        return;
+                    }
+                    const body = {};
+                    if (this.updateData.title) body.title = this.updateData.title;
+                    if (this.updateData.content) body.content = this.updateData.content;
+
+                    await this.makeRequest(`/posts/${this.targetPostId}`, 'PUT', body, true, 'single_post_op');
                 }
-            };
-
-            if (requireAuth) {
-                options.headers['X-API-Key'] = API_KEY;
-            }
-
-            if (body) {
-                options.body = JSON.stringify(body);
-            }
-
-            try {
-                const response = await fetch(`${BASE_URL}${endpoint}`, options);
-                const data = await response.json();
-
-                return {
-                    status: response.status,
-                    ok: response.ok,
-                    data: data
-                };
-            } catch (error) {
-                return {
-                    status: 0,
-                    ok: false,
-                    data: { error: error.message }
-                };
             }
         }
-
-        function displayResponse(elementId, response) {
-            const element = document.getElementById(elementId);
-            element.style.display = 'block';
-
-            const statusClass = response.ok ? 'success' : 'error';
-            const statusText = response.ok ? `✅ ${response.status} OK` : `❌ ${response.status} Error`;
-
-            element.innerHTML = `
-                <div class="status ${statusClass}">${statusText}</div>
-                <pre>${JSON.stringify(response.data, null, 2)}</pre>
-            `;
-        }
-
-        async function testApi() {
-            const response = await makeRequest('/test', 'GET', null, false);
-            displayResponse('testResponse', response);
-        }
-
-        async function getCategories() {
-            const response = await makeRequest('/categories');
-            displayResponse('categoriesResponse', response);
-        }
-
-        async function getPosts() {
-            const response = await makeRequest('/posts');
-            displayResponse('postsResponse', response);
-        }
-
-        async function createPost() {
-            const title = document.getElementById('postTitle').value;
-            const categoryId = document.getElementById('postCategory').value;
-            const content = document.getElementById('postContent').value;
-            const isPublished = document.getElementById('postPublished').checked;
-
-            if (!title || !categoryId || !content) {
-                alert('Заполните обязательные поля!');
-                return;
-            }
-
-            if (content.length < 100) {
-                alert('Содержание должно быть минимум 100 символов');
-                return;
-            }
-
-            const body = {
-                title: title,
-                category_id: parseInt(categoryId),
-                content: content
-            };
-
-            if (isPublished) body.is_published = true;
-
-            const response = await makeRequest('/posts', 'POST', body);
-            displayResponse('createPostResponse', response);
-
-            if (response.ok) {
-                document.getElementById('postTitle').value = '';
-                document.getElementById('postContent').value = '';
-                document.getElementById('postPublished').checked = false;
-            }
-        }
-
-        // Автопроверка при загрузке
-        window.addEventListener('load', () => setTimeout(testApi, 500));
     </script>
 </body>
 

@@ -20,6 +20,7 @@ class Post extends Model
         'views',
         'meta_title',
         'meta_description',
+        'meta_keywords',
     ];
 
     protected $casts = [
@@ -36,5 +37,25 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Boot method for automatic slug generation
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            if (empty($post->slug)) {
+                $post->slug = \Illuminate\Support\Str::slug($post->title);
+            }
+        });
+
+        static::updating(function ($post) {
+            if ($post->isDirty('title') && empty($post->slug)) {
+                $post->slug = \Illuminate\Support\Str::slug($post->title);
+            }
+        });
     }
 }
