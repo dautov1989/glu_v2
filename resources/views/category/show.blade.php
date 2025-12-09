@@ -267,6 +267,66 @@
                     </div>
                 </div>
             @endif
+
+            {{-- Empty State для листовых категорий без статей --}}
+            @if($posts->count() === 0 && $category->children->count() === 0)
+                <div class="flex items-center justify-center py-16">
+                    <div class="max-w-md w-full">
+                        <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/20 dark:to-blue-950/20 rounded-2xl p-8 border border-cyan-100 dark:border-cyan-900/30 shadow-lg">
+                            {{-- Иконка --}}
+                            <div class="flex justify-center mb-6">
+                                <div class="relative">
+                                    <div class="absolute inset-0 bg-cyan-400 dark:bg-cyan-600 rounded-full blur-xl opacity-30 animate-pulse"></div>
+                                    <div class="relative bg-white dark:bg-zinc-800 rounded-full p-6 shadow-lg">
+                                        <svg class="w-12 h-12 text-cyan-500 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Заголовок --}}
+                            <h3 class="text-xl font-bold text-center text-zinc-800 dark:text-zinc-100 mb-3">
+                                Скоро здесь появятся статьи
+                            </h3>
+
+                            {{-- Описание --}}
+                            <p class="text-center text-sm text-zinc-600 dark:text-zinc-400 mb-6 leading-relaxed">
+                                Мы активно работаем над наполнением этого раздела качественным контентом. 
+                                Новые статьи появятся совсем скоро!
+                            </p>
+
+                            {{-- Призыв к действию --}}
+                            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                                <a href="{{ route('home') }}" 
+                                    class="inline-flex items-center justify-center px-5 py-2.5 bg-cyan-500 hover:bg-cyan-600 dark:bg-cyan-600 dark:hover:bg-cyan-700 text-white text-sm font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                    </svg>
+                                    На главную
+                                </a>
+                                
+                                <a href="{{ route('articles.index') }}" 
+                                    class="inline-flex items-center justify-center px-5 py-2.5 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm font-semibold rounded-lg border border-zinc-200 dark:border-zinc-700 transition-all duration-200 shadow-sm hover:shadow-md">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                    </svg>
+                                    Все статьи
+                                </a>
+                            </div>
+
+                            {{-- Дополнительная информация --}}
+                            <div class="mt-6 pt-6 border-t border-cyan-200 dark:border-cyan-900/30">
+                                <p class="text-xs text-center text-zinc-500 dark:text-zinc-500">
+                                    💡 Подпишитесь на обновления, чтобы не пропустить новые материалы
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

@@ -65,6 +65,11 @@
                     class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                     📝 Posts CRUD
                 </button>
+                <button @click="activeTab = 'docs'"
+                    :class="{'border-blue-500 text-blue-600': activeTab === 'docs', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'docs'}"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    📚 Документация для n8n
+                </button>
             </nav>
         </div>
 
@@ -187,6 +192,309 @@
                 <div x-show="responses['single_post_op']"
                     class="mt-4 bg-gray-50 p-3 rounded text-xs font-mono overflow-auto max-h-40">
                     <pre x-text="JSON.stringify(responses['single_post_op'], null, 2)"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation Tab -->
+        <div x-show="activeTab === 'docs'" x-cloak class="space-y-6">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-lg p-8 text-white">
+                <h2 class="text-3xl font-bold mb-2">📚 Полная документация API для n8n</h2>
+                <p class="text-purple-100">Все поля для создания статьи через POST /api/posts</p>
+            </div>
+
+            <!-- Quick Reference -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4">⚡ Краткая справка</h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <div class="font-bold text-red-800 mb-1">ОБЯЗАТЕЛЬНЫЕ</div>
+                        <ul class="text-sm text-red-700 space-y-1">
+                            <li>• category_id</li>
+                            <li>• title</li>
+                            <li>• content</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <div class="font-bold text-blue-800 mb-1">ОПЦИОНАЛЬНЫЕ</div>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>• meta_description</li>
+                            <li>• meta_keywords</li>
+                            <li>• image_url</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <div class="font-bold text-green-800 mb-1">АВТО-ГЕНЕРАЦИЯ</div>
+                        <ul class="text-sm text-green-700 space-y-1">
+                            <li>• slug (из title)</li>
+                            <li>• excerpt (из content)</li>
+                            <li>• meta_title (из title)</li>
+                            <li>• is_published (false)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Field Details -->
+            <div class="space-y-4">
+                <!-- category_id -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">category_id</h4>
+                            <p class="text-sm text-gray-600">ID категории для статьи</p>
+                        </div>
+                        <span
+                            class="bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full">ОБЯЗАТЕЛЬНО</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">integer</code></div>
+                        <div><strong>Валидация:</strong> Должен существовать в таблице categories</div>
+                        <div><strong>Откуда взять:</strong> Из <code
+                                class="bg-purple-100 px-2 py-1 rounded">GET /api/content/suggest</code> →
+                            <code>context.category_id</code></div>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded mt-2 font-mono text-xs">
+                            "category_id": 15
+                        </div>
+                    </div>
+                </div>
+
+                <!-- title -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">title</h4>
+                            <p class="text-sm text-gray-600">Заголовок статьи (будет использован как H1)</p>
+                        </div>
+                        <span
+                            class="bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full">ОБЯЗАТЕЛЬНО</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">string</code></div>
+                        <div><strong>Валидация:</strong> От 3 до 255 символов</div>
+                        <div><strong>Что происходит:</strong> Автоматически генерируется slug (URL-friendly версия)
+                        </div>
+                        <div><strong>Требования:</strong> Уникальный, цепляющий, информативный</div>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded mt-2 font-mono text-xs">
+                            "title": "Как снизить уровень глюкозы в крови: 10 эффективных методов"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- content -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">content</h4>
+                            <p class="text-sm text-gray-600">HTML контент статьи</p>
+                        </div>
+                        <span
+                            class="bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full">ОБЯЗАТЕЛЬНО</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">string (HTML)</code>
+                        </div>
+                        <div><strong>Валидация:</strong> Минимум 100 символов</div>
+                        <div><strong>Формат:</strong> HTML с Tailwind CSS классами</div>
+                        <div><strong>⚠️ Важно:</strong> НЕ использовать тег H1 (он будет из title)</div>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-2">
+                            <p class="text-xs font-semibold text-yellow-800 mb-2">📝 Требования к контенту:</p>
+                            <ul class="text-xs text-yellow-700 space-y-1 ml-4 list-disc">
+                                <li>Минимум 1500+ слов для медицинских тем</li>
+                                <li>Использовать H2 → H3 → H4 для структуры</li>
+                                <li>Включать списки (ul/ol) для читаемости</li>
+                                <li>Выделять важное через &lt;strong&gt; или &lt;em&gt;</li>
+                                <li>Короткие абзацы (3-4 предложения)</li>
+                                <li>Без переносов строк (\n), только HTML теги</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded mt-2 font-mono text-xs overflow-x-auto">
+                            "content": "&lt;h2 class='text-2xl font-bold mb-4'&gt;Введение&lt;/h2&gt;&lt;p
+                            class='mb-4'&gt;Текст...&lt;/p&gt;"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- meta_description -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">meta_description</h4>
+                            <p class="text-sm text-gray-600">SEO описание для поисковиков</p>
+                        </div>
+                        <span
+                            class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">ОПЦИОНАЛЬНО</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">string</code></div>
+                        <div><strong>Валидация:</strong> Максимум 500 символов</div>
+                        <div><strong>Рекомендация:</strong> 150-160 символов для оптимального отображения</div>
+                        <div><strong>Если не указано:</strong> Автоматически создается из первых 160 символов content
+                        </div>
+                        <div><strong>Требования:</strong> Должно содержать призыв к действию</div>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded mt-2 font-mono text-xs overflow-x-auto">
+                            "meta_description": "Узнайте 10 проверенных способов снизить уровень глюкозы. Практические
+                            советы от врачей. Читайте сейчас!"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- meta_keywords -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">meta_keywords</h4>
+                            <p class="text-sm text-gray-600">Ключевые слова для SEO</p>
+                        </div>
+                        <span
+                            class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">ОПЦИОНАЛЬНО</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">string</code></div>
+                        <div><strong>Формат:</strong> Слова через запятую</div>
+                        <div><strong>Рекомендация:</strong> 5-7 релевантных ключевых слов</div>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded mt-2 font-mono text-xs overflow-x-auto">
+                            "meta_keywords": "глюкоза, диабет, сахар в крови, снижение глюкозы, здоровье"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- image_url -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">image_url</h4>
+                            <p class="text-sm text-gray-600">URL изображения для статьи</p>
+                        </div>
+                        <span
+                            class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">ОПЦИОНАЛЬНО</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">string (URL)</code></div>
+                        <div><strong>Валидация:</strong> Должен быть валидным URL</div>
+                        <div><strong>Что происходит:</strong> Изображение автоматически скачивается и сохраняется в
+                            storage/posts/</div>
+                        <div><strong>⚠️ Важно:</strong> Если не указано, будет использоваться placeholder</div>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded mt-2 font-mono text-xs overflow-x-auto">
+                            "image_url": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- excerpt -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">excerpt</h4>
+                            <p class="text-sm text-gray-600">Краткое описание для карточек статей</p>
+                        </div>
+                        <span
+                            class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">АВТО-ГЕНЕРАЦИЯ</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">string</code></div>
+                        <div><strong>Валидация:</strong> Максимум 500 символов</div>
+                        <div><strong>Если не указано:</strong> Автоматически создается из первых 200 символов content
+                            (без HTML)</div>
+                        <div><strong>Где используется:</strong> В списках статей, карточках, превью</div>
+                    </div>
+                </div>
+
+                <!-- is_published -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">is_published</h4>
+                            <p class="text-sm text-gray-600">Статус публикации</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">АВТО:
+                            false</span>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                        <div><strong>Тип:</strong> <code class="bg-gray-200 px-2 py-1 rounded">boolean</code></div>
+                        <div><strong>По умолчанию:</strong> <code class="bg-red-100 px-2 py-1 rounded">false</code>
+                            (черновик)</div>
+                        <div><strong>Значения:</strong> true = опубликовано, false = черновик</div>
+                        <div><strong>Что происходит при true:</strong> Автоматически устанавливается published_at =
+                            текущее время</div>
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-3 mt-2">
+                            <p class="text-xs text-blue-800">💡 <strong>Совет:</strong> Для автоматической публикации
+                                через n8n установите <code>true</code></p>
+                        </div>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded mt-2 font-mono text-xs">
+                            "is_published": true
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Request -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4">📤 Пример полного запроса</h3>
+                <div class="bg-gray-900 text-green-400 p-4 rounded font-mono text-xs overflow-x-auto">
+                    <pre>{
+  "category_id": 15,
+  "title": "Как снизить уровень глюкозы в крови: 10 эффективных методов",
+  "content": "&lt;h2 class='text-2xl font-bold text-gray-800 mb-4'&gt;Введение&lt;/h2&gt;&lt;p class='mb-4 text-gray-700'&gt;Повышенный уровень глюкозы...&lt;/p&gt;",
+  "meta_description": "Узнайте 10 проверенных способов снизить уровень глюкозы в крови. Практические советы от врачей.",
+  "meta_keywords": "глюкоза, диабет, сахар в крови, снижение глюкозы, здоровье, инсулин",
+  "image_url": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528",
+  "is_published": true
+}</pre>
+                </div>
+            </div>
+
+            <!-- Workflow -->
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+                <h3 class="text-xl font-bold mb-4">🔄 Рекомендуемый workflow для n8n</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3">
+                        <div
+                            class="flex-shrink-0 w-8 h-8 bg-white text-purple-600 rounded-full flex items-center justify-center font-bold text-sm">
+                            1</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">GET /api/content/suggest</div>
+                            <div class="text-sm text-purple-100">Получить рекомендацию категории и контекст</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div
+                            class="flex-shrink-0 w-8 h-8 bg-white text-purple-600 rounded-full flex items-center justify-center font-bold text-sm">
+                            2</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">OpenAI/Claude: Генерация контента</div>
+                            <div class="text-sm text-purple-100">Отправить контекст в AI с требованиями</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div
+                            class="flex-shrink-0 w-8 h-8 bg-white text-purple-600 rounded-full flex items-center justify-center font-bold text-sm">
+                            3</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">Code: Парсинг JSON от AI</div>
+                            <div class="text-sm text-purple-100">Извлечь title, content, meta_description, meta_keywords
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div
+                            class="flex-shrink-0 w-8 h-8 bg-white text-purple-600 rounded-full flex items-center justify-center font-bold text-sm">
+                            4</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">POST /api/posts</div>
+                            <div class="text-sm text-purple-100">Создать статью с данными от AI + category_id</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div
+                            class="flex-shrink-0 w-8 h-8 bg-green-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                            ✓</div>
+                        <div class="flex-1">
+                            <div class="font-semibold">Готово!</div>
+                            <div class="text-sm text-purple-100">Статья создана и опубликована</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

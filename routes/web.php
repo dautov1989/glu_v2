@@ -36,6 +36,12 @@ Route::get('/feed', function () {
         ->header('Content-Type', 'application/xml');
 })->name('rss.feed');
 
+// API Tester
+Route::get('/api-tester', function () {
+    return view('api-tester');
+})->name('api.tester');
+
+
 // Маршрут для просмотра категорий
 Route::get('/category/{slug}', function ($slug) {
     $category = \App\Models\Category::where('slug', $slug)
