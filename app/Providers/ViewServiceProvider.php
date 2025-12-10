@@ -22,6 +22,6 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Регистрируем View Composer для header
-        View::composer('components.header', HeaderComposer::class);
+        View::composer(['components.header', 'components.footer'], HeaderComposer::class);
     }
 }
