@@ -29,9 +29,64 @@
                         Glucosa
                     </span>
                 </a>
-                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">
                     Ваш надежный помощник в управлении диабетом. База данных, советы экспертов и поддержка сообщества.
                 </p>
+
+                <!-- Support Project Widget -->
+                <div class="relative group">
+                    <div
+                        class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div
+                        class="relative bg-white/50 dark:bg-zinc-800/50 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div
+                                class="w-6 h-6 bg-gradient-to-br from-pink-500 to-rose-500 rounded-md flex items-center justify-center text-white shadow-md shadow-pink-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-3.5 h-3.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+                                Поддержите нас</h3>
+                        </div>
+
+                        <style>
+                            @keyframes footer-glow {
+
+                                0%,
+                                100% {
+                                    box-shadow: 0 0 5px rgba(6, 182, 212, 0.2);
+                                }
+
+                                50% {
+                                    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+                                }
+                            }
+
+                            .footer-support-btn {
+                                animation: footer-glow 3s ease-in-out infinite;
+                            }
+
+                            .footer-support-btn:hover {
+                                animation: none;
+                            }
+                        </style>
+
+                        <a href="https://dalink.to/glucos_a" target="_blank" rel="noopener noreferrer"
+                            class="footer-support-btn w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white text-xs font-bold py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group/btn">
+                            <span>Поддержать проект</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor"
+                                class="w-3 h-3 transform group-hover/btn:scale-110 transition-transform">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Quick Links -->
