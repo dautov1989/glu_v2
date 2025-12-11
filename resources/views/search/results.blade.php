@@ -17,7 +17,7 @@
                             class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-200 group flex flex-col h-full">
                             @if($post->image)
                                 <div class="aspect-[16/9] w-full overflow-hidden">
-                                    <img src="{{ Storage::url($post->image) }}" alt="{{ $post->title }}"
+                                    <img src="{{ $post->image }}" alt="{{ $post->title }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 </div>
                             @else

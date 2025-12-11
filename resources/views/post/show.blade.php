@@ -93,12 +93,7 @@
             </div>
         </header>
 
-        <!-- Featured Image -->
-        @if($post->image)
-            <div class="mb-8 rounded-xl overflow-hidden">
-                <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-auto object-cover" loading="lazy">
-            </div>
-        @endif
+
 
         <!-- Content -->
         @inject('linker', 'App\Services\Seo\InternalLinker')
