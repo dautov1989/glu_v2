@@ -148,7 +148,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::where('id', $id)->orWhere('slug', $id)->firstOrFail();
 
         // Delete image if exists
         if ($post->image) {
