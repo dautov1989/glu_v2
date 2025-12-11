@@ -58,4 +58,38 @@ class Post extends Model
             }
         });
     }
+    /**
+     * Get image url with fallback to category placeholder
+     */
+    public function getImageAttribute($value)
+    {
+        if (!empty($value)) {
+            return $value;
+        }
+
+        // Return category specific placeholder
+        if ($this->category) {
+            // Check direct category match
+            $slug = $this->category->slug;
+            $placeholderPath = 'images/placeholders/' . $slug . '.png';
+
+            if (file_exists(public_path($placeholderPath))) {
+                return asset($placeholderPath);
+            }
+
+            // Check parent category match (traverse up)
+            $parent = $this->category->parent;
+            while ($parent) {
+                $slug = $parent->slug;
+                $placeholderPath = 'images/placeholders/' . $slug . '.png';
+                if (file_exists(public_path($placeholderPath))) {
+                    return asset($placeholderPath);
+                }
+                $parent = $parent->parent;
+            }
+        }
+
+        // Global default fallback
+        return asset('images/medical_placeholder.png');
+    }
 }
