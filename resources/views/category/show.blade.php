@@ -63,78 +63,107 @@
                 </ol>
             </nav>
 
-            <!-- Category Header -->
-            <div class="mb-6 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-                <h1 class="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-2">
-                    {{ $category->title }}
-                </h1>
+            <!-- Category Overview & Structure -->
+            <div class="mb-8">
+                <div class="bg-white dark:bg-zinc-800 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-700 shadow-sm relative overflow-hidden group/card">
+                    {{-- Decorative Background --}}
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 dark:from-cyan-950/20 dark:to-blue-900/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
 
-                @if($category->description)
-                    <p class="text-sm text-zinc-500 dark:text-zinc-400 max-w-4xl leading-relaxed">
-                        {{ $category->description }}
-                    </p>
-                @endif
-            </div>
-
-            <!-- Subcategories Grid -->
-            @if($category->children->count() > 0)
-                <div class="mb-10">
-                    <h2 class="text-lg font-semibold text-zinc-800 dark:text-zinc-200 mb-4 flex items-center">
-                        <span class="w-1 h-6 bg-cyan-500 rounded-full mr-3"></span>
-                        Подкатегории
-                    </h2>
-
-                    <div class="bg-white dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 overflow-hidden shadow-sm">
-                        @foreach($category->children as $child)
-                            <a href="{{ route('category.show', $child->slug) }}"
-                                class="group relative flex items-center gap-4 p-4 hover:bg-cyan-50/30 dark:hover:bg-cyan-900/10 transition-colors duration-200 border-b last:border-0 border-zinc-100 dark:border-zinc-700/50">
-                                
-                                {{-- Icon --}}
-                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyan-100/50 dark:bg-cyan-900/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/50 transition-all duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                                    </svg>
-                                </div>
-
-                                {{-- Text Content --}}
-                                <div class="flex-1 min-w-0">
-                                    <h3 class="text-base font-semibold text-zinc-800 dark:text-zinc-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                                        {{ $child->title }}
-                                    </h3>
-                                    @if($child->description)
-                                        <p class="text-sm text-zinc-500 dark:text-zinc-400 truncate pr-4">
-                                            {{ $child->description }}
-                                        </p>
-                                    @endif
-                                </div>
-
-                                {{-- Meta Info (Tablet/Desktop) --}}
-                                <div class="hidden sm:flex items-center gap-6 text-xs font-medium text-zinc-400 dark:text-zinc-500">
-                                    @if($child->children->count() > 0)
-                                        <span class="flex items-center">
-                                            {{ $child->children->count() }} {{ Str::plural('раздел', $child->children->count()) }}
-                                        </span>
-                                    @endif
-                                    
-                                    @if($child->posts_count > 0 || $child->posts->count() > 0)
-                                        <span class="flex items-center">
-                                            <span class="w-1.5 h-1.5 bg-zinc-300 rounded-full mr-2"></span>
-                                            {{ $child->posts_count ?? $child->posts->count() }} статей
-                                        </span>
-                                    @endif
-                                </div>
-
-                                {{-- Arrow --}}
-                                <div class="flex-shrink-0 text-zinc-300 dark:text-zinc-600 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 group-hover:translate-x-1 transition-all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </div>
-                            </a>
-                        @endforeach
+                    {{-- Main Header (Root) --}}
+                    <div class="relative z-10 flex flex-col md:flex-row md:items-start gap-4">
+                        {{-- Icon --}}
+                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        
+                        {{-- Content --}}
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h1 class="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
+                                    {{ $category->title }}
+                                </h1>
+                            </div>
+                            
+                            @if($category->description)
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400 max-w-4xl leading-relaxed">
+                                    {{ $category->description }}
+                                </p>
+                            @endif
+                        </div>
                     </div>
+
+                    {{-- Subcategories Tree (If Any) --}}
+                    @if($category->children->count() > 0)
+                        <div class="relative z-10 mt-6 pt-6 border-t border-zinc-100 dark:border-zinc-700/50">
+                            <div class="flex items-center gap-2 mb-4 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                                Содержание раздела
+                            </div>
+
+                            <div class="relative ml-6 space-y-2">
+                                {{-- Vertical Guide Line --}}
+                                <div class="absolute left-0 top-0 bottom-6 w-px bg-gradient-to-b from-cyan-300/50 to-zinc-200 dark:from-cyan-700/50 dark:to-zinc-700"></div>
+
+                                @foreach($category->children as $child)
+                                    <div class="relative pl-8 group">
+                                        {{-- Horizontal Connector --}}
+                                        <div class="absolute left-0 top-[1.75rem] w-8 h-px bg-cyan-300/50 dark:bg-cyan-700/50">
+                                            <div class="absolute right-0 top-1/2 -mt-[2px] w-1 h-1 rounded-full bg-cyan-400 dark:bg-cyan-600"></div>
+                                        </div>
+                                        
+                                        {{-- Node Card --}}
+                                        <a href="{{ route('category.show', $child->slug) }}" 
+                                           class="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                                            
+                                            {{-- Icon & Titles --}}
+                                            <div class="flex items-center gap-3 flex-1">
+                                                <div class="w-10 h-10 rounded-lg bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-105 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/30 transition-all duration-300">
+                                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                                                    </svg>
+                                                </div>
+                                                
+                                                <div class="flex-1 min-w-0">
+                                                    <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors truncate">
+                                                        {{ $child->title }}
+                                                    </h3>
+                                                    @if($child->description)
+                                                        <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1">
+                                                            {{ $child->description }}
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Meta & Action --}}
+                                            <div class="hidden md:flex items-center justify-end gap-4 min-w-[140px]">
+                                                 <div class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wide flex items-center gap-2">
+                                                    @if($child->children->count() > 0)
+                                                        <span class="flex items-center gap-1 bg-zinc-50 dark:bg-zinc-700/50 px-2 py-1 rounded">
+                                                            {{ $child->children->count() }} разд.
+                                                        </span>
+                                                    @endif
+                                                    <span class="flex items-center gap-1 bg-zinc-50 dark:bg-zinc-700/50 px-2 py-1 rounded">
+                                                        {{ $child->posts_count ?? $child->posts->count() }} ст.
+                                                    </span>
+                                                 </div>
+                                                 
+                                                 <div class="w-6 h-6 rounded-full border border-zinc-200 dark:border-zinc-600 flex items-center justify-center text-zinc-400 group-hover:border-cyan-500 group-hover:text-cyan-500 group-hover:rotate-45 transition-all duration-300">
+                                                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5H9m10 0v10" />
+                                                    </svg>
+                                                 </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
-            @endif
+            </div>
 
             <!-- Posts Grid -->
             @if($posts->count() > 0)
