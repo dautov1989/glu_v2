@@ -35,7 +35,14 @@
 @section('meta_description', $post->meta_description ?? Str::limit(strip_tags($post->content), 160))
 
 @section('content')
-    <div class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm">
+    <div x-data x-init="
+            if (window.innerWidth < 768) {
+                setTimeout(() => {
+                    $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        "
+        class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
         <!-- Breadcrumbs -->
         <nav class="mb-8">
             <ol class="flex flex-wrap items-center gap-2 text-sm">
@@ -98,14 +105,14 @@
         <!-- Content -->
         @inject('linker', 'App\Services\Seo\InternalLinker')
         <div class="prose prose-zinc dark:prose-invert max-w-none" x-data x-init="
-                    $el.querySelectorAll('table').forEach(table => {
-                        if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                        table.parentNode.insertBefore(wrapper, table);
-                        wrapper.appendChild(table);
-                    });
-                 ">
+                        $el.querySelectorAll('table').forEach(table => {
+                            if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                            table.parentNode.insertBefore(wrapper, table);
+                            wrapper.appendChild(table);
+                        });
+                     ">
             {!! $linker->link($post->content) !!}
         </div>
 
