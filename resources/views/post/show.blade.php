@@ -36,12 +36,12 @@
 
 @section('content')
     <div x-data x-init="
-            if (window.innerWidth < 768) {
-                setTimeout(() => {
-                    $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
-            }
-        "
+                        if (window.innerWidth < 768) {
+                            setTimeout(() => {
+                                $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 100);
+                        }
+                    "
         class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
         <!-- Breadcrumbs -->
         <nav class="mb-8">
@@ -74,7 +74,7 @@
 
         <!-- Article Header -->
         <header class="mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+            <h1 class="text-xl sm:text-2xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
                 {{ $post->title }}
             </h1>
 
@@ -104,15 +104,22 @@
 
         <!-- Content -->
         @inject('linker', 'App\Services\Seo\InternalLinker')
-        <div class="prose prose-zinc dark:prose-invert max-w-none" x-data x-init="
-                        $el.querySelectorAll('table').forEach(table => {
-                            if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                            const wrapper = document.createElement('div');
-                            wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                            table.parentNode.insertBefore(wrapper, table);
-                            wrapper.appendChild(table);
-                        });
-                     ">
+        <div class="prose prose-zinc dark:prose-invert max-w-none prose-headings:leading-tight prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg md:prose-h1:text-4xl md:prose-h2:text-3xl md:prose-h3:text-2xl"
+            x-data x-init="
+                    // Wrap tables for responsiveness
+                    $el.querySelectorAll('table').forEach(table => {
+                        if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                        table.parentNode.insertBefore(wrapper, table);
+                        wrapper.appendChild(table);
+                    });
+
+                    // Remove hardcoded size classes from AI-generated headers to allow prose styles to work
+                    $el.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
+                        el.classList.remove('text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl');
+                    });
+                ">
             {!! $linker->link($post->content) !!}
         </div>
 
