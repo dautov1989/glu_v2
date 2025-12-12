@@ -15,58 +15,56 @@
         </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="flex flex-col gap-3">
         @foreach($posts as $post)
-            <article class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-200 group flex flex-col h-full">
-                <a href="{{ route('post.show', $post->slug) }}" class="block relative aspect-[16/9] overflow-hidden">
+            <a href="{{ route('post.show', $post->slug) }}" 
+               class="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group">
+                
+                {{-- Image Thumbnail --}}
+                <div class="flex-shrink-0 relative overflow-hidden rounded-lg w-16 h-12 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
                     @if($post->image)
                         <img src="{{ $post->image }}" alt="{{ $post->title }}"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             loading="lazy">
                     @else
-                        <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                         <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-80"
                             loading="lazy">
                     @endif
-                    
-                    {{-- Category Badge --}}
-                    @if($post->category)
-                        <span class="absolute top-2 left-2 bg-black/50 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded-full">
-                            {{ $post->category->title }}
-                        </span>
-                    @endif
-                </a>
-
-                <div class="p-4 flex flex-col flex-1">
-                    <div class="flex items-center text-[11px] text-zinc-400 mb-2 gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
-                        <span>{{ $post->published_at->format('d.m.Y') }}</span>
-                        <span class="w-1 h-1 bg-zinc-300 rounded-full flex-shrink-0"></span>
-                        <span>{{ $post->views }} просмотров</span>
-                    </div>
-
-                    <h3 class="text-base font-bold text-zinc-800 dark:text-zinc-100 mb-2 line-clamp-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                        <a href="{{ route('post.show', $post->slug) }}">
-                            {{ $post->title }}
-                        </a>
+                </div>
+                
+                {{-- Content --}}
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors truncate">
+                        {{ $post->title }}
                     </h3>
-
-                    <p class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 mb-4 flex-1 leading-relaxed">
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1">
                         {{ $post->excerpt }}
                     </p>
+                </div>
 
-                    <div class="mt-auto pt-3 border-t border-zinc-100 dark:border-zinc-700">
-                        <a href="{{ route('post.show', $post->slug) }}"
-                            class="text-cyan-600 dark:text-cyan-400 text-xs font-semibold hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center uppercase tracking-wide">
-                            Читать статью
-                            <svg class="w-3 h-3 ml-1 transform group-hover:translate-x-1 transition-transform"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                {{-- Meta & Action --}}
+                <div class="hidden md:flex items-center justify-end gap-4 min-w-[fit-content]">
+                    <div class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wide flex items-center gap-3">
+                        <span class="flex items-center gap-1 bg-zinc-50 dark:bg-zinc-700/50 px-2 py-1 rounded whitespace-nowrap">
+                            {{ $post->published_at->format('d.m.Y') }}
+                        </span>
+                        <span class="flex items-center gap-1 bg-zinc-50 dark:bg-zinc-700/50 px-2 py-1 rounded whitespace-nowrap">
+                            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                             </svg>
-                        </a>
+                            {{ $post->views }}
+                        </span>
+                    </div>
+                     
+                    <div class="w-8 h-8 rounded-full border border-zinc-200 dark:border-zinc-600 flex items-center justify-center text-zinc-400 group-hover:border-cyan-500 group-hover:text-cyan-500 group-hover:rotate-45 transition-all duration-300">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5H9m10 0v10" />
+                        </svg>
                     </div>
                 </div>
-            </article>
+            </a>
         @endforeach
     </div>
 </div>
