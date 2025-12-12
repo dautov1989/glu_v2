@@ -101,8 +101,8 @@
             {!! $linker->link($post->content) !!}
         </div>
 
-        <!-- Related Posts -->
-        <x-related-posts :currentPost="$post" :limit="4" />
+        <!-- Recommended Posts -->
+        <x-recommended-posts :posts="$recommendedPosts" />
     </div>
 
     <!-- Comments Section -->

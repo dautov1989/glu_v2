@@ -84,34 +84,51 @@
                         Подкатегории
                     </h2>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 overflow-hidden shadow-sm">
                         @foreach($category->children as $child)
                             <a href="{{ route('category.show', $child->slug) }}"
-                                class="group relative bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700 hover:border-cyan-300 dark:hover:border-cyan-700 shadow-sm hover:shadow-md transition-all duration-200">
+                                class="group relative flex items-center gap-4 p-4 hover:bg-cyan-50/30 dark:hover:bg-cyan-900/10 transition-colors duration-200 border-b last:border-0 border-zinc-100 dark:border-zinc-700/50">
+                                
+                                {{-- Icon --}}
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyan-100/50 dark:bg-cyan-900/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/50 transition-all duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                                    </svg>
+                                </div>
 
-                                <div class="flex flex-col h-full">
-                                    <h3
-                                        class="text-base font-semibold text-zinc-800 dark:text-zinc-200 mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                                {{-- Text Content --}}
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-base font-semibold text-zinc-800 dark:text-zinc-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                                         {{ $child->title }}
                                     </h3>
-
                                     @if($child->description)
-                                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-3 line-clamp-2 leading-relaxed">
+                                        <p class="text-sm text-zinc-500 dark:text-zinc-400 truncate pr-4">
                                             {{ $child->description }}
                                         </p>
                                     @endif
+                                </div>
 
+                                {{-- Meta Info (Tablet/Desktop) --}}
+                                <div class="hidden sm:flex items-center gap-6 text-xs font-medium text-zinc-400 dark:text-zinc-500">
                                     @if($child->children->count() > 0)
-                                        <div
-                                            class="mt-auto pt-3 border-t border-zinc-50 dark:border-zinc-700/50 flex items-center text-[10px] uppercase tracking-wider text-zinc-400 font-medium group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                                        <span class="flex items-center">
                                             {{ $child->children->count() }} {{ Str::plural('раздел', $child->children->count()) }}
-                                            <svg class="w-3 h-3 ml-1 transform group-hover:translate-x-1 transition-transform"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                                                </path>
-                                            </svg>
-                                        </div>
+                                        </span>
                                     @endif
+                                    
+                                    @if($child->posts_count > 0 || $child->posts->count() > 0)
+                                        <span class="flex items-center">
+                                            <span class="w-1.5 h-1.5 bg-zinc-300 rounded-full mr-2"></span>
+                                            {{ $child->posts_count ?? $child->posts->count() }} статей
+                                        </span>
+                                    @endif
+                                </div>
+
+                                {{-- Arrow --}}
+                                <div class="flex-shrink-0 text-zinc-300 dark:text-zinc-600 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 group-hover:translate-x-1 transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
                                 </div>
                             </a>
                         @endforeach

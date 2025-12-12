@@ -110,16 +110,7 @@ Route::get('/articles', function () {
 })->name('articles.index');
 
 // Маршрут для просмотра отдельной статьи
-Route::get('/post/{slug}', function ($slug) {
-    $post = \App\Models\Post::where('slug', $slug)
-        ->where('is_published', true)
-        ->firstOrFail();
-
-    // Увеличиваем счетчик просмотров
-    $post->increment('views');
-
-    return view('post.show', compact('post'));
-})->name('post.show');
+Route::get('/post/{slug}', [\App\Http\Controllers\PostController::class, 'show'])->name('post.show');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
