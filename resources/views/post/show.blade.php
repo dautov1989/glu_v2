@@ -36,12 +36,12 @@
 
 @section('content')
     <div x-data x-init="
-                        if (window.innerWidth < 768) {
-                            setTimeout(() => {
-                                $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }, 100);
-                        }
-                    "
+                                if (window.innerWidth < 768) {
+                                    setTimeout(() => {
+                                        $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }, 100);
+                                }
+                            "
         class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
         <!-- Breadcrumbs -->
         <nav class="mb-8">
@@ -104,7 +104,7 @@
 
         <!-- Content -->
         @inject('linker', 'App\Services\Seo\InternalLinker')
-        <div class="prose prose-zinc dark:prose-invert max-w-none prose-headings:leading-tight prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg md:prose-h1:text-4xl md:prose-h2:text-3xl md:prose-h3:text-2xl"
+        <div class="article-content prose prose-zinc dark:prose-invert max-w-none prose-headings:leading-tight prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg md:prose-h1:text-4xl md:prose-h2:text-3xl md:prose-h3:text-2xl"
             x-data x-init="
                     // Wrap tables for responsiveness
                     $el.querySelectorAll('table').forEach(table => {
@@ -114,14 +114,43 @@
                         table.parentNode.insertBefore(wrapper, table);
                         wrapper.appendChild(table);
                     });
-
-                    // Remove hardcoded size classes from AI-generated headers to allow prose styles to work
-                    $el.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
-                        el.classList.remove('text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl');
-                    });
-                ">
+                 ">
             {!! $linker->link($post->content) !!}
         </div>
+
+        <style>
+            @media (max-width: 767px) {
+                .article-content h1 {
+                    font-size: 1.5rem !important;
+                    line-height: 2rem !important;
+                }
+
+                .article-content h2 {
+                    font-size: 1.25rem !important;
+                    line-height: 1.75rem !important;
+                }
+
+                .article-content h3 {
+                    font-size: 1.125rem !important;
+                    line-height: 1.75rem !important;
+                }
+
+                .article-content h4 {
+                    font-size: 1rem !important;
+                    line-height: 1.5rem !important;
+                }
+
+                .article-content h5 {
+                    font-size: 0.875rem !important;
+                    line-height: 1.25rem !important;
+                }
+
+                .article-content h6 {
+                    font-size: 0.75rem !important;
+                    line-height: 1rem !important;
+                }
+            }
+        </style>
 
         <!-- Recommended Posts -->
         <x-recommended-posts :posts="$recommendedPosts" />
