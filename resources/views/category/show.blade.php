@@ -72,11 +72,17 @@
                     {{-- Main Header (Root) --}}
                     <div class="relative z-10 flex flex-col md:flex-row md:items-start gap-4">
                         {{-- Icon --}}
-                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                        </div>
+                        @if(file_exists(public_path('images/placeholders/' . $category->slug . '.png')))
+                            <div class="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/10 bg-white dark:bg-zinc-900 border border-cyan-100 dark:border-cyan-800/30">
+                                <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain">
+                            </div>
+                        @else
+                            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                            </div>
+                        @endif
                         
                         {{-- Content --}}
                         <div class="flex-1 min-w-0">
@@ -304,11 +310,11 @@
                                     <a href="{{ route('post.show', $post->slug) }}" class="block w-full h-full absolute inset-0">
                                         @if($post->image)
                                             <img src="{{ $post->image }}" alt="{{ $post->title }}"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 loading="lazy">
                                         @else
                                             <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                                                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 opacity-80"
                                                 loading="lazy">
                                         @endif
                                     </a>

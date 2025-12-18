@@ -163,15 +163,15 @@
         <!-- Features Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @foreach([
-                ['icon' => '🩺', 'title' => 'Медицинская информация', 'desc' => 'Проверенные данные от специалистов', 'slug' => 'simptomy'],
-                ['icon' => '🥗', 'title' => 'Рецепты и питание', 'desc' => 'Вкусные и полезные рецепты', 'slug' => 'pitanie'],
-                ['icon' => '🏃', 'title' => 'Спорт и активность', 'desc' => 'Программы тренировок и советы', 'slug' => 'sport'],
-                ['icon' => '💊', 'title' => 'Лекарства и терапия', 'desc' => 'Информация о препаратах', 'slug' => 'diabet-1-tipa']
+                ['image' => 'simptomy.png', 'title' => 'Медицинская информация', 'desc' => 'Проверенные данные от специалистов', 'slug' => 'simptomy'],
+                ['image' => 'pitanie.png', 'title' => 'Рецепты и питание', 'desc' => 'Вкусные и полезные рецепты', 'slug' => 'pitanie'],
+                ['image' => 'sport.png', 'title' => 'Спорт и активность', 'desc' => 'Программы тренировок и советы', 'slug' => 'sport'],
+                ['image' => 'diabet-1-tipa.png', 'title' => 'Лекарства и терапия', 'desc' => 'Информация о препаратах', 'slug' => 'diabet-1-tipa']
             ] as $feature)
                 <a href="{{ route('category.show', $feature['slug']) }}" class="block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 p-6 shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-105 group">
                     <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                            {{ $feature['icon'] }}
+                        <div class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 overflow-hidden bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/10 dark:to-blue-900/10 border border-cyan-100 dark:border-cyan-800/30">
+                            <img src="{{ asset('images/placeholders/' . $feature['image']) }}" alt="{{ $feature['title'] }}" class="w-full h-full object-contain">
                         </div>
                         <div class="flex-1">
                             <h3 class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
@@ -215,9 +215,9 @@
                     <!-- Post Image -->
                     <div class="relative h-48 overflow-hidden bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30">
                         @if($post->image)
-                            <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300">
                         @else
-                            <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300">
                         @endif
                         <!-- Category Badge -->
                         <div class="absolute top-3 left-3">

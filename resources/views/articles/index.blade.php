@@ -175,11 +175,11 @@
                                     <a href="{{ route('post.show', $post->slug) }}" class="block w-full h-full absolute inset-0">
                                         @if($post->image)
                                             <img src="{{ $post->image }}" alt="{{ $post->title }}"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 loading="lazy">
                                         @else
                                             <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                                                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 opacity-80"
                                                 loading="lazy">
                                         @endif
                                     </a>
