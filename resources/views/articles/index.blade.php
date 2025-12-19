@@ -170,7 +170,7 @@
                                 {{-- Image Container --}}
                                 <div :class="{ 
                                     'w-full aspect-[16/9]': viewMode === 'grid',
-                                    'w-full h-48 sm:w-64 md:w-72 sm:h-auto flex-shrink-0': viewMode === 'list'
+                                    'w-full aspect-[16/9] sm:w-64 md:w-72 flex-shrink-0 self-start': viewMode === 'list'
                                 }" class="relative overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
                                     <a href="{{ route('post.show', $post->slug) }}" class="block w-full h-full absolute inset-0">
                                         @if($post->image)
@@ -186,31 +186,31 @@
                                 </div>
 
                                 {{-- Content Container --}}
-                                <div class="p-4 flex flex-col flex-1 relative">
+                                <div :class="{ 'p-4': viewMode === 'grid', 'p-3': viewMode === 'list' }" class="flex flex-col flex-1 relative">
                                     {{-- Meta --}}
-                                    <div class="flex items-center text-[11px] text-zinc-400 mb-2 gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
+                                    <div :class="{ 'mb-2': viewMode === 'grid', 'mb-1': viewMode === 'list' }" class="flex items-center text-[11px] text-zinc-400 gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                                         <span>{{ $post->published_at->format('d.m.Y') }}</span>
                                         <span class="w-1 h-1 bg-zinc-300 rounded-full flex-shrink-0"></span>
                                         <span>{{ $post->views }} просмотров</span>
                                     </div>
 
                                     {{-- Title --}}
-                                    <h3 class="text-base font-bold text-zinc-800 dark:text-zinc-100 mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight"
-                                        :class="{ 'line-clamp-2': viewMode === 'grid', 'line-clamp-1 sm:line-clamp-2': viewMode === 'list' }">
+                                    <h3 class="text-base font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight"
+                                        :class="{ 'mb-2 line-clamp-2': viewMode === 'grid', 'mb-1 line-clamp-1 sm:line-clamp-2': viewMode === 'list' }">
                                         <a href="{{ route('post.show', $post->slug) }}">
                                             {{ $post->title }}
                                         </a>
                                     </h3>
 
                                     {{-- Excerpt --}}
-                                    <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-4 leading-relaxed"
-                                       :class="{ 'line-clamp-3 flex-1': viewMode === 'grid', 'line-clamp-2 sm:line-clamp-3': viewMode === 'list' }">
+                                    <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
+                                       :class="{ 'line-clamp-3 flex-1 mb-4': viewMode === 'grid', 'line-clamp-1 mb-0': viewMode === 'list' }">
                                         {{ $post->excerpt }}
                                     </p>
 
                                     {{-- Footer --}}
-                                    <div class="pt-3 border-t border-zinc-100 dark:border-zinc-700/50 flex items-center justify-between"
-                                        :class="{ 'mt-auto': viewMode === 'grid', 'mt-2': viewMode === 'list' }">
+                                    <div class="border-t border-zinc-100 dark:border-zinc-700/50 flex items-center justify-between"
+                                        :class="{ 'mt-auto pt-3': viewMode === 'grid', 'mt-2 pt-2': viewMode === 'list' }">
                                         <a href="{{ route('post.show', $post->slug) }}"
                                             class="text-cyan-600 dark:text-cyan-400 text-xs font-semibold hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center uppercase tracking-wide group/btn">
                                             Читать
