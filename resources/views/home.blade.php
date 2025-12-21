@@ -147,7 +147,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach([
                 ['icon' => '📚', 'number' => $articlesCount, 'label' => 'Статей'],
-                ['icon' => '👥', 'number' => $usersCount, 'label' => 'Пользователей'],
+                ['icon' => '👥', 'number' => $usersCount >= 1000 ? $usersCount : '1000+', 'label' => 'Пользователей'],
                 ['icon' => '⭐', 'number' => '1000+', 'label' => 'Историй успеха']
             ] as $stat)
                 <div class="bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
@@ -163,27 +163,34 @@
         <!-- Features Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @foreach([
-                ['image' => 'simptomy.png', 'title' => 'Медицинская информация', 'desc' => 'Проверенные данные от специалистов', 'slug' => 'simptomy'],
+                ['image' => 'simptomy.png', 'title' => 'Симптомы', 'desc' => 'Распознавание и понимание признаков', 'slug' => 'simptomy'],
                 ['image' => 'pitanie.png', 'title' => 'Рецепты и питание', 'desc' => 'Вкусные и полезные рецепты', 'slug' => 'pitanie'],
                 ['image' => 'sport.png', 'title' => 'Спорт и активность', 'desc' => 'Программы тренировок и советы', 'slug' => 'sport'],
-                ['image' => 'diabet-1-tipa.png', 'title' => 'Лекарства и терапия', 'desc' => 'Информация о препаратах', 'slug' => 'diabet-1-tipa']
+                ['image' => 'diabet-1-tipa.png', 'title' => 'Диабет 1 типа', 'desc' => 'Инсулинотерапия и управление', 'slug' => 'diabet-1-tipa'],
+                ['image' => 'diabet-2-tipa.png', 'title' => 'Диабет 2 типа', 'desc' => 'Медикаменты и контроль веса', 'slug' => 'diabet-2-tipa'],
+                ['image' => 'gadzety-i-rasxodniki.png', 'title' => 'Гаджеты и Расходники', 'desc' => 'Современные устройства и аксессуары', 'slug' => 'gadzety-i-rasxodniki']
             ] as $feature)
-                <a href="{{ route('category.show', $feature['slug']) }}" class="block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 p-6 shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-105 group">
-                    <div class="flex items-start gap-4">
-                        <div class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 overflow-hidden bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/10 dark:to-blue-900/10 border border-cyan-100 dark:border-cyan-800/30">
-                            <img src="{{ asset('images/placeholders/' . $feature['image']) }}" alt="{{ $feature['title'] }}" class="w-full h-full object-contain">
+                <a href="{{ route('category.show', $feature['slug']) }}" class="block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 overflow-hidden shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-[1.02] group">
+                    <div class="flex items-center gap-0">
+                        <!-- Wide Image Container for 16:9 -->
+                        <div class="w-40 flex-shrink-0 overflow-hidden bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 relative" style="aspect-ratio: 16/9;">
+                            <img src="{{ asset('images/placeholders/' . $feature['image']) }}" alt="{{ $feature['title'] }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 p-2">
                         </div>
-                        <div class="flex-1">
-                            <h3 class="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                                {{ $feature['title'] }}
-                            </h3>
-                            <p class="text-sm text-zinc-600 dark:text-zinc-400">
-                                {{ $feature['desc'] }}
-                            </p>
+                        <!-- Text Content -->
+                        <div class="flex-1 p-5 flex items-center justify-between gap-3">
+                            <div class="flex-1">
+                                <h3 class="text-sm md:text-base font-bold text-zinc-800 dark:text-zinc-200 mb-1.5 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors line-clamp-1">
+                                    {{ $feature['title'] }}
+                                </h3>
+                                <p class="text-xs md:text-sm text-zinc-600 dark:text-zinc-400 line-clamp-1">
+                                    {{ $feature['desc'] }}
+                                </p>
+                            </div>
+                            <!-- Arrow Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 flex-shrink-0 text-zinc-300 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-all duration-300 group-hover:translate-x-1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-zinc-300 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-all duration-300 group-hover:translate-x-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
                     </div>
                 </a>
             @endforeach
@@ -213,11 +220,11 @@
                 @foreach($latestPosts as $post)
                 <a href="{{ route('post.show', $post->slug) }}" class="group block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 overflow-hidden shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-105">
                     <!-- Post Image -->
-                    <div class="relative h-48 overflow-hidden bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30">
+                    <div class="relative w-full overflow-hidden bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30" style="aspect-ratio: 16/9;">
                         @if($post->image)
-                            <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300">
+                            <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                         @else
-                            <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300">
+                            <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                         @endif
                         <!-- Category Badge -->
                         <div class="absolute top-3 left-3">

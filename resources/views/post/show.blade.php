@@ -36,12 +36,12 @@
 
 @section('content')
     <div x-data x-init="
-                                if (window.innerWidth < 768) {
-                                    setTimeout(() => {
-                                        $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                    }, 100);
-                                }
-                            "
+                                    if (window.innerWidth < 768) {
+                                        setTimeout(() => {
+                                            $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }, 100);
+                                    }
+                                "
         class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
         <!-- Breadcrumbs -->
         <nav class="mb-8">
@@ -106,19 +106,121 @@
         @inject('linker', 'App\Services\Seo\InternalLinker')
         <div class="article-content prose prose-zinc dark:prose-invert max-w-none prose-headings:leading-tight prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg md:prose-h1:text-4xl md:prose-h2:text-3xl md:prose-h3:text-2xl"
             x-data x-init="
-                    // Wrap tables for responsiveness
-                    $el.querySelectorAll('table').forEach(table => {
-                        if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                        table.parentNode.insertBefore(wrapper, table);
-                        wrapper.appendChild(table);
-                    });
-                 ">
+                        // Wrap tables for responsiveness
+                        $el.querySelectorAll('table').forEach(table => {
+                            if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                            table.parentNode.insertBefore(wrapper, table);
+                            wrapper.appendChild(table);
+                        });
+                     ">
             {!! $linker->link($post->content) !!}
         </div>
 
         <style>
+            /* Beautiful List Styles */
+            .article-content ul {
+                list-style: none;
+                padding-left: 0;
+                margin: 1.5rem 0;
+            }
+
+            .article-content ul li {
+                position: relative;
+                padding-left: 2rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.75;
+            }
+
+            .article-content ul li::before {
+                content: "●";
+                position: absolute;
+                left: 0.5rem;
+                color: #06b6d4;
+                /* cyan-500 */
+                font-size: 1.2em;
+                font-weight: bold;
+                transition: transform 0.2s ease;
+            }
+
+            .article-content ul li:hover::before {
+                transform: scale(1.3);
+                color: #0891b2;
+                /* cyan-600 */
+            }
+
+            .article-content ol {
+                list-style: none;
+                counter-reset: custom-counter;
+                padding-left: 0;
+                margin: 1.5rem 0;
+            }
+
+            .article-content ol li {
+                position: relative;
+                padding-left: 2.5rem;
+                margin-bottom: 0.75rem;
+                counter-increment: custom-counter;
+                line-height: 1.75;
+            }
+
+            .article-content ol li::before {
+                content: counter(custom-counter);
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 1.75rem;
+                height: 1.75rem;
+                background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.875rem;
+                font-weight: bold;
+                box-shadow: 0 2px 4px rgba(6, 182, 212, 0.3);
+                transition: all 0.2s ease;
+            }
+
+            .article-content ol li:hover::before {
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(6, 182, 212, 0.4);
+            }
+
+            /* Nested lists */
+            .article-content ul ul,
+            .article-content ol ol,
+            .article-content ul ol,
+            .article-content ol ul {
+                margin: 0.5rem 0;
+            }
+
+            .article-content ul ul li::before {
+                content: "○";
+                color: #22d3ee;
+                /* cyan-400 */
+            }
+
+            /* Dark mode */
+            @media (prefers-color-scheme: dark) {
+                .article-content ul li::before {
+                    color: #22d3ee;
+                    /* cyan-400 */
+                }
+
+                .article-content ul li:hover::before {
+                    color: #06b6d4;
+                    /* cyan-500 */
+                }
+
+                .article-content ol li::before {
+                    background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+                }
+            }
+
+            /* Mobile responsive headings */
             @media (max-width: 767px) {
                 .article-content h1 {
                     font-size: 1.5rem !important;
@@ -148,6 +250,19 @@
                 .article-content h6 {
                     font-size: 0.75rem !important;
                     line-height: 1rem !important;
+                }
+
+                /* Mobile list adjustments */
+                .article-content ul li,
+                .article-content ol li {
+                    padding-left: 1.75rem;
+                    font-size: 0.9375rem;
+                }
+
+                .article-content ol li::before {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    font-size: 0.75rem;
                 }
             }
         </style>

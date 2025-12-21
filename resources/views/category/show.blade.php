@@ -70,30 +70,28 @@
                     <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 dark:from-cyan-950/20 dark:to-blue-900/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
 
                     {{-- Main Header (Root) --}}
-                    <div class="relative z-10 flex flex-col md:flex-row md:items-start gap-4">
-                        {{-- Icon --}}
+                    <div class="relative z-10 flex flex-col gap-4">
+                        {{-- Wide Image Container for 16:9 --}}
                         @if(file_exists(public_path('images/placeholders/' . $category->slug . '.png')))
-                            <div class="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/10 bg-white dark:bg-zinc-900 border border-cyan-100 dark:border-cyan-800/30">
-                                <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain">
+                            <div class="w-full max-w-md mx-auto overflow-hidden rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 shadow-lg border border-cyan-100 dark:border-cyan-800/30" style="aspect-ratio: 16/9;">
+                                <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain p-4 group-hover/card:scale-105 transition-transform duration-500">
                             </div>
                         @else
-                            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div class="w-32 h-32 mx-auto rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                 </svg>
                             </div>
                         @endif
                         
                         {{-- Content --}}
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h1 class="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
-                                    {{ $category->title }}
-                                </h1>
-                            </div>
+                        <div class="flex-1 min-w-0 text-center">
+                            <h1 class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight mb-3">
+                                {{ $category->title }}
+                            </h1>
                             
                             @if($category->description)
-                                <p class="text-sm text-zinc-600 dark:text-zinc-400 max-w-4xl leading-relaxed">
+                                <p class="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto leading-relaxed">
                                     {{ $category->description }}
                                 </p>
                             @endif
