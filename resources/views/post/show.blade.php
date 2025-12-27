@@ -36,101 +36,78 @@
 
 @section('content')
     <div x-data x-init="
-                                        if (window.innerWidth < 768) {
-                                            setTimeout(() => {
-                                                const yOffset = -100;
-                                                const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                                                window.scrollTo({top: y, behavior: 'smooth'});
-                                            }, 300);
-                                        }
-                                    "
+                                                    if (window.innerWidth < 768) {
+                                                        setTimeout(() => {
+                                                            const yOffset = -100;
+                                                            const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                                            window.scrollTo({top: y, behavior: 'smooth'});
+                                                        }, 300);
+                                                    }
+                                                "
         class="bg-white dark:bg-zinc-800 rounded-2xl p-4 md:p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
-        <!-- Breadcrumbs -->
-        <nav class="mb-4 md:mb-8">
-            <ol class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
-                <li>
-                    <a href="{{ route('home') }}"
-                        class="text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">
+        <!-- Article Header -->
+        <header class="mb-6 md:mb-8">
+            <!-- Category & Breadcrumbs Integration -->
+            <div class="mb-4">
+                <nav class="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
+                    <a href="{{ route('home') }}" class="hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
                         Главная
                     </a>
-                </li>
-                @foreach($post->category->getBreadcrumbs() as $breadcrumb)
-                    <li class="hidden sm:flex items-center">
-                        <svg class="w-4 h-4 mx-1 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                    @if(count($post->category->getBreadcrumbs()) > 0)
+                        <svg class="w-3 h-3 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
-                        <a href="{{ route('category.show', $breadcrumb->slug) }}"
-                            class="text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">
-                            {{ $breadcrumb->title }}
-                        </a>
-                    </li>
-                @endforeach
-                <li class="flex items-center">
-                    <svg class="w-4 h-4 mx-1 sm:mx-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                    <span
-                        class="text-zinc-500 dark:text-zinc-400 truncate max-w-[150px] sm:max-w-[200px]">{{ $post->title }}</span>
-                </li>
-            </ol>
-        </nav>
+                    @endif
 
-        <!-- Article Header -->
-        <header class="mb-0 md:mb-10 relative">
-            <!-- Decorative accent line -->
-            <div
-                class="absolute -left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-blue-500 to-cyan-500 rounded-full hidden md:block">
+                    @foreach($post->category->getBreadcrumbs() as $breadcrumb)
+                        @if(!$loop->last)
+                            <a href="{{ route('category.show', $breadcrumb->slug) }}"
+                                class="hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
+                                {{ $breadcrumb->title }}
+                            </a>
+                            <svg class="w-3 h-3 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        @else
+                            <a href="{{ route('category.show', $breadcrumb->slug) }}"
+                                class="font-semibold text-cyan-600 dark:text-cyan-400 hover:underline">
+                                {{ $breadcrumb->title }}
+                            </a>
+                        @endif
+                    @endforeach
+                </nav>
             </div>
 
-            <!-- Category Badge -->
-            <div class="mb-3 md:mb-4">
-                <a href="{{ route('category.show', $post->category->slug) }}"
-                    class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30 text-cyan-700 dark:text-cyan-300 rounded-full text-xs md:text-sm font-semibold border border-cyan-200 dark:border-cyan-800/50 hover:border-cyan-400 dark:hover:border-cyan-600 transition-all duration-300 hover:shadow-md hover:shadow-cyan-500/20">
-                    <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
-                        </path>
-                    </svg>
-                    {{ $post->category->title }}
-                </a>
-            </div>
-
-            <!-- Title with gradient -->
             <!-- Title -->
             <h1
-                class="text-lg sm:text-2xl md:text-3xl font-bold mb-3 md:mb-5 leading-tight text-zinc-900 dark:text-zinc-100">
+                class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 leading-tight text-zinc-900 dark:text-white tracking-tight">
                 {{ $post->title }}
             </h1>
 
-            <!-- Meta information with icons -->
-            <div class="flex flex-wrap items-center gap-3 md:gap-4 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-                <div
-                    class="flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-3 md:py-1.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700">
-                    <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-cyan-500" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+            <!-- Meta information (Date, Views) -->
+            <div
+                class="flex items-center gap-6 text-sm text-zinc-500 dark:text-zinc-400 pb-6 border-b border-zinc-100 dark:border-zinc-800">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                         </path>
                     </svg>
-                    <span class="font-medium">{{ $post->published_at->format('d.m.Y') }}</span>
+                    <span>{{ $post->published_at->format('d.m.Y') }}</span>
                 </div>
 
-                <div
-                    class="flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-3 md:py-1.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700">
-                    <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-cyan-500" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                         </path>
                     </svg>
-                    <span class="font-medium">{{ $post->views }} просмотров</span>
+                    <span>{{ $post->views }}</span>
                 </div>
             </div>
-
-            <!-- Decorative bottom line -->
-            <div class="mt-2 md:mt-6 h-1 w-16 md:w-24 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></div>
         </header>
 
 
@@ -139,15 +116,15 @@
         @inject('linker', 'App\Services\Seo\InternalLinker')
         <div class="article-content max-w-none prose prose-zinc dark:prose-invert prose-headings:leading-tight prose-h1:text-xl prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h2:text-xl md:prose-h3:text-lg"
             x-data x-init="
-                                                                            // Wrap tables for responsiveness
-                                                                            $el.querySelectorAll('table').forEach(table => {
-                                                                                if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                                                                                const wrapper = document.createElement('div');
-                                                                                wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                                                                                table.parentNode.insertBefore(wrapper, table);
-                                                                                wrapper.appendChild(table);
-                                                                            });
-                                                                         ">
+                                                                                        // Wrap tables for responsiveness
+                                                                                        $el.querySelectorAll('table').forEach(table => {
+                                                                                            if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                                                                                            const wrapper = document.createElement('div');
+                                                                                            wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                                                                                            table.parentNode.insertBefore(wrapper, table);
+                                                                                            wrapper.appendChild(table);
+                                                                                        });
+                                                                                     ">
             {!! $linker->link($post->content) !!}
         </div>
 

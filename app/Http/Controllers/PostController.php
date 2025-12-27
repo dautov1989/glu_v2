@@ -7,6 +7,33 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        $sortBy = request()->get('sort', 'date_desc');
+        $postsQuery = Post::where('is_published', true);
+
+        switch ($sortBy) {
+            case 'date_asc':
+                $postsQuery->orderBy('published_at', 'asc');
+                break;
+            case 'date_desc':
+                $postsQuery->orderBy('published_at', 'desc');
+                break;
+            case 'views':
+                $postsQuery->orderBy('views', 'desc');
+                break;
+            case 'title':
+                $postsQuery->orderBy('title', 'asc');
+                break;
+            default:
+                $postsQuery->orderBy('published_at', 'desc');
+        }
+
+        $posts = $postsQuery->paginate(12)->appends(['sort' => $sortBy]);
+
+        return view('articles.index', compact('posts', 'sortBy'));
+    }
+
     public function show($slug)
     {
         $post = Post::where('slug', $slug)

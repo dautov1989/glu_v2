@@ -42,7 +42,7 @@
             }, 300);
         }
     " class="min-h-screen bg-gradient-to-br from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 scroll-mt-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <!-- Breadcrumbs -->
             <nav class="mb-6">
                 <ol class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
@@ -75,28 +75,26 @@
                     <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 dark:from-cyan-950/20 dark:to-blue-900/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
 
                     {{-- Main Header (Root) --}}
-                    <div class="relative z-10 flex flex-row md:flex-col items-center gap-4">
-                        {{-- Wide Image Container for 16:9 --}}
-                        @if(file_exists(public_path('images/placeholders/' . $category->slug . '.png')))
-                            <div class="w-20 md:w-full max-w-md md:mx-auto overflow-hidden rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 shadow-lg border border-cyan-100 dark:border-cyan-800/30 flex-shrink-0" style="aspect-ratio: 16/9;">
-                                <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain p-2 md:p-4 group-hover/card:scale-105 transition-transform duration-500">
-                            </div>
-                        @else
-                            <div class="w-16 h-16 md:w-32 md:h-32 md:mx-auto flex-shrink-0 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 md:w-16 md:h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    <div class="relative z-10 flex items-start gap-4 md:gap-6">
+                        {{-- Image Container (Left) --}}
+                        <div class="shrink-0 w-20 h-20 md:w-28 md:h-28 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 border border-cyan-100 dark:border-cyan-800/30 flex items-center justify-center p-2">
+                            @if(file_exists(public_path('images/placeholders/' . $category->slug . '.png')))
+                                <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain">
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 md:w-14 md:h-14 text-cyan-600 dark:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                 </svg>
-                            </div>
-                        @endif
+                            @endif
+                        </div>
                         
-                        {{-- Content --}}
-                        <div class="flex-1 min-w-0 text-left md:text-center">
-                            <h1 class="text-xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight mb-1 md:mb-3 leading-tight">
+                        {{-- Content (Right) --}}
+                        <div class="flex-1 min-w-0 pt-1">
+                            <h1 class="text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight mb-2">
                                 {{ $category->title }}
                             </h1>
                             
                             @if($category->description)
-                                <p class="text-xs sm:text-base text-zinc-600 dark:text-zinc-400 max-w-3xl md:mx-auto leading-relaxed line-clamp-2 md:line-clamp-none">
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
                                     {{ $category->description }}
                                 </p>
                             @endif
@@ -295,7 +293,7 @@
                                 {{-- Content Container --}}
                                 <div :class="{ 
                                     'p-2 sm:p-4 sm:pb-16': viewMode === 'grid', 
-                                    'p-2 sm:p-4 pl-3 sm:pl-4 flex justify-center': viewMode === 'list' 
+                                    'p-2 sm:px-4 sm:py-2 pl-3 sm:pl-4': viewMode === 'list' 
                                 }" class="flex flex-col flex-1 relative min-w-0">
                                     
                                     {{-- Meta --}}

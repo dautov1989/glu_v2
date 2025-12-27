@@ -16,6 +16,7 @@ class SearchController extends Controller
         }
 
         $posts = Post::where('is_published', true)
+            ->with('category')
             ->where(function ($q) use ($query) {
                 $q->where('title', 'like', "%{$query}%")
                     ->orWhere('content', 'like', "%{$query}%")
