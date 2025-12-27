@@ -31,8 +31,15 @@
     <div x-data x-init="
         if (window.innerWidth < 768) {
             setTimeout(() => {
-                $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+                const target = document.getElementById('materials-start');
+                if (target) {
+                    const yOffset = -100; // Отступ под хедер (80px) + воздух
+                    const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({top: y, behavior: 'smooth'});
+                } else {
+                    $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 300);
         }
     " class="min-h-screen bg-gradient-to-br from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -178,7 +185,7 @@
                         localStorage.setItem('postsViewMode', mode);
                     }
                 }">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+                    <div id="materials-start" class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
                         <h2 class="text-lg font-semibold text-zinc-800 dark:text-zinc-200 flex items-center">
                             <span class="w-1 h-6 bg-cyan-500 rounded-full mr-3"></span>
                             Материалы в этой категории

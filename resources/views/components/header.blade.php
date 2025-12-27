@@ -252,29 +252,41 @@
                                     class="mt-1 ml-3 space-y-1">
                                     <template x-for="type in subSection.children" :key="type.label">
                                         <div>
-                                            <button @click="openType = openType === type.label ? null : type.label"
-                                                class="w-full flex justify-between items-center px-3 py-1.5 text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                                                <span x-text="type.label"></span>
-                                                <template x-if="type.children && type.children.length > 0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                        class="w-3 h-3 transition-transform duration-200"
-                                                        :class="{ 'rotate-180': openType === type.label }">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                                    </svg>
-                                                </template>
-                                            </button>
+                                            <!-- Case 1: Has children -> Accordion Button -->
+                                            <template x-if="type.children && type.children.length > 0">
+                                                <div>
+                                                    <button
+                                                        @click="openType = openType === type.label ? null : type.label"
+                                                        class="w-full flex justify-between items-center px-3 py-1.5 text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                                        <span x-text="type.label"></span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                            class="w-3 h-3 transition-transform duration-200"
+                                                            :class="{ 'rotate-180': openType === type.label }">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    </button>
 
-                                            <!-- Level 4: Details -->
-                                            <div x-show="openType === type.label" x-collapse
-                                                class="mt-1 ml-3 space-y-0.5">
-                                                <template x-for="detail in type.children" :key="detail.label">
-                                                    <a :href="detail.url || '#'"
-                                                        class="block px-3 py-1 text-xs text-zinc-600 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
-                                                        x-text="detail.label"></a>
-                                                </template>
-                                            </div>
+                                                    <!-- Level 4: Details -->
+                                                    <div x-show="openType === type.label" x-collapse
+                                                        class="mt-1 ml-3 space-y-0.5">
+                                                        <template x-for="detail in type.children" :key="detail.label">
+                                                            <a :href="detail.url || '#'"
+                                                                class="block px-3 py-1 text-xs text-zinc-600 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                                                                x-text="detail.label"></a>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </template>
+
+                                            <!-- Case 2: No children -> Direct Link -->
+                                            <template x-if="!type.children || type.children.length === 0">
+                                                <a :href="type.url || '#'"
+                                                    class="block w-full px-3 py-1.5 text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-left">
+                                                    <span x-text="type.label"></span>
+                                                </a>
+                                            </template>
                                         </div>
                                     </template>
                                 </div>
