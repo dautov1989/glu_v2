@@ -36,12 +36,12 @@
 
 @section('content')
     <div x-data x-init="
-                                                    if (window.innerWidth < 768) {
-                                                        setTimeout(() => {
-                                                            $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                                        }, 100);
-                                                    }
-                                                "
+                                                        if (window.innerWidth < 768) {
+                                                            setTimeout(() => {
+                                                                $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                            }, 100);
+                                                        }
+                                                    "
         class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
         <!-- Breadcrumbs -->
         <nav class="mb-8">
@@ -93,11 +93,9 @@
             </div>
 
             <!-- Title with gradient -->
-            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-5 leading-tight">
-                <span
-                    class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 dark:from-zinc-50 dark:via-cyan-100 dark:to-zinc-50 bg-clip-text text-transparent">
-                    {{ $post->title }}
-                </span>
+            <!-- Title -->
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-5 leading-tight text-zinc-900 dark:text-zinc-100">
+                {{ $post->title }}
             </h1>
 
             <!-- Meta information with icons -->
@@ -135,15 +133,15 @@
         @inject('linker', 'App\Services\Seo\InternalLinker')
         <div class="article-content prose prose-zinc dark:prose-invert max-w-none prose-headings:leading-tight prose-h1:text-xl prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h2:text-xl md:prose-h3:text-lg"
             x-data x-init="
-                                        // Wrap tables for responsiveness
-                                        $el.querySelectorAll('table').forEach(table => {
-                                            if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                                            const wrapper = document.createElement('div');
-                                            wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                                            table.parentNode.insertBefore(wrapper, table);
-                                            wrapper.appendChild(table);
-                                        });
-                                     ">
+                                            // Wrap tables for responsiveness
+                                            $el.querySelectorAll('table').forEach(table => {
+                                                if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                                                const wrapper = document.createElement('div');
+                                                wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                                                table.parentNode.insertBefore(wrapper, table);
+                                                wrapper.appendChild(table);
+                                            });
+                                         ">
             {!! $linker->link($post->content) !!}
         </div>
 
