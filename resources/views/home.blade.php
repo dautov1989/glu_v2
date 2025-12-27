@@ -79,7 +79,7 @@
                          x-transition:leave="transition ease-in duration-700 transform absolute inset-0"
                          x-transition:leave-start="opacity-100 scale-100"
                          x-transition:leave-end="opacity-0 scale-105"
-                         class="absolute inset-0 w-full h-full flex items-center justify-center text-center p-12 overflow-hidden">
+                         class="absolute inset-0 w-full h-full flex items-center justify-center text-center p-4 md:p-12 overflow-hidden">
                         
                         <!-- Background Image -->
                         <img :src="slide.image" class="absolute inset-0 w-full h-full object-cover" alt="Slider Background">
@@ -88,55 +88,55 @@
                         <div class="absolute inset-0 bg-gradient-to-br" :class="slide.bgGradient"></div>
                         
                         <!-- Content -->
-                        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
-                            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-semibold border border-white/30 shadow-lg">
+                        <div class="relative z-10 max-w-3xl mx-auto space-y-4 md:space-y-6 flex flex-col items-center justify-center h-full">
+                            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold border border-white/30 shadow-lg">
                                 <span x-text="slide.badge"></span>
                             </div>
                             
-                            <h1 class="text-5xl md:text-7xl font-bold text-white drop-shadow-lg">
+                            <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-lg leading-tight">
                                 <span x-text="slide.title"></span>
-                                <br>
-                                <span class="text-cyan-300" x-text="slide.subtitle"></span>
+                                <br class="hidden sm:block">
+                                <span class="text-cyan-300 block sm:inline mt-1 sm:mt-0" x-text="slide.subtitle"></span>
                             </h1>
                             
-                            <p class="text-xl text-white/90 max-w-2xl mx-auto font-medium drop-shadow-md" x-text="slide.description"></p>
+                            <p class="text-sm sm:text-lg md:text-xl text-white/90 max-w-xl md:max-w-2xl mx-auto font-medium drop-shadow-md px-8 md:px-0" x-text="slide.description"></p>
                             
-                            <div class="flex flex-wrap gap-4 justify-center pt-6">
-                                <a href="{{ route('articles.index') }}" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/40 hover:shadow-cyan-400/60 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 border border-white/20">
+                            <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-6 w-full sm:w-auto px-4 sm:px-0">
+                                <a href="{{ route('articles.index') }}" class="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/40 hover:shadow-cyan-400/60 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 border border-white/20 text-sm md:text-base">
                                     <span>Начать изучение</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 md:w-5 md:h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                                     </svg>
                                 </a>
-                                <button class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-xl border border-white/30 hover:border-white/50 shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                <a href="{{ route('home') }}" class="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold rounded-xl border border-white/30 hover:border-white/50 shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-sm md:text-base">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 md:w-5 md:h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                                     </svg>
                                     <span>О проекте</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </template>
                 
                 <!-- Navigation Arrows -->
-                <button @click="prev()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 dark:bg-zinc-800/80 hover:bg-white dark:hover:bg-zinc-800 rounded-full flex items-center justify-center text-zinc-700 dark:text-zinc-300 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <button @click="prev()" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/40 md:bg-white/80 dark:bg-zinc-800/40 dark:md:bg-zinc-800/80 hover:bg-white md:hover:bg-white dark:hover:bg-zinc-800 rounded-full flex items-center justify-center text-white md:text-zinc-700 dark:md:text-zinc-300 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 md:w-5 md:h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                     </svg>
                 </button>
-                <button @click="next()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 dark:bg-zinc-800/80 hover:bg-white dark:hover:bg-zinc-800 rounded-full flex items-center justify-center text-zinc-700 dark:text-zinc-300 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <button @click="next()" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/40 md:bg-white/80 dark:bg-zinc-800/40 dark:md:bg-zinc-800/80 hover:bg-white md:hover:bg-white dark:hover:bg-zinc-800 rounded-full flex items-center justify-center text-white md:text-zinc-700 dark:md:text-zinc-300 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 md:w-5 md:h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                     </svg>
                 </button>
                 
                 <!-- Dots Navigation -->
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                <div class="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
                     <template x-for="(slide, index) in slides" :key="index">
                         <button @click="goTo(index)" 
-                                class="w-2 h-2 rounded-full transition-all duration-300"
-                                :class="currentSlide === index ? 'bg-cyan-500 w-8' : 'bg-zinc-400 hover:bg-cyan-400'">
+                                class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300"
+                                :class="currentSlide === index ? 'bg-cyan-500 w-6 md:w-8' : 'bg-white/50 md:bg-zinc-400 hover:bg-cyan-400'">
                         </button>
                     </template>
                 </div>
