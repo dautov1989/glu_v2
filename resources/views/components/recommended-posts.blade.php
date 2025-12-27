@@ -18,29 +18,33 @@
     <div class="flex flex-col gap-3">
         @foreach($posts as $post)
             <a href="{{ route('post.show', $post->slug) }}" 
-               class="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group">
+               class="flex flex-row items-stretch gap-3 p-3 sm:p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group">
                 
                 {{-- Image Thumbnail --}}
-                <div class="flex-shrink-0 relative overflow-hidden rounded-lg w-16 h-12 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+                <div class="flex-shrink-0 relative overflow-hidden rounded-lg w-24 sm:w-32 aspect-video bg-zinc-100 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-700">
                     @if($post->image)
                         <img src="{{ $post->image }}" alt="{{ $post->title }}"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                             loading="lazy">
                     @else
                          <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-80"
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 opacity-80"
                             loading="lazy">
                     @endif
                 </div>
                 
                 {{-- Content --}}
-                <div class="flex-1 min-w-0">
-                    <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors truncate">
+                <div class="flex-1 min-w-0 flex flex-col justify-center">
+                    <h3 class="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors line-clamp-2 leading-tight mb-1">
                         {{ $post->title }}
                     </h3>
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1">
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 hidden sm:block">
                         {{ $post->excerpt }}
                     </p>
+                    {{-- Mobile Date --}}
+                    <div class="sm:hidden text-[10px] text-zinc-400 mt-1">
+                        {{ $post->published_at->format('d.m.Y') }}
+                    </div>
                 </div>
 
                 {{-- Meta & Action --}}
