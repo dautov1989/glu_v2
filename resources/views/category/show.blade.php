@@ -53,18 +53,16 @@
                         </a>
                     </li>
                     @foreach($category->getBreadcrumbs() as $breadcrumb)
+                        @continue($loop->last)
                         <li class="flex items-center">
-                            <svg class="w-3 h-3 mx-1 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-3 h-3 mx-1 text-zinc-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
-                            @if($loop->last)
-                                <span class="font-medium text-zinc-700 dark:text-zinc-300">{{ $breadcrumb->title }}</span>
-                            @else
-                                <a href="{{ route('category.show', $breadcrumb->slug) }}"
-                                    class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
-                                    {{ $breadcrumb->title }}
-                                </a>
-                            @endif
+                            <a href="{{ route('category.show', $breadcrumb->slug) }}"
+                                class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors truncate max-w-[70px] sm:max-w-none"
+                                title="{{ $breadcrumb->title }}">
+                                {{ $breadcrumb->title }}
+                            </a>
                         </li>
                     @endforeach
                 </ol>
@@ -77,28 +75,28 @@
                     <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 dark:from-cyan-950/20 dark:to-blue-900/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
 
                     {{-- Main Header (Root) --}}
-                    <div class="relative z-10 flex flex-col gap-4">
+                    <div class="relative z-10 flex flex-row md:flex-col items-center gap-4">
                         {{-- Wide Image Container for 16:9 --}}
                         @if(file_exists(public_path('images/placeholders/' . $category->slug . '.png')))
-                            <div class="w-full max-w-md mx-auto overflow-hidden rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 shadow-lg border border-cyan-100 dark:border-cyan-800/30" style="aspect-ratio: 16/9;">
-                                <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain p-4 group-hover/card:scale-105 transition-transform duration-500">
+                            <div class="w-20 md:w-full max-w-md md:mx-auto overflow-hidden rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 shadow-lg border border-cyan-100 dark:border-cyan-800/30 flex-shrink-0" style="aspect-ratio: 16/9;">
+                                <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain p-2 md:p-4 group-hover/card:scale-105 transition-transform duration-500">
                             </div>
                         @else
-                            <div class="w-32 h-32 mx-auto rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div class="w-16 h-16 md:w-32 md:h-32 md:mx-auto flex-shrink-0 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 md:w-16 md:h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                 </svg>
                             </div>
                         @endif
                         
                         {{-- Content --}}
-                        <div class="flex-1 min-w-0 text-center">
-                            <h1 class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight mb-3">
+                        <div class="flex-1 min-w-0 text-left md:text-center">
+                            <h1 class="text-xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight mb-1 md:mb-3 leading-tight">
                                 {{ $category->title }}
                             </h1>
                             
                             @if($category->description)
-                                <p class="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto leading-relaxed">
+                                <p class="text-xs sm:text-base text-zinc-600 dark:text-zinc-400 max-w-3xl md:mx-auto leading-relaxed line-clamp-2 md:line-clamp-none">
                                     {{ $category->description }}
                                 </p>
                             @endif
@@ -296,7 +294,7 @@
 
                                 {{-- Content Container --}}
                                 <div :class="{ 
-                                    'p-2 sm:p-4': viewMode === 'grid', 
+                                    'p-2 sm:p-4 sm:pb-16': viewMode === 'grid', 
                                     'p-2 sm:p-4 pl-3 sm:pl-4 flex justify-center': viewMode === 'list' 
                                 }" class="flex flex-col flex-1 relative min-w-0">
                                     
@@ -316,7 +314,7 @@
                                     {{-- Title --}}
                                     <h3 class="font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight"
                                         :class="{ 
-                                            'text-xs sm:text-base mb-2 line-clamp-3': viewMode === 'grid', 
+                                            'text-xs sm:text-sm mb-2 line-clamp-4': viewMode === 'grid', 
                                             'text-sm sm:text-lg mb-0 sm:mb-1 line-clamp-3 sm:line-clamp-2': viewMode === 'list' 
                                         }">
                                         <a href="{{ route('post.show', $post->slug) }}">
@@ -327,7 +325,7 @@
                                     {{-- Excerpt (Hidden on Mobile) --}}
                                     <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                                        :class="{ 
-                                           'hidden sm:block line-clamp-3 flex-1 mb-4': viewMode === 'grid', 
+                                           'hidden': viewMode === 'grid', 
                                            'hidden sm:block line-clamp-2 mb-0': viewMode === 'list' 
                                        }">
                                         {{ $post->excerpt }}
@@ -336,7 +334,7 @@
                                     {{-- Footer (Hidden on Mobile) --}}
                                     <div class="border-t border-zinc-100 dark:border-zinc-700/50 items-center justify-between"
                                         :class="{ 
-                                            'hidden sm:flex mt-auto pt-3': viewMode === 'grid', 
+                                            'hidden sm:flex absolute bottom-4 left-4 right-4 pt-3': viewMode === 'grid', 
                                             'hidden sm:flex mt-2 pt-2': viewMode === 'list' 
                                         }">
                                         <a href="{{ route('post.show', $post->slug) }}"
