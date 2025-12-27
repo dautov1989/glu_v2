@@ -75,7 +75,6 @@
 
 {{-- Additional SEO Meta Tags --}}
 <meta name="author" content="{{ $author ?? $siteTitle }}">
-<meta name="generator" content="Laravel {{ app()->version() }}">
 
 {{-- Favicon and Icons (already in head.blade.php, but good to have here) --}}
 <link rel="icon" href="/favicon.ico" sizes="any">
