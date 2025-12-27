@@ -36,16 +36,18 @@
 
 @section('content')
     <div x-data x-init="
-                                                        if (window.innerWidth < 768) {
-                                                            setTimeout(() => {
-                                                                $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                                            }, 100);
-                                                        }
-                                                    "
-        class="bg-white dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
+                                        if (window.innerWidth < 768) {
+                                            setTimeout(() => {
+                                                const yOffset = -100;
+                                                const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                                window.scrollTo({top: y, behavior: 'smooth'});
+                                            }, 300);
+                                        }
+                                    "
+        class="bg-white dark:bg-zinc-800 rounded-2xl p-4 md:p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
         <!-- Breadcrumbs -->
-        <nav class="mb-8">
-            <ol class="flex flex-wrap items-center gap-2 text-sm">
+        <nav class="mb-4 md:mb-8">
+            <ol class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
                 <li>
                     <a href="{{ route('home') }}"
                         class="text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300">
@@ -53,7 +55,7 @@
                     </a>
                 </li>
                 @foreach($post->category->getBreadcrumbs() as $breadcrumb)
-                    <li class="flex items-center">
+                    <li class="hidden sm:flex items-center">
                         <svg class="w-4 h-4 mx-1 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
@@ -64,26 +66,27 @@
                     </li>
                 @endforeach
                 <li class="flex items-center">
-                    <svg class="w-4 h-4 mx-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 mx-1 sm:mx-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
-                    <span class="text-zinc-500 dark:text-zinc-400 truncate max-w-[200px]">{{ $post->title }}</span>
+                    <span
+                        class="text-zinc-500 dark:text-zinc-400 truncate max-w-[150px] sm:max-w-[200px]">{{ $post->title }}</span>
                 </li>
             </ol>
         </nav>
 
         <!-- Article Header -->
-        <header class="mb-10 relative">
+        <header class="mb-0 md:mb-10 relative">
             <!-- Decorative accent line -->
             <div
                 class="absolute -left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-blue-500 to-cyan-500 rounded-full hidden md:block">
             </div>
 
             <!-- Category Badge -->
-            <div class="mb-4">
+            <div class="mb-3 md:mb-4">
                 <a href="{{ route('category.show', $post->category->slug) }}"
-                    class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30 text-cyan-700 dark:text-cyan-300 rounded-full text-sm font-semibold border border-cyan-200 dark:border-cyan-800/50 hover:border-cyan-400 dark:hover:border-cyan-600 transition-all duration-300 hover:shadow-md hover:shadow-cyan-500/20">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30 text-cyan-700 dark:text-cyan-300 rounded-full text-xs md:text-sm font-semibold border border-cyan-200 dark:border-cyan-800/50 hover:border-cyan-400 dark:hover:border-cyan-600 transition-all duration-300 hover:shadow-md hover:shadow-cyan-500/20">
+                    <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
                         </path>
@@ -94,15 +97,17 @@
 
             <!-- Title with gradient -->
             <!-- Title -->
-            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-5 leading-tight text-zinc-900 dark:text-zinc-100">
+            <h1
+                class="text-lg sm:text-2xl md:text-3xl font-bold mb-3 md:mb-5 leading-tight text-zinc-900 dark:text-zinc-100">
                 {{ $post->title }}
             </h1>
 
             <!-- Meta information with icons -->
-            <div class="flex flex-wrap items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+            <div class="flex flex-wrap items-center gap-3 md:gap-4 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
                 <div
-                    class="flex items-center gap-2 px-3 py-1.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700">
-                    <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-3 md:py-1.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700">
+                    <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-cyan-500" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                         </path>
@@ -111,8 +116,9 @@
                 </div>
 
                 <div
-                    class="flex items-center gap-2 px-3 py-1.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700">
-                    <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-3 md:py-1.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700">
+                    <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-cyan-500" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -124,28 +130,42 @@
             </div>
 
             <!-- Decorative bottom line -->
-            <div class="mt-6 h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></div>
+            <div class="mt-2 md:mt-6 h-1 w-16 md:w-24 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></div>
         </header>
 
 
 
         <!-- Content -->
         @inject('linker', 'App\Services\Seo\InternalLinker')
-        <div class="article-content prose prose-zinc dark:prose-invert max-w-none prose-headings:leading-tight prose-h1:text-xl prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h2:text-xl md:prose-h3:text-lg"
+        <div class="article-content max-w-none prose prose-zinc dark:prose-invert prose-headings:leading-tight prose-h1:text-xl prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h2:text-xl md:prose-h3:text-lg"
             x-data x-init="
-                                            // Wrap tables for responsiveness
-                                            $el.querySelectorAll('table').forEach(table => {
-                                                if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                                                const wrapper = document.createElement('div');
-                                                wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                                                table.parentNode.insertBefore(wrapper, table);
-                                                wrapper.appendChild(table);
-                                            });
-                                         ">
+                                                                            // Wrap tables for responsiveness
+                                                                            $el.querySelectorAll('table').forEach(table => {
+                                                                                if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                                                                                const wrapper = document.createElement('div');
+                                                                                wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                                                                                table.parentNode.insertBefore(wrapper, table);
+                                                                                wrapper.appendChild(table);
+                                                                            });
+                                                                         ">
             {!! $linker->link($post->content) !!}
         </div>
 
         <style>
+            /* Remove top margin from the first element and its first child to avoid double spacing */
+            .article-content> :first-child,
+            .article-content> :first-child> :first-child {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+
+            /* Neutralize inner wrapper constraints (fixes indents and width issues) */
+            .article-content>div {
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
             /* Beautiful List Styles */
             .article-content ul {
                 list-style: none;
