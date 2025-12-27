@@ -131,15 +131,7 @@
                     </svg>
                 </button>
                 
-                <!-- Dots Navigation -->
-                <div class="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                    <template x-for="(slide, index) in slides" :key="index">
-                        <button @click="goTo(index)" 
-                                class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300"
-                                :class="currentSlide === index ? 'bg-cyan-500 w-6 md:w-8' : 'bg-white/50 md:bg-zinc-400 hover:bg-cyan-400'">
-                        </button>
-                    </template>
-                </div>
+
             </div>
         </div>
 
