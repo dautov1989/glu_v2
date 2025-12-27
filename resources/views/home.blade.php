@@ -93,7 +93,7 @@
                                 <span x-text="slide.badge"></span>
                             </div>
                             
-                            <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-lg leading-tight">
+                            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg leading-tight">
                                 <span x-text="slide.title"></span>
                                 <br class="hidden sm:block">
                                 <span class="text-cyan-300 block sm:inline mt-1 sm:mt-0" x-text="slide.subtitle"></span>
