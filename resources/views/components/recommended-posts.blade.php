@@ -4,7 +4,7 @@
 ])
 
 @if($posts->count() > 0)
-<div class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-700">
+<div class="mt-12 pt-8 border-t border-cyan-100/50 dark:border-cyan-900/20">
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100 flex items-center">
             <span class="w-1 h-8 bg-gradient-to-b from-cyan-500 to-blue-500 rounded-full mr-3"></span>
@@ -18,10 +18,10 @@
     <div class="flex flex-col gap-3">
         @foreach($posts as $post)
             <a href="{{ route('post.show', $post->slug) }}" 
-               class="flex flex-row items-stretch gap-3 p-3 sm:p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group">
+               class="flex flex-row items-stretch gap-3 p-3 sm:p-4 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 bg-white dark:bg-zinc-800 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group">
                 
                 {{-- Image Thumbnail --}}
-                <div class="flex-shrink-0 relative overflow-hidden rounded-lg w-24 sm:w-32 aspect-video bg-zinc-100 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-700">
+                <div class="flex-shrink-0 relative overflow-hidden rounded-lg w-24 sm:w-32 aspect-video bg-zinc-100 dark:bg-zinc-900/50 border border-cyan-100/50 dark:border-cyan-900/20">
                     @if($post->image)
                         <img src="{{ $post->image }}" alt="{{ $post->title }}"
                             class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
@@ -62,7 +62,7 @@
                         </span>
                     </div>
                      
-                    <div class="w-8 h-8 rounded-full border border-zinc-200 dark:border-zinc-600 flex items-center justify-center text-zinc-400 group-hover:border-cyan-500 group-hover:text-cyan-500 group-hover:rotate-45 transition-all duration-300">
+                    <div class="w-8 h-8 rounded-full border border-cyan-200/50 dark:border-cyan-800/30 flex items-center justify-center text-zinc-400 group-hover:border-cyan-500 group-hover:text-cyan-500 group-hover:rotate-45 transition-all duration-300">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5H9m10 0v10" />
                         </svg>
