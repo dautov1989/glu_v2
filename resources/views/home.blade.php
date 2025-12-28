@@ -10,7 +10,7 @@
 @endsection
 
 <x-layouts.app title="Home">
-    <div class="p-8 space-y-8 bg-white dark:bg-zinc-900">
+    <div class="p-4 sm:p-8 space-y-8 bg-white dark:bg-zinc-900 rounded-2xl border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm shadow-cyan-200/10 dark:shadow-cyan-950/10">
         
         <!-- Hero Slider Section -->
         <div class="relative" 
@@ -70,7 +70,7 @@
              @mouseleave="startAutoplay()">
             
             <!-- Slider Container -->
-            <div class="relative overflow-hidden rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 shadow-lg" style="min-height: 500px;">
+            <div class="relative overflow-hidden rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 shadow-lg" style="min-height: 500px;">
                 <template x-for="(slide, index) in slides" :key="index">
                     <div x-show="currentSlide === index"
                          x-transition:enter="transition ease-out duration-700 transform"
@@ -142,7 +142,7 @@
                 ['icon' => '👥', 'number' => $usersCount >= 1000 ? $usersCount : '1000+', 'label' => 'Пользователей'],
                 ['icon' => '⭐', 'number' => '1000+', 'label' => 'Историй успеха']
             ] as $stat)
-                <div class="bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <div class="bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
                     <div class="text-5xl mb-3">{{ $stat['icon'] }}</div>
                     <div class="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-1">
                         {{ $stat['number'] }}
@@ -162,7 +162,7 @@
                 ['image' => 'diabet-2-tipa.png', 'title' => 'Диабет 2 типа', 'desc' => 'Медикаменты и контроль веса', 'slug' => 'diabet-2-tipa'],
                 ['image' => 'gadzety-i-rasxodniki.png', 'title' => 'Гаджеты и Расходники', 'desc' => 'Современные устройства и аксессуары', 'slug' => 'gadzety-i-rasxodniki']
             ] as $feature)
-                <a href="{{ route('category.show', $feature['slug']) }}" class="block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 overflow-hidden shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-[1.02] group">
+                <a href="{{ route('category.show', $feature['slug']) }}" class="block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 overflow-hidden shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-[1.02] group">
                     <div class="flex items-center gap-0">
                         <!-- Wide Image Container for 16:9 -->
                         <div class="w-40 flex-shrink-0 overflow-hidden bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 relative" style="aspect-ratio: 16/9;">
@@ -210,9 +210,9 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @foreach($latestPosts as $post)
-                <a href="{{ route('post.show', $post->slug) }}" class="group block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/30 dark:border-cyan-800/20 overflow-hidden shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-105 flex flex-col h-full relative">
+                <a href="{{ route('post.show', $post->slug) }}" class="group block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 overflow-hidden shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-105 flex flex-col h-full relative">
                     <!-- Category Header (Top Center) -->
-                    <div class="px-3 py-1.5 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/30">
+                    <div class="px-3 py-1.5 border-b border-cyan-100/50 dark:border-cyan-900/20 bg-zinc-50/50 dark:bg-zinc-800/30">
                         <div class="text-[10px] font-bold uppercase tracking-wider text-center text-cyan-600 dark:text-cyan-400 truncate">
                             {{ $post->category->title }}
                         </div>
@@ -233,7 +233,7 @@
                             {{ $post->title }}
                         </h3>
 
-                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] text-zinc-400 border-t border-zinc-100 dark:border-zinc-800 pt-3">
+                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] text-zinc-400 border-t border-cyan-100/50 dark:border-cyan-900/20 pt-3">
                             <div class="flex items-center gap-1.5">
                                 <span>{{ $post->published_at->format('d.m.Y') }}</span>
                             </div>
