@@ -41,7 +41,7 @@
                 }
             }, 300);
         }
-    " class="min-h-screen bg-gradient-to-br from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 scroll-mt-24">
+    " class="min-h-screen bg-white dark:bg-zinc-900 rounded-2xl border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm shadow-cyan-200/10 dark:shadow-cyan-950/10 scroll-mt-24 pt-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
             {{-- Smart Breadcrumbs with Arrow Navigation --}}
             <div x-data="{ 
