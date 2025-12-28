@@ -36,47 +36,112 @@
 
 @section('content')
     <div x-data x-init="
-                                                    if (window.innerWidth < 768) {
-                                                        setTimeout(() => {
-                                                            const yOffset = -100;
-                                                            const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                                                            window.scrollTo({top: y, behavior: 'smooth'});
-                                                        }, 300);
-                                                    }
-                                                "
-        class="bg-white dark:bg-zinc-800 rounded-2xl p-4 md:p-8 border border-zinc-200 dark:border-zinc-700 shadow-sm scroll-mt-24">
+                                                                                    if (window.innerWidth < 768) {
+                                                                                        setTimeout(() => {
+                                                                                            const yOffset = -100;
+                                                                                            const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                                                                            window.scrollTo({top: y, behavior: 'smooth'});
+                                                                                        }, 300);
+                                                                                    }
+                                                                                "
+        class="bg-white dark:bg-zinc-800 rounded-2xl p-4 md:p-8 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm scroll-mt-24">
         <!-- Article Header -->
         <header class="mb-6 md:mb-8">
-            <!-- Category & Breadcrumbs Integration -->
-            <div class="mb-4">
-                <nav class="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
-                    <a href="{{ route('home') }}" class="hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
-                        Главная
-                    </a>
+            {{-- Smart Breadcrumbs with Arrow Navigation --}}
+            <div x-data="{ 
+                                        canScrollLeft: false, 
+                                        canScrollRight: false,
+                                        updateScrollState() {
+                                            const el = this.$refs.scrollContainer;
+                                            if (!el) return;
+                                            // Добавляем микро-задержку для точности отрисовки
+                                            this.canScrollLeft = el.scrollLeft > 2;
+                                            this.canScrollRight = el.scrollWidth > (el.clientWidth + el.scrollLeft + 2);
+                                        },
+                                        scroll(direction) {
+                                            const el = this.$refs.scrollContainer;
+                                            const scrollAmount = Math.min(el.clientWidth * 0.8, 300);
+                                            el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+                                        }
+                                    }" x-init="
+                                        $nextTick(() => updateScrollState());
+                                        // Следим за изменением размера для пересчета стрелок
+                                        new ResizeObserver(() => updateScrollState()).observe($refs.scrollContainer);
+                                    " @resize.window.debounce.100ms="updateScrollState()" class="relative group mb-6">
 
-                    @if(count($post->category->getBreadcrumbs()) > 0)
-                        <svg class="w-3 h-3 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    @endif
+                {{-- Left Arrow --}}
+                <button x-show="canScrollLeft" x-cloak x-transition.opacity @click="scroll('left')"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-white dark:bg-zinc-800 shadow-xl rounded-full border-2 border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 transition-all duration-200 sm:-ml-[23px] sm:-mt-[2px]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
 
-                    @foreach($post->category->getBreadcrumbs() as $breadcrumb)
-                        @if(!$loop->last)
-                            <a href="{{ route('category.show', $breadcrumb->slug) }}"
-                                class="hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
-                                {{ $breadcrumb->title }}
+                {{-- Scrollable Container --}}
+                <nav x-ref="scrollContainer" @scroll.debounce.50ms="updateScrollState()"
+                    class="overflow-x-auto scroll-smooth" style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <style>
+                        [x-ref='scrollContainer']::-webkit-scrollbar {
+                            display: none;
+                        }
+                    </style>
+                    <ol class="flex items-center gap-2 min-w-max pb-1 px-1">
+                        <li>
+                            <a href="{{ route('home') }}"
+                                class="flex items-center h-9 px-4 rounded-xl bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm text-zinc-600 dark:text-zinc-400 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 group">
+                                <svg class="w-3.5 h-3.5 mr-2 text-zinc-400 group-hover:text-cyan-500 transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                <span class="text-sm font-semibold">Главная</span>
                             </a>
-                            <svg class="w-3 h-3 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </li>
+
+                        @foreach($post->category->getBreadcrumbs() as $breadcrumb)
+                            <li class="flex items-center">
+                                <svg class="w-3.5 h-3.5 text-zinc-300 dark:text-zinc-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </li>
+                            <li>
+                                <a href="{{ route('category.show', $breadcrumb->slug) }}"
+                                    class="flex items-center h-9 px-4 rounded-xl bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm text-zinc-600 dark:text-zinc-400 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 group">
+                                    <span class="text-sm font-semibold">{{ $breadcrumb->title }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+
+                        <li class="flex items-center">
+                            <svg class="w-3.5 h-3.5 text-zinc-300 dark:text-zinc-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
                             </svg>
-                        @else
-                            <a href="{{ route('category.show', $breadcrumb->slug) }}"
-                                class="font-semibold text-cyan-600 dark:text-cyan-400 hover:underline">
-                                {{ $breadcrumb->title }}
-                            </a>
-                        @endif
-                    @endforeach
+                        </li>
+                        <li>
+                            <div
+                                class="flex items-center h-9 px-4 rounded-xl bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200/50 dark:border-cyan-800/30 text-cyan-600 dark:text-cyan-400 shadow-sm">
+                                <svg class="w-3.5 h-3.5 mr-2 text-cyan-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                <span class="text-sm font-bold tracking-tight">Статья</span>
+                            </div>
+                        </li>
+                    </ol>
                 </nav>
+
+                {{-- Right Arrow --}}
+                <button x-show="canScrollRight" x-cloak x-transition.opacity @click="scroll('right')"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-white dark:bg-zinc-800 shadow-xl rounded-full border-2 border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 transition-all duration-200 sm:-mr-[23px] sm:-mt-[2px]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
 
             <!-- Title -->
@@ -116,15 +181,15 @@
         @inject('linker', 'App\Services\Seo\InternalLinker')
         <div class="article-content max-w-none prose prose-zinc dark:prose-invert prose-headings:leading-tight prose-h1:text-xl prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h2:text-xl md:prose-h3:text-lg"
             x-data x-init="
-                                                                                        // Wrap tables for responsiveness
-                                                                                        $el.querySelectorAll('table').forEach(table => {
-                                                                                            if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                                                                                            const wrapper = document.createElement('div');
-                                                                                            wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                                                                                            table.parentNode.insertBefore(wrapper, table);
-                                                                                            wrapper.appendChild(table);
-                                                                                        });
-                                                                                     ">
+                                                                                                                        // Wrap tables for responsiveness
+                                                                                                                        $el.querySelectorAll('table').forEach(table => {
+                                                                                                                            if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                                                                                                                            const wrapper = document.createElement('div');
+                                                                                                                            wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                                                                                                                            table.parentNode.insertBefore(wrapper, table);
+                                                                                                                            wrapper.appendChild(table);
+                                                                                                                        });
+                                                                                                                     ">
             {!! $linker->link($post->content) !!}
         </div>
 

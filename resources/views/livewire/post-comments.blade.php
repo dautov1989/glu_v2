@@ -1,7 +1,7 @@
 <div
-    class="mt-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-zinc-200/50 dark:border-zinc-800/50">
+    class="mt-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-cyan-200/50 dark:border-cyan-800/30">
     <!-- Header -->
-    <div class="mb-5 pb-4 border-b border-zinc-200 dark:border-zinc-800">
+    <div class="mb-5 pb-4 border-b border-cyan-200/50 dark:border-cyan-800/30">
         <h3 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="size-5 text-cyan-600 dark:text-cyan-400">
@@ -31,7 +31,7 @@
     <!-- Comments List -->
     <div class="space-y-3 mb-6">
         @forelse($comments as $comment)
-            <div class="flex gap-3 p-4 bg-zinc-50/50 dark:bg-zinc-800/30 rounded-xl border border-zinc-200/30 dark:border-zinc-700/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all duration-200"
+            <div class="flex gap-3 p-4 bg-zinc-50/50 dark:bg-zinc-800/30 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all duration-200"
                 wire:key="{{ $comment->id }}">
                 <div class="flex-shrink-0">
                     <!-- Avatar -->
@@ -72,12 +72,12 @@
 
     <!-- Comment Form -->
     @auth
-        <div class="pt-4 border-t border-zinc-200 dark:border-zinc-800">
+        <div class="pt-4 border-t border-cyan-200/50 dark:border-cyan-800/30">
             <form wire:submit="save">
                 <div class="mb-3">
                     <label for="comment" class="sr-only">Ваш комментарий</label>
                     <textarea wire:model="body" id="comment" rows="3"
-                        class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-cyan-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 dark:focus:ring-cyan-400/20 placeholder-zinc-400 dark:placeholder-zinc-500 resize-none transition-all duration-200 px-4 py-3 text-sm"
+                        class="w-full rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-cyan-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 dark:focus:ring-cyan-400/20 placeholder-zinc-400 dark:placeholder-zinc-500 resize-none transition-all duration-200 px-4 py-3 text-sm"
                         placeholder="Напишите ваш комментарий..."></textarea>
                     @error('body')
                         <div class="mt-1.5 flex items-center gap-1.5 text-red-500 text-xs">
@@ -105,7 +105,7 @@
         </div>
     @else
         <div
-            class="pt-4 border-t border-zinc-200 dark:border-zinc-800 p-5 bg-cyan-50/50 dark:bg-cyan-950/20 rounded-xl text-center">
+            class="pt-4 border-t border-cyan-200/50 dark:border-cyan-800/30 p-5 bg-cyan-50/50 dark:bg-cyan-950/20 rounded-xl text-center">
             <div
                 class="mb-3 inline-flex items-center justify-center w-10 h-10 bg-cyan-100 dark:bg-cyan-900/30 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"

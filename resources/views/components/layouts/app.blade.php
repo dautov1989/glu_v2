@@ -15,7 +15,7 @@
             <x-sidebar />
 
             <!-- Main Content -->
-            <main class="flex-1 min-w-0 rounded-lg border border-zinc-200 dark:border-zinc-800">
+            <main class="flex-1 min-w-0">
                 @hasSection('content')
                     @yield('content')
                 @else

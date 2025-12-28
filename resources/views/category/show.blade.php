@@ -25,7 +25,7 @@
 @extends('components.layouts.app')
 
 @section('title', $category->meta_title ?? $category->title . ' | Glucosa')
-@section('meta_description', $category->meta_description ?? $category->description)
+@section('meta_description', $category->meta_description)
 
 @section('content')
     <div x-data x-init="
@@ -42,35 +42,82 @@
             }, 300);
         }
     " class="min-h-screen bg-gradient-to-br from-white via-cyan-50/30 to-white dark:from-zinc-900 dark:via-cyan-950/20 dark:to-zinc-900 scroll-mt-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <!-- Breadcrumbs -->
-            <nav class="mb-6">
-                <ol class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-                    <li>
-                        <a href="{{ route('home') }}"
-                            class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
-                            Главная
-                        </a>
-                    </li>
-                    @foreach($category->getBreadcrumbs() as $breadcrumb)
-                        @continue($loop->last)
-                        <li class="flex items-center">
-                            <svg class="w-3 h-3 mx-1 text-zinc-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                            <a href="{{ route('category.show', $breadcrumb->slug) }}"
-                                class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors truncate max-w-[70px] sm:max-w-none"
-                                title="{{ $breadcrumb->title }}">
-                                {{ $breadcrumb->title }}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+            {{-- Smart Breadcrumbs with Arrow Navigation --}}
+            <div x-data="{ 
+                canScrollLeft: false, 
+                canScrollRight: false,
+                updateScrollState() {
+                    const el = this.$refs.scrollContainer;
+                    if (!el) return;
+                    this.canScrollLeft = el.scrollLeft > 2;
+                    this.canScrollRight = el.scrollWidth > (el.clientWidth + el.scrollLeft + 2);
+                },
+                scroll(direction) {
+                    const el = this.$refs.scrollContainer;
+                    const scrollAmount = Math.min(el.clientWidth * 0.8, 300);
+                    el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+                }
+            }" x-init="
+                $nextTick(() => updateScrollState());
+                new ResizeObserver(() => updateScrollState()).observe($refs.scrollContainer);
+            " @resize.window.debounce.100ms="updateScrollState()" class="relative group mb-6">
+                
+                {{-- Left Arrow --}}
+                <button x-show="canScrollLeft" x-cloak x-transition.opacity @click="scroll('left')" 
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-white dark:bg-zinc-800 shadow-xl rounded-full border-2 border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 transition-all duration-200 sm:-ml-[23px] sm:-mt-[2px]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+
+                {{-- Scrollable Container --}}
+                <nav x-ref="scrollContainer" @scroll.debounce.50ms="updateScrollState()" 
+                    class="overflow-x-auto scroll-smooth"
+                    style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <style>
+                        [x-ref='scrollContainer']::-webkit-scrollbar { display: none; }
+                    </style>
+                    <ol class="flex items-center gap-2 min-w-max pb-1 px-1">
+                        <li>
+                            <a href="{{ route('home') }}"
+                                class="flex items-center h-9 px-4 rounded-xl bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm text-zinc-600 dark:text-zinc-400 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 group">
+                                <svg class="w-3.5 h-3.5 mr-2 text-zinc-400 group-hover:text-cyan-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                <span class="text-sm font-semibold">Главная</span>
                             </a>
                         </li>
-                    @endforeach
-                </ol>
-            </nav>
+                        @foreach($category->getBreadcrumbs() as $breadcrumb)
+                            <li class="flex items-center">
+                                <svg class="w-3.5 h-3.5 text-zinc-300 dark:text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </li>
+                            <li>
+                                @if(!$loop->last)
+                                    <a href="{{ route('category.show', $breadcrumb->slug) }}"
+                                        class="flex items-center h-9 px-4 rounded-xl bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm text-zinc-600 dark:text-zinc-400 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 group">
+                                        <span class="text-sm font-semibold">{{ $breadcrumb->title }}</span>
+                                    </a>
+                                @else
+                                    <div class="flex items-center h-9 px-4 rounded-xl bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200/50 dark:border-cyan-800/30 text-cyan-600 dark:text-cyan-400 shadow-sm">
+                                        <span class="text-sm font-bold tracking-tight">{{ $breadcrumb->title }}</span>
+                                    </div>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ol>
+                </nav>
+
+                {{-- Right Arrow --}}
+                <button x-show="canScrollRight" x-cloak x-transition.opacity @click="scroll('right')" 
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-white dark:bg-zinc-800 shadow-xl rounded-full border-2 border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 transition-all duration-200 sm:-mr-[23px] sm:-mt-[2px]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
 
             <!-- Category Overview & Structure -->
             <div class="mb-8">
-                <div class="bg-white dark:bg-zinc-800 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-700 shadow-sm relative overflow-hidden group/card">
+                <div class="bg-white dark:bg-zinc-800 rounded-2xl p-5 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm relative overflow-hidden group/card">
                     {{-- Decorative Background --}}
                     <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 dark:from-cyan-950/20 dark:to-blue-900/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
 
@@ -122,7 +169,7 @@
                                         
                                         {{-- Node Card --}}
                                         <a href="{{ route('category.show', $child->slug) }}" 
-                                           class="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                                           class="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 bg-white dark:bg-zinc-800/80 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                                             
                                             {{-- Icon & Titles --}}
                                             <div class="flex items-center gap-3 flex-1">
@@ -188,7 +235,7 @@
 
                     <div class="flex items-center justify-between mb-4 gap-4">
                         <!-- View Mode Toggle (Left) -->
-                        <div class="flex items-center bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg p-1 shadow-sm">
+                        <div class="flex items-center bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 rounded-lg p-1 shadow-sm">
                             <button @click="setViewMode('grid')" 
                                 :class="viewMode === 'grid' ? 'bg-cyan-500 text-white' : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200'"
                                 class="p-2 rounded-md transition-all duration-200"
@@ -210,7 +257,7 @@
                         <!-- Sort Dropdown (Right) -->
                         <div x-data="{ open: false }" class="relative">
                             <button @click="open = !open" @click.away="open = false"
-                                class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all duration-200 shadow-sm hover:shadow-md">
+                                class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 rounded-lg text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all duration-200 shadow-sm hover:shadow-md">
                                 <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
@@ -236,7 +283,7 @@
                                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                                 x-transition:leave="transition ease-in duration-150"
                                 x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-xl z-10"
+                                class="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 rounded-lg shadow-xl z-10"
                                 style="display: none;">
                                 <div class="py-1">
                                     <a href="{{ route('category.show', ['slug' => $category->slug, 'sort' => 'date_desc']) }}"
@@ -270,7 +317,7 @@
                                     'flex flex-col h-full': viewMode === 'grid',
                                     'flex flex-row items-stretch': viewMode === 'list'
                                 }"
-                                class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-200 group relative">
+                                class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm hover:shadow-md transition-all duration-200 group relative">
                                 
                                 {{-- Image Container --}}
                                 <div :class="{ 
@@ -330,7 +377,7 @@
                                     </p>
 
                                     {{-- Footer (Hidden on Mobile) --}}
-                                    <div class="border-t border-zinc-100 dark:border-zinc-700/50 items-center justify-between"
+                                    <div class="border-t border-cyan-100/50 dark:border-cyan-900/20 items-center justify-between"
                                         :class="{ 
                                             'hidden sm:flex absolute bottom-4 left-4 right-4 pt-3': viewMode === 'grid', 
                                             'hidden sm:flex mt-2 pt-2': viewMode === 'list' 

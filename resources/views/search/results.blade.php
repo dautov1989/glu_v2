@@ -18,25 +18,93 @@
                 }
             }, 300);
         }
-    " class="pt-2 pb-6 sm:py-10 bg-zinc-50/50 dark:bg-zinc-950/20">
+    "
+        class="pt-6 pb-6 sm:pb-10 bg-white dark:bg-zinc-900 rounded-2xl border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm shadow-cyan-200/10 dark:shadow-cyan-950/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {{-- Breadcrumbs --}}
-            <nav class="mb-3">
-                <ol
-                    class="flex items-center gap-2 text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 font-medium lowercase">
-                    <li><a href="{{ route('home') }}" class="hover:text-cyan-600 transition-colors">Главная</a></li>
-                    <li class="flex items-center gap-1.5">
-                        <svg class="w-2.5 h-2.5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                        <span>Поиск</span>
-                    </li>
-                </ol>
-            </nav>
+            {{-- Smart Breadcrumbs with Arrow Navigation --}}
+            <div x-data="{ 
+                canScrollLeft: false, 
+                canScrollRight: false,
+                updateScrollState() {
+                    const el = this.$refs.scrollContainer;
+                    if (!el) return;
+                    this.canScrollLeft = el.scrollLeft > 5;
+                    this.canScrollRight = el.scrollWidth > (el.clientWidth + el.scrollLeft + 5);
+                },
+                scroll(direction) {
+                    const el = this.$refs.scrollContainer;
+                    const scrollAmount = Math.min(el.clientWidth * 0.7, 300);
+                    el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+                }
+            }" x-init="
+                $nextTick(() => {
+                    updateScrollState();
+                    // Повторный замер через секунду на случай ленивой отрисовки
+                    setTimeout(() => updateScrollState(), 1000);
+                });
+                new ResizeObserver(() => updateScrollState()).observe($refs.scrollContainer);
+            " @resize.window.debounce.100ms="updateScrollState()" class="relative mb-6">
+
+                {{-- Left Arrow --}}
+                <button x-show="canScrollLeft" @click="scroll('left')"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-white dark:bg-zinc-800 shadow-xl rounded-full border-2 border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 transition-all duration-200 sm:-ml-[23px] sm:-mt-[2px]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                {{-- Scrollable Container --}}
+                <nav x-ref="scrollContainer" @scroll.debounce.50ms="updateScrollState()"
+                    class="overflow-x-auto scroll-smooth" style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <style>
+                        [x-ref='scrollContainer']::-webkit-scrollbar {
+                            display: none;
+                        }
+                    </style>
+                    <ol class="flex items-center gap-2 min-w-max pb-1 px-1">
+                        <li>
+                            <a href="{{ route('home') }}"
+                                class="flex items-center h-9 px-4 rounded-xl bg-white dark:bg-zinc-800 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm text-zinc-600 dark:text-zinc-400 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 group">
+                                <svg class="w-3.5 h-3.5 mr-2 text-zinc-400 group-hover:text-cyan-500 transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                <span class="text-sm font-semibold">Главная</span>
+                            </a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-3.5 h-3.5 text-zinc-300 dark:text-zinc-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </li>
+                        <li>
+                            <div
+                                class="flex items-center h-9 px-4 rounded-xl bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200/50 dark:border-cyan-800/30 text-cyan-600 dark:text-cyan-400 shadow-sm">
+                                <svg class="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <span class="text-sm font-bold tracking-tight">Поиск</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+
+                {{-- Right Arrow --}}
+                <button x-show="canScrollRight" @click="scroll('right')"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-white dark:bg-zinc-800 shadow-xl rounded-full border-2 border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 transition-all duration-200 sm:-mr-[23px] sm:-mt-[2px]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
 
             {{-- Compact Header Card --}}
             <div id="search-results-start"
-                class="bg-white dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-zinc-200 dark:border-zinc-700 shadow-sm mb-4 sm:mb-6">
+                class="bg-white dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm mb-4 sm:mb-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                     <div class="space-y-0.5 sm:space-y-1">
                         <h1
@@ -87,20 +155,21 @@
 
 
                     <div :class="{ 
-                                            'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6': viewMode === 'grid', 
-                                            'flex flex-col gap-3': viewMode === 'list' 
-                                        }">
+                                                                                    'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6': viewMode === 'grid', 
+                                                                                    'flex flex-col gap-3': viewMode === 'list' 
+                                                                                }">
                         @foreach($posts as $post)
-                            <article :class="{ 
-                                                                            'flex flex-col h-full': viewMode === 'grid',
-                                                                            'flex flex-row items-stretch': viewMode === 'list'
-                                                                        }"
-                                class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-200 group relative">
+                            <article
+                                :class="{ 
+                                                                                                                                                            'flex flex-col h-full': viewMode === 'grid',
+                                                                                                                                                            'flex flex-row items-stretch': viewMode === 'list'
+                                                                                                                                                        }"
+                                class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm hover:shadow-md transition-all duration-200 group relative">
 
                                 {{-- Category Header (Only for Grid Mode) --}}
                                 @if($post->category)
                                     <div x-show="viewMode === 'grid'"
-                                        class="px-3 py-2 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/30 flex justify-center">
+                                        class="px-3 py-2 border-b border-cyan-100/50 dark:border-cyan-900/20 bg-zinc-50/50 dark:bg-zinc-800/30 flex justify-center">
                                         <div
                                             class="px-3 py-1 bg-white dark:bg-zinc-700 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-900/30 text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider truncate max-w-full">
                                             {{ $post->category->title }}
@@ -110,9 +179,9 @@
 
                                 {{-- Image Container --}}
                                 <div :class="{ 
-                                                                            'w-full aspect-[16/9]': viewMode === 'grid',
-                                                                            'w-36 aspect-video sm:w-64 md:w-72 flex-shrink-0': viewMode === 'list'
-                                                                        }"
+                                                                                                                                                            'w-full aspect-[16/9]': viewMode === 'grid',
+                                                                                                                                                            'w-36 aspect-video sm:w-64 md:w-72 flex-shrink-0': viewMode === 'list'
+                                                                                                                                                        }"
                                     class="relative overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
                                     <a href="{{ route('post.show', $post->slug) }}"
                                         class="block w-full h-full absolute inset-0">
@@ -132,9 +201,10 @@
 
                                 {{-- Content Container --}}
                                 <div :class="{ 
-                                                                            'p-2 sm:p-4 sm:pb-16': viewMode === 'grid', 
-                                                                            'p-2 sm:px-4 sm:py-2 pl-3 sm:pl-4': viewMode === 'list' 
-                                                                        }" class="flex flex-col flex-1 relative min-w-0">
+                                                                                                                                                            'p-2 sm:p-4 sm:pb-16': viewMode === 'grid', 
+                                                                                                                                                            'p-2 sm:px-4 sm:py-2 pl-3 sm:pl-4': viewMode === 'list' 
+                                                                                                                                                        }"
+                                    class="flex flex-col flex-1 relative min-w-0">
 
                                     {{-- Meta --}}
                                     <div :class="{ 'mb-2': viewMode === 'grid', 'mb-1': viewMode === 'list' }"
@@ -164,28 +234,29 @@
                                     {{-- Title --}}
                                     <h3 class="font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight"
                                         :class="{ 
-                                                                                    'text-xs sm:text-sm mb-2 line-clamp-4': viewMode === 'grid', 
-                                                                                    'text-sm sm:text-lg mb-0 sm:mb-1 line-clamp-3 sm:line-clamp-2': viewMode === 'list' 
-                                                                                }">
+                                                                                                                                                                    'text-xs sm:text-sm mb-2 line-clamp-4': viewMode === 'grid', 
+                                                                                                                                                                    'text-sm sm:text-lg mb-0 sm:mb-1 line-clamp-3 sm:line-clamp-2': viewMode === 'list' 
+                                                                                                                                                                }">
                                         <a href="{{ route('post.show', $post->slug) }}">
                                             {{ $post->title }}
                                         </a>
                                     </h3>
 
                                     {{-- Excerpt (Hidden on Mobile) --}}
-                                    <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed" :class="{ 
-                                                                                   'hidden': viewMode === 'grid', 
-                                                                                   'hidden sm:block line-clamp-2 mb-0': viewMode === 'list' 
-                                                                               }">
+                                    <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
+                                        :class="{ 
+                                                                                                                                                                   'hidden': viewMode === 'grid', 
+                                                                                                                                                                   'hidden sm:block line-clamp-2 mb-0': viewMode === 'list' 
+                                                                                                                                                               }">
                                         {{ $post->excerpt }}
                                     </p>
 
                                     {{-- Footer (Hidden on Mobile) --}}
-                                    <div class="border-t border-zinc-100 dark:border-zinc-700/50 items-center justify-between"
+                                    <div class="border-t border-cyan-100/50 dark:border-cyan-900/20 items-center justify-between"
                                         :class="{ 
-                                                                                    'hidden sm:flex absolute bottom-4 left-4 right-4 pt-3': viewMode === 'grid', 
-                                                                                    'hidden sm:flex mt-2 pt-2': viewMode === 'list' 
-                                                                                }">
+                                                                                                                                                                    'hidden sm:flex absolute bottom-4 left-4 right-4 pt-3': viewMode === 'grid', 
+                                                                                                                                                                    'hidden sm:flex mt-2 pt-2': viewMode === 'list' 
+                                                                                                                                                                }">
                                         <a href="{{ route('post.show', $post->slug) }}"
                                             class="text-cyan-600 dark:text-cyan-400 text-xs font-semibold hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center uppercase tracking-wide group/btn">
                                             Читать
@@ -207,7 +278,7 @@
                 </div>
             @else
                 <div
-                    class="text-center py-16 bg-white dark:bg-zinc-800 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-700">
+                    class="text-center py-16 bg-white dark:bg-zinc-800 rounded-2xl border border-dashed border-cyan-200/50 dark:border-cyan-800/30">
                     <div
                         class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-zinc-100 dark:bg-zinc-700/50 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
