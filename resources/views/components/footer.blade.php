@@ -4,13 +4,13 @@
     <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-purple-500/5 pointer-events-none">
     </div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
 
             <!-- Brand & About -->
             <div class="col-span-1 md:col-span-1">
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group mb-4">
-                    <!-- Logo Icon -->
+                {{-- Logo hidden for cleaner footer --}}
+                {{-- <a href="{{ route('home') }}" class="hidden items-center gap-3 group mb-4">
                     <div class="relative">
                         <div
                             class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity duration-300">
@@ -25,66 +25,103 @@
                         </div>
                     </div>
                     <span
-                        class="text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent">
-                        Glucosa
-                    </span>
-                </a>
-                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">
+                        class="text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent">Glucosa</span>
+                </a> --}}
+                {{-- Description hidden for cleaner footer --}}
+                {{-- <p class="hidden text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
                     Ваш надежный помощник в управлении диабетом. База данных, советы экспертов и поддержка сообщества.
-                </p>
+                </p> --}}
 
-                <!-- Support Project Widget -->
+                <!-- Support Project Widget - Redesigned -->
                 <div class="relative group">
+                    <!-- Animated gradient background with cyan colors -->
                     <div
-                        class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        class="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-500 rounded-2xl blur-lg opacity-10 group-hover:opacity-20 transition-opacity duration-500">
                     </div>
+
                     <div
-                        class="relative bg-white/50 dark:bg-zinc-800/50 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                        <div class="flex items-center gap-2 mb-2">
-                            <div
-                                class="w-6 h-6 bg-gradient-to-br from-pink-500 to-rose-500 rounded-md flex items-center justify-center text-white shadow-md shadow-pink-500/20">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" class="w-3.5 h-3.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                                </svg>
-                            </div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
-                                Поддержите нас</h3>
+                        class="relative bg-gradient-to-br from-white to-cyan-50/50 dark:from-zinc-800 dark:to-zinc-800/80 rounded-2xl border-2 border-transparent bg-clip-padding shadow-xl overflow-hidden">
+                        <!-- Decorative corner accent -->
+                        <div
+                            class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-bl-full">
                         </div>
 
-                        <style>
-                            @keyframes footer-glow {
+                        <div class="relative p-5">
+                            <!-- Header with icon -->
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl blur-md opacity-50">
+                                    </div>
+                                    <div
+                                        class="relative w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center text-white shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                            class="w-5 h-5">
+                                            <path
+                                                d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <h3
+                                        class="text-sm font-bold bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent uppercase tracking-wide">
+                                        Поддержите нас
+                                    </h3>
+                                    <p class="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                        Помогите развивать проект
+                                    </p>
+                                </div>
+                            </div>
 
-                                0%,
-                                100% {
-                                    box-shadow: 0 0 5px rgba(6, 182, 212, 0.2);
+                            <!-- Motivational text -->
+                            <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
+                                Ваша поддержка помогает нам создавать качественный контент и делать сайт лучше для всех!
+                                💙
+                            </p>
+
+                            <style>
+                                @keyframes footer-pulse {
+
+                                    0%,
+                                    100% {
+                                        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3), 0 0 0 0 rgba(6, 182, 212, 0.4);
+                                    }
+
+                                    50% {
+                                        box-shadow: 0 8px 30px rgba(6, 182, 212, 0.5), 0 0 0 8px rgba(6, 182, 212, 0);
+                                    }
                                 }
 
-                                50% {
-                                    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+                                .footer-support-btn {
+                                    animation: footer-pulse 2.5s ease-in-out infinite;
                                 }
-                            }
 
-                            .footer-support-btn {
-                                animation: footer-glow 3s ease-in-out infinite;
-                            }
+                                .footer-support-btn:hover {
+                                    animation: none;
+                                }
+                            </style>
 
-                            .footer-support-btn:hover {
-                                animation: none;
-                            }
-                        </style>
+                            <!-- CTA Button -->
+                            <a href="https://dalink.to/glucos_a" target="_blank" rel="noopener noreferrer"
+                                class="footer-support-btn group/btn relative w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 bg-size-200 hover:bg-pos-100 text-white text-sm font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 flex items-center justify-center gap-2 overflow-hidden">
+                                <!-- Shine effect -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000">
+                                </div>
 
-                        <a href="https://dalink.to/glucos_a" target="_blank" rel="noopener noreferrer"
-                            class="footer-support-btn w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white text-xs font-bold py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group/btn">
-                            <span>Поддержать проект</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor"
-                                class="w-3 h-3 transform group-hover/btn:scale-110 transition-transform">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                            </svg>
-                        </a>
+                                <span class="relative z-10">Поддержать проект</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                    class="relative z-10 w-4 h-4 transform group-hover/btn:scale-125 group-hover/btn:rotate-12 transition-all duration-300">
+                                    <path
+                                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                                </svg>
+                            </a>
+
+                            <!-- Small note -->
+                            <p class="text-[10px] text-center text-zinc-400 dark:text-zinc-500 mt-3">
+                                Любая сумма имеет значение ✨
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

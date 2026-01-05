@@ -156,35 +156,35 @@
                                 Содержание раздела
                             </div>
 
-                            <div class="relative ml-6 space-y-2">
-                                {{-- Vertical Guide Line --}}
-                                <div class="absolute left-0 top-0 bottom-6 w-px bg-gradient-to-b from-cyan-300/50 to-zinc-200 dark:from-cyan-700/50 dark:to-zinc-700"></div>
+                            <div class="relative md:ml-6 space-y-2">
+                                {{-- Vertical Guide Line (Desktop Only) --}}
+                                <div class="hidden md:block absolute left-0 top-0 bottom-6 w-px bg-gradient-to-b from-cyan-300/50 to-zinc-200 dark:from-cyan-700/50 dark:to-zinc-700"></div>
 
                                 @foreach($category->children as $child)
-                                    <div class="relative pl-8 group">
-                                        {{-- Horizontal Connector --}}
-                                        <div class="absolute left-0 top-[1.75rem] w-8 h-px bg-cyan-300/50 dark:bg-cyan-700/50">
+                                    <div class="relative md:pl-8 group">
+                                        {{-- Horizontal Connector (Desktop Only) --}}
+                                        <div class="hidden md:block absolute left-0 top-[1.75rem] w-8 h-px bg-cyan-300/50 dark:bg-cyan-700/50">
                                             <div class="absolute right-0 top-1/2 -mt-[2px] w-1 h-1 rounded-full bg-cyan-400 dark:bg-cyan-600"></div>
                                         </div>
                                         
                                         {{-- Node Card --}}
                                         <a href="{{ route('category.show', $child->slug) }}" 
-                                           class="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 bg-white dark:bg-zinc-800/80 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                                           class="flex flex-col md:flex-row md:items-center gap-3 p-3 md:p-4 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 bg-white dark:bg-zinc-800/80 hover:border-cyan-400 dark:hover:border-cyan-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                                             
                                             {{-- Icon & Titles --}}
-                                            <div class="flex items-center gap-3 flex-1">
-                                                <div class="w-10 h-10 rounded-lg bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-105 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/30 transition-all duration-300">
+                                            <div class="flex items-center gap-3 flex-1 min-w-0">
+                                                <div class="w-10 h-10 flex-shrink-0 rounded-lg bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-105 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/30 transition-all duration-300">
                                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                                                     </svg>
                                                 </div>
                                                 
                                                 <div class="flex-1 min-w-0">
-                                                    <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors truncate">
+                                                    <h3 class="text-sm md:text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors truncate md:line-clamp-1">
                                                         {{ $child->title }}
                                                     </h3>
                                                     @if($child->description)
-                                                        <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1">
+                                                        <p class="hidden md:block text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1 mt-1">
                                                             {{ $child->description }}
                                                         </p>
                                                     @endif
