@@ -4,9 +4,16 @@
 {{-- SEO Meta Tags --}}
 @yield('seo-meta')
 
-<link rel="icon" href="/favicon.ico" sizes="any">
+{{-- Favicon - Multiple formats and sizes for better browser and search engine support --}}
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#06b6d4">
 <link rel="alternate" type="application/rss+xml" title="RSS Feed for Glucosa" href="{{ route('rss.feed') }}" />
 
 <link rel="preconnect" href="https://fonts.bunny.net">

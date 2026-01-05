@@ -1,0 +1,23 @@
+{
+    "name": "Glucosa - Информация о диабете",
+    "short_name": "Glucosa",
+    "description": "Ваш надежный помощник в управлении диабетом. База данных, советы экспертов и поддержка сообщества.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#06b6d4",
+    "icons": [
+        {
+            "src": "/favicon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/favicon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
