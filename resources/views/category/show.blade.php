@@ -28,20 +28,7 @@
 @section('meta_description', $category->meta_description)
 
 @section('content')
-    <div x-data x-init="
-        if (window.innerWidth < 768) {
-            setTimeout(() => {
-                const target = document.getElementById('materials-start');
-                if (target) {
-                    const yOffset = -100; // Отступ под хедер (80px) + воздух
-                    const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                    window.scrollTo({top: y, behavior: 'smooth'});
-                } else {
-                    $el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 300);
-        }
-    " class="min-h-screen bg-white dark:bg-zinc-900 rounded-2xl border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm shadow-cyan-200/10 dark:shadow-cyan-950/10 scroll-mt-24 pt-6">
+    <div class="min-h-screen bg-white dark:bg-zinc-900 rounded-2xl border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm shadow-cyan-200/10 dark:shadow-cyan-950/10 scroll-mt-24 pt-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
             {{-- Smart Breadcrumbs with Arrow Navigation --}}
             <div x-data="{ 
@@ -123,8 +110,8 @@
 
                     {{-- Main Header (Root) --}}
                     <div class="relative z-10 flex items-start gap-4 md:gap-6">
-                        {{-- Image Container (Left) --}}
-                        <div class="shrink-0 w-20 h-20 md:w-28 md:h-28 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 border border-cyan-100 dark:border-cyan-800/30 flex items-center justify-center p-2">
+                        {{-- Image Container (Left) - Hidden on Mobile --}}
+                        <div class="hidden md:flex shrink-0 w-20 h-20 md:w-28 md:h-28 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 border border-cyan-100 dark:border-cyan-800/30 items-center justify-center p-2">
                             @if(file_exists(public_path('images/placeholders/' . $category->slug . '.png')))
                                 <img src="{{ asset('images/placeholders/' . $category->slug . '.png') }}" alt="{{ $category->title }}" class="w-full h-full object-contain">
                             @else
