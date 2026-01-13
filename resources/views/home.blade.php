@@ -111,7 +111,7 @@
 
                             <!-- Post Content -->
                             <div class="p-4 pb-14 flex-1">
-                                <h3 class="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-0 leading-tight line-clamp-4 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                                <h3 class="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-0 leading-tight line-clamp-5 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                                     {{ $post->title }}
                                 </h3>
 

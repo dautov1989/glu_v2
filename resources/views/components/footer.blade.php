@@ -219,22 +219,26 @@
 
         <!-- Disclaimer -->
         <div
-            class="mb-8 p-5 rounded-2xl bg-white/40 dark:bg-zinc-800/40 border border-cyan-100 dark:border-cyan-800/30 backdrop-blur-sm shadow-sm flex flex-col md:flex-row gap-4 items-start md:items-center">
-            <div class="flex-shrink-0 p-2 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg text-cyan-600 dark:text-cyan-400">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-            </div>
-            <div class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
-                <span class="font-bold text-zinc-700 dark:text-zinc-300 block mb-1 text-sm">Отказ от
-                    ответственности</span>
-                Информация на сайте предоставлена исключительно в ознакомительных целях. Она не является медицинской
-                консультацией и не может заменить визит к врачу. Не занимайтесь самолечением — это может быть опасно.
-                При
-                любых подозрениях на проблемы со здоровьем обращайтесь к квалифицированным специалистам.
+            class="mb-8 p-5 rounded-2xl bg-white/40 dark:bg-zinc-800/40 border border-cyan-100 dark:border-cyan-800/30 backdrop-blur-sm shadow-sm transition-all duration-300">
+            <div class="flex gap-4">
+                <div class="flex-shrink-0">
+                    <div
+                        class="p-2.5 bg-cyan-50 dark:bg-cyan-900/20 rounded-xl text-cyan-600 dark:text-cyan-400 shadow-sm shadow-cyan-100 dark:shadow-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                    <span class="font-bold text-zinc-800 dark:text-zinc-200 block mb-1.5 text-sm tracking-tight">Отказ
+                        от ответственности</span>
+                    Информация на сайте предоставлена исключительно в ознакомительных целях. Она не является медицинской
+                    консультацией и не может заменить визит к врачу. Не занимайтесь самолечением — это может быть
+                    опасно. При любых подозрениях на проблемы со здоровьем обращайтесь к квалифицированным специалистам.
+                </div>
             </div>
         </div>
 

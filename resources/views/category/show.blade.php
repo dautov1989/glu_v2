@@ -346,8 +346,8 @@
                                     {{-- Title --}}
                                     <h3 class="font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight"
                                         :class="{ 
-                                            'text-xs sm:text-sm mb-2 line-clamp-4': viewMode === 'grid', 
-                                            'text-sm sm:text-lg mb-0 sm:mb-1 line-clamp-3 sm:line-clamp-2': viewMode === 'list' 
+                                            'text-xs sm:text-sm mb-2 line-clamp-5': viewMode === 'grid', 
+                                            'text-xs sm:text-sm mb-0 sm:mb-1 line-clamp-3 sm:line-clamp-2': viewMode === 'list' 
                                         }">
                                         <a href="{{ route('post.show', $post->slug) }}">
                                             {{ $post->title }}

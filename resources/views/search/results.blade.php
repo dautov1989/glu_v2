@@ -142,15 +142,15 @@
 
 
                     <div :class="{ 
-                                                                                        'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6': viewMode === 'grid', 
-                                                                                        'flex flex-col gap-3': viewMode === 'list' 
-                                                                                    }">
+                                                                                                'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6': viewMode === 'grid', 
+                                                                                                'flex flex-col gap-3': viewMode === 'list' 
+                                                                                            }">
                         @foreach($posts as $post)
                             <article
                                 :class="{ 
-                                                                                                                                                                    'flex flex-col h-full': viewMode === 'grid',
-                                                                                                                                                                    'flex flex-row items-stretch': viewMode === 'list'
-                                                                                                                                                                }"
+                                                                                                                                                                                    'flex flex-col h-full': viewMode === 'grid',
+                                                                                                                                                                                    'flex flex-row items-stretch': viewMode === 'list'
+                                                                                                                                                                                }"
                                 class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm hover:shadow-md transition-all duration-200 group relative">
 
                                 {{-- Category Header (Only for Grid Mode) --}}
@@ -166,9 +166,9 @@
 
                                 {{-- Image Container --}}
                                 <div :class="{ 
-                                                                                                                                                                    'w-full aspect-[16/9]': viewMode === 'grid',
-                                                                                                                                                                    'w-36 aspect-video sm:w-64 md:w-72 flex-shrink-0': viewMode === 'list'
-                                                                                                                                                                }"
+                                                                                                                                                                                    'w-full aspect-[16/9]': viewMode === 'grid',
+                                                                                                                                                                                    'w-36 aspect-video sm:w-64 md:w-72 flex-shrink-0': viewMode === 'list'
+                                                                                                                                                                                }"
                                     class="relative overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
                                     <a href="{{ route('post.show', $post->slug) }}"
                                         class="block w-full h-full absolute inset-0">
@@ -188,9 +188,9 @@
 
                                 {{-- Content Container --}}
                                 <div :class="{ 
-                                                                                                                                                                    'p-2 sm:p-4 sm:pb-16': viewMode === 'grid', 
-                                                                                                                                                                    'p-2 sm:px-4 sm:py-2 pl-3 sm:pl-4': viewMode === 'list' 
-                                                                                                                                                                }"
+                                                                                                                                                                                    'p-2 sm:p-4 sm:pb-16': viewMode === 'grid', 
+                                                                                                                                                                                    'p-2 sm:px-4 sm:py-2 pl-3 sm:pl-4': viewMode === 'list' 
+                                                                                                                                                                                }"
                                     class="flex flex-col flex-1 relative min-w-0">
 
                                     {{-- Meta --}}
@@ -221,9 +221,9 @@
                                     {{-- Title --}}
                                     <h3 class="font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight"
                                         :class="{ 
-                                                                                                                                                                            'text-xs sm:text-sm mb-2 line-clamp-4': viewMode === 'grid', 
-                                                                                                                                                                            'text-sm sm:text-lg mb-0 sm:mb-1 line-clamp-3 sm:line-clamp-2': viewMode === 'list' 
-                                                                                                                                                                        }">
+                                                                                                                                                                                            'text-xs sm:text-sm mb-2 line-clamp-5': viewMode === 'grid', 
+                                                                                                                                                                                            'text-xs sm:text-sm mb-0 sm:mb-1 line-clamp-3 sm:line-clamp-2': viewMode === 'list' 
+                                                                                                                                                                                        }">
                                         <a href="{{ route('post.show', $post->slug) }}">
                                             {{ $post->title }}
                                         </a>
@@ -232,18 +232,18 @@
                                     {{-- Excerpt (Hidden on Mobile) --}}
                                     <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                                         :class="{ 
-                                                                                                                                                                           'hidden': viewMode === 'grid', 
-                                                                                                                                                                           'hidden sm:block line-clamp-2 mb-0': viewMode === 'list' 
-                                                                                                                                                                       }">
+                                                                                                                                                                                           'hidden': viewMode === 'grid', 
+                                                                                                                                                                                           'hidden sm:block line-clamp-2 mb-0': viewMode === 'list' 
+                                                                                                                                                                                       }">
                                         {{ $post->excerpt }}
                                     </p>
 
                                     {{-- Footer (Hidden on Mobile) --}}
                                     <div class="border-t border-cyan-100/50 dark:border-cyan-900/20 items-center justify-between"
                                         :class="{ 
-                                                                                                                                                                            'hidden sm:flex absolute bottom-4 left-4 right-4 pt-3': viewMode === 'grid', 
-                                                                                                                                                                            'hidden sm:flex mt-2 pt-2': viewMode === 'list' 
-                                                                                                                                                                        }">
+                                                                                                                                                                                            'hidden sm:flex absolute bottom-4 left-4 right-4 pt-3': viewMode === 'grid', 
+                                                                                                                                                                                            'hidden sm:flex mt-2 pt-2': viewMode === 'list' 
+                                                                                                                                                                                        }">
                                         <a href="{{ route('post.show', $post->slug) }}"
                                             class="text-cyan-600 dark:text-cyan-400 text-xs font-semibold hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center uppercase tracking-wide group/btn">
                                             Читать
