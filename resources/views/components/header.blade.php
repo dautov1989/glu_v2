@@ -190,19 +190,26 @@
             <!-- Mobile menu button -->
             <div class="lg:hidden flex items-center">
                 <button type="button" @click="mobileOpen = !mobileOpen"
-                    class="p-2 rounded-full text-zinc-500 hover:text-cyan-600 hover:bg-cyan-50 dark:hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500">
-                    <span class="sr-only">Open menu</span>
-                    <!-- Icon when menu is closed -->
-                    <svg x-show="!mobileOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                    <!-- Icon when menu is open -->
-                    <svg x-show="mobileOpen" x-cloak class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    class="group flex items-center gap-2 px-4 py-2 rounded-xl text-zinc-700 dark:text-zinc-300 bg-gradient-to-r from-cyan-50/80 to-blue-50/80 dark:from-zinc-800/80 dark:to-cyan-950/40 border border-cyan-200/50 dark:border-cyan-800/50 hover:border-cyan-400 dark:hover:border-cyan-600 shadow-sm shadow-cyan-200/20 dark:shadow-cyan-900/10 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500/30">
+                    <span
+                        class="text-xs font-bold uppercase tracking-widest bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent group-hover:from-cyan-500 group-hover:to-blue-500 transition-all"
+                        x-text="mobileOpen ? 'Закрыть' : 'Категории'"></span>
+
+                    <div class="relative w-5 h-5 flex items-center justify-center">
+                        <!-- Chevron icon when closed -->
+                        <svg x-show="!mobileOpen"
+                            class="absolute inset-0 h-5 w-5 text-cyan-500 dark:text-cyan-400 transition-transform duration-300 group-hover:translate-y-0.5"
+                            fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+
+                        <!-- Close icon when open -->
+                        <svg x-show="mobileOpen" x-cloak
+                            class="absolute inset-0 h-5 w-5 text-cyan-500 dark:text-cyan-400 transition-transform duration-300 rotate-0 group-hover:rotate-90"
+                            fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
                 </button>
             </div>
         </div>
