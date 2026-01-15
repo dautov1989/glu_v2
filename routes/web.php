@@ -31,6 +31,9 @@ Route::get('/articles', [\App\Http\Controllers\PostController::class, 'index'])-
 // Просмотр статьи
 Route::get('/post/{slug}', [\App\Http\Controllers\PostController::class, 'show'])->name('post.show');
 
+// Инструменты
+Route::get('/tools/insulin-calculator', [\App\Http\Controllers\ToolsController::class, 'insulinCalculator'])->name('tools.insulin-calculator');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

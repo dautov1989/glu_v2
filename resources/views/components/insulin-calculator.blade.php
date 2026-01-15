@@ -67,12 +67,46 @@
          }
      }">
 
+    {{-- Schema.org JSON-LD --}}
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "SoftwareApplication",
+      "name": "Калькулятор инсулина Glucosa",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@@type": "Offer",
+        "price": "0",
+        "priceCurrency": "RUB"
+      },
+      "description": "Онлайн калькулятор для расчета дозы инсулина короткого действия на основе количества углеводов (ХЕ) и текущего уровня сахара крови с учетом активного инсулина.",
+      "featureList": "Расчет дозы на еду, Коррекция высокого сахара, Учет активного инсулина",
+      "screenshot": "{{ asset('images/calculator-preview.png') }}"
+    }
+    </script>
+
+
+
+
+
     <!-- Header -->
     <div class="text-center mb-6">
         <div class="flex flex-col md:flex-row items-center justify-center gap-3 mb-4">
             <h2 class="text-xl md:text-3xl font-extrabold text-zinc-800 dark:text-zinc-100 leading-tight">
                 Калькулятор <span class="text-cyan-600 dark:text-cyan-400">инсулина</span>
             </h2>
+
+            @if(!request()->routeIs('tools.insulin-calculator'))
+                <a href="{{ route('tools.insulin-calculator') }}"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/30 rounded-full text-xs font-bold hover:bg-cyan-100 dark:hover:bg-cyan-900/40 transition-all hover:scale-105 md:ml-2">
+                    <span>Подробнее</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-3 h-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                </a>
+            @endif
         </div>
     </div>
 
@@ -178,14 +212,21 @@
             this.showCarbsTable = true;
         }
     }">
+        {{-- Screen reader description --}}
+        <p class="sr-only">
+            Используйте данный калькулятор для расчета дозы инсулина. Введите количество углеводов в граммах и текущий
+            уровень сахара в крови. Калькулятор автоматически рассчитает необходимую дозу с учетом коррекции. Не
+            забудьте указать активный инсулин, если с прошлого укола прошло менее 4 часов.
+        </p>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <!-- Углеводы -->
             <div
                 class="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm">
-                <label class="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+                <label for="carbs-input" class="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
                     🍞 Углеводы (г)
                 </label>
-                <input type="number" x-model="carbs" step="0.5" min="0" placeholder="0.0"
+                <input id="carbs-input" type="number" x-model="carbs" step="0.5" min="0" placeholder="0.0"
                     class="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-cyan-200/50 dark:border-cyan-800/30 rounded-lg text-zinc-800 dark:text-zinc-200 font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 transition-all">
                 <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
                     💡 Количество углеводов в приёме пищи. Смотрите на упаковке продуктов или используйте
@@ -197,10 +238,10 @@
             <!-- Сахар крови -->
             <div
                 class="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm">
-                <label class="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+                <label for="glucose-input" class="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
                     🩸 Сахар крови (ммоль/л)
                 </label>
-                <input type="number" x-model="glucose" step="0.1" min="0" placeholder="0.0"
+                <input id="glucose-input" type="number" x-model="glucose" step="0.1" min="0" placeholder="0.0"
                     class="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-cyan-200/50 dark:border-cyan-800/30 rounded-lg text-zinc-800 dark:text-zinc-200 font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 transition-all">
                 <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
                     💡 Текущий уровень глюкозы по глюкометру. Норма: 4.0-7.0 ммоль/л перед едой.
@@ -210,10 +251,11 @@
             <!-- Активный инсулин (опционально) -->
             <div
                 class="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm">
-                <label class="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+                <label for="active-insulin-input" class="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
                     💧 Активный инсулин (ед)
                 </label>
-                <input type="number" x-model="activeInsulin" step="0.1" min="0" placeholder="0.0"
+                <input id="active-insulin-input" type="number" x-model="activeInsulin" step="0.1" min="0"
+                    placeholder="0.0"
                     class="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-cyan-200/50 dark:border-cyan-800/30 rounded-lg text-zinc-800 dark:text-zinc-200 font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 transition-all">
                 <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
                     💡 Это инсулин от прошлого укола, который всё ещё работает в организме. Если прошло меньше 4 часов —

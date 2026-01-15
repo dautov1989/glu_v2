@@ -10,6 +10,13 @@
         <priority>1.0</priority>
     </url>
 
+    {{-- Tools --}}
+    <url>
+        <loc>{{ route('tools.insulin-calculator') }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
     {{-- Categories --}}
     @foreach($categories as $category)
     <url>

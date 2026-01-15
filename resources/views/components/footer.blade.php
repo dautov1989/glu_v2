@@ -141,6 +141,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('tools.insulin-calculator') }}"
+                            class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors inline-block">
+                            Калькулятор инсулина
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('articles.index') }}"
                             class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors inline-block">
                             Статьи
