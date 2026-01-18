@@ -118,8 +118,8 @@
             break;
     }
 
-    // Merge with custom data if provided
-    if (!empty($data) && $type !== 'breadcrumb') {
+    // Merge with custom data if provided, but avoid redundant keys for specific types
+    if (!empty($data) && !in_array($type, ['breadcrumb', 'faq'])) {
         $schema = array_merge($schema, $data);
     }
 @endphp
