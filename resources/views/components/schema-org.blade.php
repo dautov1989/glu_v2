@@ -94,6 +94,28 @@
                 'itemListElement' => $listItems
             ];
             break;
+
+        case 'faq':
+            $questions = $data['questions'] ?? [];
+            $mainEntity = [];
+
+            foreach ($questions as $q) {
+                $mainEntity[] = [
+                    '@type' => 'Question',
+                    'name' => $q['question'],
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => $q['answer']
+                    ]
+                ];
+            }
+
+            $schema = [
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => $mainEntity
+            ];
+            break;
     }
 
     // Merge with custom data if provided

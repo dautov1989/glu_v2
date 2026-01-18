@@ -1,48 +1,65 @@
 <aside class="w-full lg:w-64 flex-shrink-0 space-y-6">
 
-    <!-- Quick HE Calculator Widget -->
-    <div class="relative group" x-data="{ grams: 50, result: 4.2 }"
-        x-init="$watch('grams', value => result = (value / 12).toFixed(1))">
+    <!-- Tools & Guides Navigation -->
+    <div class="relative group">
         <div
             class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         </div>
         <div
-            class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-6 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
-            <div class="flex items-center gap-2 mb-5">
+            class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-5 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
+            <div class="flex items-center gap-2 mb-4">
                 <div
                     class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                            d="M11.423 20.407a2.25 2.25 0 0 1-2.09-1.354l-.872-2.132a2.25 2.25 0 0 0-2.09-1.354H4.5a2.25 2.25 0 0 1-2.25-2.25V6.75A2.25 2.25 0 0 1 4.5 4.5h15a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-1.871a2.25 2.25 0 0 0-2.09 1.354l-.872 2.132a2.25 2.25 0 0 1-2.09 1.354H11.423Z" />
                     </svg>
                 </div>
                 <h3
-                    class="text-sm font-bold bg-gradient-to-r from-cyan-700 to-blue-700 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent">
-                    Калькулятор ХЕ</h3>
+                    class="text-sm font-bold bg-gradient-to-r from-cyan-700 to-blue-700 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent uppercase tracking-wider">
+                    Инструменты</h3>
             </div>
 
-            <div class="space-y-4">
-                <div>
-                    <label class="text-xs text-zinc-600 dark:text-zinc-400 mb-2 block">Граммы углеводов:</label>
-                    <input type="range" x-model="grams" min="0" max="200" step="5"
-                        class="w-full h-2 bg-gradient-to-r from-cyan-200 to-blue-200 dark:from-cyan-900/30 dark:to-blue-900/30 rounded-lg appearance-none cursor-pointer accent-cyan-500">
-                    <div class="flex justify-between text-xs text-zinc-500 mt-1">
-                        <span>0г</span>
-                        <span class="font-semibold text-cyan-600 dark:text-cyan-400" x-text="grams + 'г'"></span>
-                        <span>200г</span>
+            <div class="space-y-2">
+                <!-- Можно ли при диабете -->
+                <a href="{{ route('tools.can-i-eat') }}"
+                    class="group/link flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-cyan-200/50 dark:hover:border-cyan-800/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 transition-all duration-300 @if(request()->routeIs('tools.can-i-eat')) bg-cyan-50/80 dark:bg-cyan-900/40 border-cyan-200/50 dark:border-cyan-800/30 @endif">
+                    <div
+                        class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover/link:scale-110 transition-transform">
+                        <span class="text-sm">✅</span>
                     </div>
-                </div>
+                    <div>
+                        <div class="text-xs font-bold text-zinc-800 dark:text-zinc-200">Можно ли при диабете?</div>
+                        <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Гид по продуктам</div>
+                    </div>
+                </a>
 
-                <div
-                    class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30 rounded-lg p-4 border border-cyan-200/50 dark:border-cyan-800/30">
-                    <div class="text-center">
-                        <div class="text-xs text-cyan-700 dark:text-cyan-400 mb-1">Хлебные единицы:</div>
-                        <div class="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent"
-                            x-text="result"></div>
-                        <div class="text-xs text-zinc-500 mt-1">ХЕ</div>
+                <!-- Калькулятор инсулина -->
+                <a href="{{ route('tools.insulin-calculator') }}"
+                    class="group/link flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-cyan-200/50 dark:hover:border-cyan-800/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 transition-all duration-300 @if(request()->routeIs('tools.insulin-calculator')) bg-cyan-50/80 dark:bg-cyan-900/40 border-cyan-200/50 dark:border-cyan-800/30 @endif">
+                    <div
+                        class="w-8 h-8 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover/link:scale-110 transition-transform">
+                        <span class="text-xs">💉</span>
                     </div>
-                </div>
+                    <div>
+                        <div class="text-xs font-bold text-zinc-800 dark:text-zinc-200">Калькулятор инсулина</div>
+                        <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Расчет дозы на еду</div>
+                    </div>
+                </a>
+
+                <!-- База знаний (FAQ) -->
+                <a href="{{ route('tools.faq') }}"
+                    class="group/link flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-cyan-200/50 dark:hover:border-cyan-800/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 transition-all duration-300 @if(request()->routeIs('tools.faq')) bg-cyan-50/80 dark:bg-cyan-900/40 border-cyan-200/50 dark:border-cyan-800/30 @endif">
+                    <div
+                        class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover/link:scale-110 transition-transform">
+                        <span class="text-xs">📈</span>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-zinc-800 dark:text-zinc-200">База знаний (FAQ)</div>
+                        <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Ответы на вопросы</div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

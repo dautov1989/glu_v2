@@ -80,8 +80,8 @@
         "price": "0",
         "priceCurrency": "RUB"
       },
-      "description": "Онлайн калькулятор для расчета дозы инсулина короткого действия на основе количества углеводов (ХЕ) и текущего уровня сахара крови с учетом активного инсулина.",
-      "featureList": "Расчет дозы на еду, Коррекция высокого сахара, Учет активного инсулина",
+      "description": "Калькулятор для расчета дозы инсулина. Работает без интернета. Расчет на основе углеводов (ХЕ), сахара крови и активного инсулина.",
+      "featureList": "Работа offline, Расчет дозы на еду, Коррекция высокого сахара, Учет активного инсулина",
       "screenshot": "{{ asset('images/calculator-preview.png') }}"
     }
     </script>
@@ -92,10 +92,23 @@
 
     <!-- Header -->
     <div class="text-center mb-6">
-        <div class="flex flex-col md:flex-row items-center justify-center gap-3 mb-4">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-3 mb-2">
             <h2 class="text-xl md:text-3xl font-extrabold text-zinc-800 dark:text-zinc-100 leading-tight">
                 Калькулятор <span class="text-cyan-600 dark:text-cyan-400">инсулина</span>
             </h2>
+
+            @if(request()->routeIs('tools.insulin-calculator'))
+                <!-- Offline Badge -->
+                <div
+                    class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/30 rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Работает без интернета
+                </div>
+            @endif
 
             @if(!request()->routeIs('tools.insulin-calculator'))
                 <a href="{{ route('tools.insulin-calculator') }}"
@@ -108,6 +121,11 @@
                 </a>
             @endif
         </div>
+        @if(request()->routeIs('tools.insulin-calculator'))
+            <p class="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 font-medium">
+                Точный расчет дозировки прямо в вашем браузере. Данные не отправляются на сервер.
+            </p>
+        @endif
     </div>
 
     <!-- Input Form Wrapper with Shared State -->
@@ -387,7 +405,7 @@
                     </div>
 
                     <!-- Selected Items List (The new row) -->
-                    <div x-show="selectedItems.length > 0" x-transition
+                    <div x-show="selectedItems.length > 0" x-cloak x-transition
                         class="bg-black/10 backdrop-blur-sm border-t border-white/10 p-2 md:p-3 flex gap-2 overflow-x-scroll scroll-smooth custom-scrollbar-horizontal">
                         <template x-for="item in selectedItems" :key="item.id">
                             <div
@@ -485,14 +503,14 @@
     </div>
 
     <!-- Warning Message -->
-    <div x-show="warning" x-transition:enter="transition ease-out duration-300"
+    <div x-show="warning" x-cloak x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
         class="bg-red-50 dark:bg-red-900/20 border-2 border-red-300 dark:border-red-700 rounded-xl p-4 mb-6">
         <p class="text-red-800 dark:text-red-300 font-semibold text-center" x-text="warning"></p>
     </div>
 
     <!-- Result Display -->
-    <div x-show="result" x-transition:enter="transition ease-out duration-300"
+    <div x-show="result" x-cloak x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
         class="bg-white dark:bg-zinc-800 rounded-xl border-2 border-cyan-300 dark:border-cyan-700 p-6 shadow-xl">
 

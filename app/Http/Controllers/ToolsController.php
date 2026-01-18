@@ -13,4 +13,20 @@ class ToolsController extends Controller
     {
         return view('tools.insulin-calculator');
     }
+
+    /**
+     * Show the 'Can I Eat' tool page.
+     */
+    public function canIEat()
+    {
+        return view('tools.can-i-eat');
+    }
+
+    /**
+     * Show the FAQ page.
+     */
+    public function faq()
+    {
+        return view('tools.faq');
+    }
 }
