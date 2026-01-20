@@ -4,18 +4,7 @@
             Калькулятор <span class="text-cyan-600 dark:text-cyan-400">инсулина</span>
         </h2>
 
-        @if(request()->routeIs('tools.insulin-calculator'))
-            <!-- Offline Badge -->
-            <div
-                class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/30 rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm">
-                <span class="relative flex h-2 w-2">
-                    <span
-                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                Работает без интернета
-            </div>
-        @endif
+
 
         @if(!request()->routeIs('tools.insulin-calculator'))
             <a href="{{ route('tools.insulin-calculator') }}"
