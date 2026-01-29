@@ -2,7 +2,6 @@
     x-data="{
          carbs: '',
          glucose: '',
-         activeInsulin: 0.0,
          result: null,
          warning: '',
          history: [],
@@ -93,7 +92,6 @@
                  'Дата и время',
                  'Углеводы (г)',
                  'Глюкоза (ммоль/л)',
-                 'Активный инсулин (ед)',
                  'Доза на еду (ед)',
                  'Доза на коррекцию (ед)',
                  'Итоговая доза (ед)'
@@ -114,7 +112,6 @@
                      formattedDate,
                      entry.carbs.toFixed(1),
                      entry.glucose.toFixed(1),
-                     entry.activeInsulin.toFixed(1),
                      entry.foodDose.toFixed(1),
                      entry.correctionDose.toFixed(1),
                      entry.total.toFixed(1)
@@ -163,7 +160,6 @@
              // Преобразование в float
              const carbsValue = parseFloat(this.carbs);
              const glucoseValue = parseFloat(this.glucose);
-             const activeInsulinValue = parseFloat(this.activeInsulin) || 0.0;
              
              // Валидация входных данных
              if (isNaN(carbsValue) || carbsValue < 0) {
@@ -191,10 +187,8 @@
                  correctionDose = (glucoseValue - 7.0) * 0.5;
              }
              
-             // Итоговая доза с учётом активного инсулина
-             const totalDoseRaw = foodDose + correctionDose - activeInsulinValue;
-             
-             // Округление до 1 знака после запятой
+             // Итоговая доза
+             const totalDoseRaw = foodDose + correctionDose;
              const totalDose = Math.max(0, totalDoseRaw).toFixed(1);
              
              // Формирование результата
@@ -202,7 +196,6 @@
                  total: totalDose,
                  foodDose: foodDose.toFixed(1),
                  correctionDose: correctionDose.toFixed(1),
-                 activeInsulin: activeInsulinValue.toFixed(1),
                  wasRounded: totalDose !== totalDoseRaw
              };
              
@@ -210,7 +203,6 @@
              this.addToHistory({
                  carbs: carbsValue,
                  glucose: glucoseValue,
-                 activeInsulin: activeInsulinValue,
                  total: parseFloat(totalDose),
                  foodDose: parseFloat(foodDose.toFixed(1)),
                  correctionDose: parseFloat(correctionDose.toFixed(1))
@@ -219,7 +211,6 @@
              // Очищаем инпуты после успешного расчёта
              this.carbs = '';
              this.glucose = '';
-             this.activeInsulin = 0.0;
          }
      }">
 

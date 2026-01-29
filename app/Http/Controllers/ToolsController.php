@@ -29,4 +29,11 @@ class ToolsController extends Controller
     {
         return view('tools.faq');
     }
+    /**
+     * Show the Carbs Table page.
+     */
+    public function carbsTable()
+    {
+        return view('tools.carbs-table');
+    }
 }

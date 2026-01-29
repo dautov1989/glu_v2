@@ -128,11 +128,6 @@
                                                           }" x-text="entry.glucose.toFixed(1) + ' ммоль/л'">
                                                     </span>
                                                 </div>
-                                                <div class="flex items-center justify-between text-sm">
-                                                    <span class="text-zinc-600 dark:text-zinc-400">💧 Активный:</span>
-                                                    <span class="font-bold text-zinc-800 dark:text-zinc-200"
-                                                        x-text="entry.activeInsulin.toFixed(1) + ' ед'"></span>
-                                                </div>
                                             </div>
                                         </div>
 

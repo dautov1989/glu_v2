@@ -25,7 +25,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-bold text-lg md:text-xl">Калькулятор еды</h3>
+                        <h3 class="font-bold text-lg md:text-xl">Справочник углеводов</h3>
                         <div class="flex items-center gap-2 mt-1">
                             <span class="bg-white/20 px-2 py-0.5 rounded text-[10px] md:text-xs font-bold"
                                 x-text="modalItemCount + ' шт'"></span>
@@ -78,21 +78,21 @@
         <!-- Dynamic Content -->
         <div
             class="p-4 md:p-6 overflow-y-scroll max-h-[70vh] md:max-h-[75vh] bg-zinc-50/50 dark:bg-zinc-900/50 custom-scrollbar">
-            <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <template x-for="category in foodCategories" :key="category.name">
                     <div>
                         <h4
-                            class="text-lg font-bold text-zinc-800 dark:text-zinc-100 mb-3 flex items-center gap-2 sticky top-0 bg-zinc-50/95 dark:bg-zinc-900/95 py-2 z-0 backdrop-blur-sm">
+                            class="text-lg font-bold text-zinc-800 dark:text-zinc-100 mb-3 flex items-center gap-2 bg-zinc-50/95 dark:bg-zinc-900/95 py-2 backdrop-blur-sm">
                             <span class="w-1 h-6 rounded-full" :class="category.color"></span>
                             <span x-text="category.icon + ' ' + category.name"></span>
                         </h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="space-y-2">
                             <template x-for="item in category.items" :key="item.name">
                                 <button @click="addCarbsToModal(item)"
                                     :class="selectedItems.some(i => i.name === item.name) 
                                         ? 'bg-rose-50 dark:bg-rose-900/20 border-rose-300 dark:border-rose-700 shadow-sm ring-1 ring-rose-500/20' 
                                         : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700/50 hover:border-cyan-300 dark:hover:border-cyan-600'"
-                                    class="flex justify-between items-center p-3 rounded-xl transition-all group text-left shadow-sm hover:shadow-md active:scale-[0.98] outline-none focus:ring-2 focus:ring-cyan-500/50 cursor-pointer border-2">
+                                    class="w-full flex justify-between items-center p-3 rounded-xl transition-all group text-left shadow-sm hover:shadow-md active:scale-[0.98] outline-none focus:ring-2 focus:ring-cyan-500/50 cursor-pointer border-2">
 
                                     <div class="flex flex-col">
                                         <span class="text-sm font-medium transition-colors"

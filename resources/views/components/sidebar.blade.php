@@ -1,66 +1,111 @@
 <aside class="w-full lg:w-64 flex-shrink-0 space-y-6">
 
     <!-- Tools & Guides Navigation -->
-    <div class="relative group">
-        <div
-            class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        </div>
-        <div
-            class="relative bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 p-5 shadow-lg shadow-cyan-200/20 dark:shadow-cyan-900/10">
-            <div class="flex items-center gap-2 mb-4">
-                <div
-                    class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M11.423 20.407a2.25 2.25 0 0 1-2.09-1.354l-.872-2.132a2.25 2.25 0 0 0-2.09-1.354H4.5a2.25 2.25 0 0 1-2.25-2.25V6.75A2.25 2.25 0 0 1 4.5 4.5h15a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-1.871a2.25 2.25 0 0 0-2.09 1.354l-.872 2.132a2.25 2.25 0 0 1-2.09 1.354H11.423Z" />
-                    </svg>
+    <div class="space-y-3">
+        <div class="grid grid-cols-1 gap-3">
+            <!-- Можно ли при диабете -->
+            <a href="{{ route('tools.can-i-eat') }}" @class([
+                'group relative overflow-hidden rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
+                'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-emerald-200 dark:hover:border-emerald-800' => !request()->routeIs('tools.can-i-eat'),
+                'bg-emerald-50/40 dark:bg-emerald-900/10 border border-emerald-500 dark:border-emerald-500 ring-1 ring-emerald-500/20 shadow-sm' => request()->routeIs('tools.can-i-eat')
+            ])>
+                <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="text-4xl">🥗</span>
                 </div>
-                <h3
-                    class="text-sm font-bold bg-gradient-to-r from-cyan-700 to-blue-700 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent uppercase tracking-wider">
-                    Инструменты</h3>
-            </div>
-
-            <div class="space-y-2">
-                <!-- Можно ли при диабете -->
-                <a href="{{ route('tools.can-i-eat') }}"
-                    class="group/link flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-cyan-200/50 dark:hover:border-cyan-800/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 transition-all duration-300 @if(request()->routeIs('tools.can-i-eat')) bg-cyan-50/80 dark:bg-cyan-900/40 border-cyan-200/50 dark:border-cyan-800/30 @endif">
+                <div class="flex items-center gap-4 relative z-10">
                     <div
-                        class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover/link:scale-110 transition-transform">
-                        <span class="text-sm">✅</span>
+                        class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        ✅
                     </div>
                     <div>
-                        <div class="text-xs font-bold text-zinc-800 dark:text-zinc-200">Можно ли при диабете?</div>
-                        <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Гид по продуктам</div>
+                        <h4
+                            class="font-bold text-zinc-800 dark:text-zinc-100 leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                            Можно ли при диабете?
+                        </h4>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 font-medium">
+                            Светофор продуктов
+                        </p>
                     </div>
-                </a>
+                </div>
+            </a>
 
-                <!-- Калькулятор инсулина -->
-                <a href="{{ route('tools.insulin-calculator') }}"
-                    class="group/link flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-cyan-200/50 dark:hover:border-cyan-800/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 transition-all duration-300 @if(request()->routeIs('tools.insulin-calculator')) bg-cyan-50/80 dark:bg-cyan-900/40 border-cyan-200/50 dark:border-cyan-800/30 @endif">
+            <!-- Справочник углеводов -->
+            <a href="{{ route('tools.carbs-table') }}" @class([
+                'group relative overflow-hidden rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
+                'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-amber-200 dark:hover:border-amber-800' => !request()->routeIs('tools.carbs-table'),
+                'bg-amber-50/40 dark:bg-amber-900/10 border border-amber-500 dark:border-amber-500 ring-1 ring-amber-500/20 shadow-sm' => request()->routeIs('tools.carbs-table')
+            ])>
+            <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="text-4xl">🍞</span>
+                </div>
+                <div class="flex items-center gap-4 relative z-10">
                     <div
-                        class="w-8 h-8 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover/link:scale-110 transition-transform">
-                        <span class="text-xs">💉</span>
+                        class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        🥯
                     </div>
                     <div>
-                        <div class="text-xs font-bold text-zinc-800 dark:text-zinc-200">Калькулятор инсулина</div>
-                        <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Расчет дозы на еду</div>
+                        <h4
+                            class="font-bold text-zinc-800 dark:text-zinc-100 leading-tight group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                            Справочник углеводов
+                        </h4>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 font-medium">
+                            Таблица Хлебных Единиц
+                        </p>
                     </div>
-                </a>
+                </div>
+            </a>
 
-                <!-- База знаний (FAQ) -->
-                <a href="{{ route('tools.faq') }}"
-                    class="group/link flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-cyan-200/50 dark:hover:border-cyan-800/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 transition-all duration-300 @if(request()->routeIs('tools.faq')) bg-cyan-50/80 dark:bg-cyan-900/40 border-cyan-200/50 dark:border-cyan-800/30 @endif">
+            <!-- Калькулятор инсулина -->
+            <a href="{{ route('tools.insulin-calculator') }}" @class([
+                'group relative overflow-hidden rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
+                'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-cyan-200 dark:hover:border-cyan-800' => !request()->routeIs('tools.insulin-calculator'),
+                'bg-cyan-50/40 dark:bg-cyan-900/10 border border-cyan-500 dark:border-cyan-500 ring-1 ring-cyan-500/20 shadow-sm' => request()->routeIs('tools.insulin-calculator')
+            ])>
+                <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="text-4xl">💉</span>
+                </div>
+                <div class="flex items-center gap-4 relative z-10">
                     <div
-                        class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover/link:scale-110 transition-transform">
-                        <span class="text-xs">📈</span>
+                        class="w-10 h-10 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        ⚡
                     </div>
                     <div>
-                        <div class="text-xs font-bold text-zinc-800 dark:text-zinc-200">База знаний (FAQ)</div>
-                        <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Ответы на вопросы</div>
+                        <h4
+                            class="font-bold text-zinc-800 dark:text-zinc-100 leading-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                            Калькулятор инсулина
+                        </h4>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 font-medium">
+                            Расчет дозы на еду
+                        </p>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
+
+            <!-- База знаний (FAQ) -->
+            <a href="{{ route('tools.faq') }}" @class([
+                'group relative overflow-hidden rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
+                'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-purple-200 dark:hover:border-purple-800' => !request()->routeIs('tools.faq'),
+                'bg-purple-50/40 dark:bg-purple-900/10 border border-purple-500 dark:border-purple-500 ring-1 ring-purple-500/20 shadow-sm' => request()->routeIs('tools.faq')
+            ])>
+          <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="text-4xl">📚</span>
+                </div>
+                <div class="flex items-center gap-4 relative z-10">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        🧠
+                    </div>
+                    <div>
+                        <h4
+                            class="font-bold text-zinc-800 dark:text-zinc-100 leading-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                            База знаний
+                        </h4>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 font-medium">
+                            Ответы на вопросы
+                        </p>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 

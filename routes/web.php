@@ -35,6 +35,7 @@ Route::get('/post/{slug}', [\App\Http\Controllers\PostController::class, 'show']
 Route::get('/tools/insulin-calculator', [\App\Http\Controllers\ToolsController::class, 'insulinCalculator'])->name('tools.insulin-calculator');
 Route::get('/tools/can-i-eat', [\App\Http\Controllers\ToolsController::class, 'canIEat'])->name('tools.can-i-eat');
 Route::get('/tools/faq', [\App\Http\Controllers\ToolsController::class, 'faq'])->name('tools.faq');
+Route::get('/tools/carbs-table', [\App\Http\Controllers\ToolsController::class, 'carbsTable'])->name('tools.carbs-table');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

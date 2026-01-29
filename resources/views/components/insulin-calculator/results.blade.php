@@ -61,7 +61,7 @@
             <div x-show="result && result.total == 0"
                 class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 w-full">
                 <p class="text-sm text-blue-800 dark:text-blue-300 text-center">
-                    ℹ️ Инсулин не требуется. Активный инсулин уже покрывает необходимую дозу.
+                    ℹ️ Инсулин не требуется. Текущие показатели в норме.
                 </p>
             </div>
         </div>
@@ -79,13 +79,6 @@
                 <span class="text-sm text-zinc-600 dark:text-zinc-400">📈 На коррекцию:</span>
                 <span class="text-sm font-bold text-zinc-800 dark:text-zinc-200">
                     <span x-text="result ? result.correctionDose : '0.0'"></span> ед
-                </span>
-            </div>
-
-            <div class="flex items-center justify-between bg-zinc-50 dark:bg-zinc-900 rounded-lg p-3">
-                <span class="text-sm text-zinc-600 dark:text-zinc-400">💧 Активный инсулин:</span>
-                <span class="text-sm font-bold text-zinc-800 dark:text-zinc-200">
-                    <span x-text="result ? result.activeInsulin : '0.0'"></span> ед
                 </span>
             </div>
         </div>
