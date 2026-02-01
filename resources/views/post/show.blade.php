@@ -35,40 +35,41 @@
 @section('meta_description', $post->meta_description ?? Str::limit(strip_tags($post->content), 160))
 
 @section('content')
-    <div x-data x-init="
-                                                                                                        if (window.innerWidth < 768) {
-                                                                                                            setTimeout(() => {
-                                                                                                                const yOffset = -100;
-                                                                                                                const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                                                                                                                window.scrollTo({top: y, behavior: 'smooth'});
-                                                                                                            }, 300);
-                                                                                                        }
-                                                                                                    "
+    <div x-data
+        x-init="
+                                                                                                                                if (window.innerWidth < 768) {
+                                                                                                                                    setTimeout(() => {
+                                                                                                                                        const yOffset = -100;
+                                                                                                                                        const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                                                                                                                        window.scrollTo({top: y, behavior: 'smooth'});
+                                                                                                                                    }, 300);
+                                                                                                                                }
+                                                                                                                            "
         class="bg-white dark:bg-zinc-800 rounded-2xl p-4 md:p-8 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm scroll-mt-24">
         <!-- Article Header -->
         <header class="mb-6 md:mb-8">
             {{-- Smart Breadcrumbs with Arrow Navigation --}}
             <div x-data="{ 
-                                                            canScrollLeft: false, 
-                                                            canScrollRight: false,
-                                                            updateScrollState() {
-                                                                const el = this.$refs.scrollContainer;
-                                                                if (!el) return;
-                                                                // Добавляем микро-задержку для точности отрисовки
-                                                                this.canScrollLeft = el.scrollLeft > 2;
-                                                                this.canScrollRight = el.scrollWidth > (el.clientWidth + el.scrollLeft + 2);
-                                                            },
-                                                            scroll(direction) {
-                                                                const el = this.$refs.scrollContainer;
-                                                                const scrollAmount = Math.min(el.clientWidth * 0.8, 300);
-                                                                el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
-                                                            }
-                                                        }" x-init="
-                                                            $nextTick(() => updateScrollState());
-                                                            // Следим за изменением размера для пересчета стрелок
-                                                            new ResizeObserver(() => updateScrollState()).observe($refs.scrollContainer);
-                                                        " @resize.window.debounce.100ms="updateScrollState()"
-                class="relative group mb-6">
+                                                                                    canScrollLeft: false, 
+                                                                                    canScrollRight: false,
+                                                                                    updateScrollState() {
+                                                                                        const el = this.$refs.scrollContainer;
+                                                                                        if (!el) return;
+                                                                                        // Добавляем микро-задержку для точности отрисовки
+                                                                                        this.canScrollLeft = el.scrollLeft > 2;
+                                                                                        this.canScrollRight = el.scrollWidth > (el.clientWidth + el.scrollLeft + 2);
+                                                                                    },
+                                                                                    scroll(direction) {
+                                                                                        const el = this.$refs.scrollContainer;
+                                                                                        const scrollAmount = Math.min(el.clientWidth * 0.8, 300);
+                                                                                        el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+                                                                                    }
+                                                                                }" x-init="
+                                                                                    $nextTick(() => updateScrollState());
+                                                                                    // Следим за изменением размера для пересчета стрелок
+                                                                                    new ResizeObserver(() => updateScrollState()).observe($refs.scrollContainer);
+                                                                                "
+                @resize.window.debounce.100ms="updateScrollState()" class="relative group mb-6">
 
                 {{-- Left Arrow --}}
                 <button x-show="canScrollLeft" x-cloak x-transition.opacity @click="scroll('left')"
@@ -183,15 +184,15 @@
         <div class="article-content max-w-none prose prose-zinc dark:prose-invert prose-headings:leading-tight prose-h1:text-xl prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h2:text-xl md:prose-h3:text-lg"
             x-data
             x-init="
-                                                                                                                                            // Wrap tables for responsiveness
-                                                                                                                                            $el.querySelectorAll('table').forEach(table => {
-                                                                                                                                                if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                                                                                                                                                const wrapper = document.createElement('div');
-                                                                                                                                                wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                                                                                                                                                table.parentNode.insertBefore(wrapper, table);
-                                                                                                                                                wrapper.appendChild(table);
-                                                                                                                                            });
-                                                                                                                                         ">
+                                                                                                                                                                    // Wrap tables for responsiveness
+                                                                                                                                                                    $el.querySelectorAll('table').forEach(table => {
+                                                                                                                                                                        if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                                                                                                                                                                        const wrapper = document.createElement('div');
+                                                                                                                                                                        wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                                                                                                                                                                        table.parentNode.insertBefore(wrapper, table);
+                                                                                                                                                                        wrapper.appendChild(table);
+                                                                                                                                                                    });
+                                                                                                                                                                 ">
             {!! $linker->link($post->content) !!}
         </div>
 
@@ -303,21 +304,124 @@
                 /* cyan-400 */
             }
 
-            /* Dark mode */
-            @media (prefers-color-scheme: dark) {
-                .article-content ul li::before {
-                    color: #22d3ee;
-                    /* cyan-400 */
-                }
+            /* Dark mode enhancements for content readability */
+            .dark .article-content {
+                color: #d4d4d8;
+                /* zinc-300 */
+            }
 
-                .article-content ul li:hover::before {
-                    color: #06b6d4;
-                    /* cyan-500 */
-                }
+            /* Force light color for common elements in dark mode to override inline styles */
+            .dark .article-content p,
+            .dark .article-content span,
+            .dark .article-content li,
+            .dark .article-content div:not(.overflow-x-auto) {
+                color: #d4d4d8 !important;
+            }
 
-                .article-content ol li::before {
-                    background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
-                }
+            .dark .article-content h1,
+            .dark .article-content h2,
+            .dark .article-content h3,
+            .dark .article-content h4,
+            .dark .article-content h5,
+            .dark .article-content h6 {
+                color: #ffffff !important;
+            }
+
+            .dark .article-content strong,
+            .dark .article-content b {
+                color: #ffffff !important;
+            }
+
+            .dark .article-content ul li::before {
+                color: #22d3ee;
+                /* cyan-400 */
+            }
+
+            .dark .article-content ul li:hover::before {
+                color: #06b6d4;
+                /* cyan-500 */
+            }
+
+            .dark .article-content ol li::before {
+                background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+            }
+
+            /* Aggressive dark mode fix for inline styles and white backgrounds */
+            .dark .article-content [style*="background-color: white"],
+            .dark .article-content [style*="background-color: #fff"],
+            .dark .article-content [style*="background-color: #ffffff"],
+            .dark .article-content [style*="background-color: rgb(255, 255, 255)"],
+            .dark .article-content [style*="background: white"],
+            .dark .article-content [style*="background: #fff"],
+            .dark .article-content [style*="background: #ffffff"],
+            .dark .article-content [style*="background-color:white"],
+            .dark .article-content [style*="background-color:#fff"],
+            .dark .article-content [style*="background-color:#ffffff"] {
+                background-color: transparent !important;
+                background: transparent !important;
+            }
+
+            /* Radical dark mode fix for Tailwind utility classes and common blocks in content */
+            .dark .article-content .bg-white,
+            .dark .article-content [class*="bg-white"],
+            .dark .article-content [class*="bg-gray-50"],
+            .dark .article-content [class*="bg-gray-100"],
+            .dark .article-content [class*="bg-zinc-50"],
+            .dark .article-content [class*="bg-zinc-100"],
+            .dark .article-content [class*="bg-neutral-50"],
+            .dark .article-content [class*="bg-neutral-100"],
+            .dark .article-content [class*="bg-cyan-50"],
+            .dark .article-content [class*="bg-blue-50"],
+            .dark .article-content [class*="bg-"][class*="-50"],
+            .dark .article-content [class*="bg-"][class*="-100"],
+            .dark .article-content [class*="bg-"][class*="-200"],
+            .dark .article-content blockquote,
+            .dark .article-content div[style*="background"],
+            .dark .article-content section[style*="background"],
+            .dark .article-content div[style*="background-color"] {
+                background-color: transparent !important;
+                background: transparent !important;
+                border-color: rgba(6, 182, 212, 0.3) !important;
+            }
+
+            /* For blocks that SHOULD have a background (like disclaimers/quotes) but dark */
+            .dark .article-content blockquote,
+            .dark .article-content .rounded-lg,
+            .dark .article-content .rounded-xl {
+                background-color: #18181b !important;
+                padding: 1.25rem !important;
+            }
+
+            /* Normalize ALL text colors and overrides common Tailwind text classes */
+            .dark .article-content,
+            .dark .article-content *,
+            .dark .article-content [class*="text-zinc-"],
+            .dark .article-content [class*="text-gray-"],
+            .dark .article-content [class*="text-slate-"],
+            .dark .article-content [class*="text-neutral-"],
+            .dark .article-content [class*="text-black"] {
+                color: #d4d4d8 !important;
+            }
+
+            .dark .article-content h1,
+            .dark .article-content h2,
+            .dark .article-content h3,
+            .dark .article-content h4,
+            .dark .article-content h5,
+            .dark .article-content h6,
+            .dark .article-content strong,
+            .dark .article-content b {
+                color: #ffffff !important;
+            }
+
+            /* Special handling for attention borders (left border in disclaimers) */
+            .dark .article-content [class*="border-l-"],
+            .dark .article-content div[style*="border-left"],
+            .dark .article-content blockquote {
+                border-left-width: 4px !important;
+                border-left-style: solid !important;
+                border-left-color: #eab308 !important;
+                /* Keep warning yellow */
             }
 
             /* Compact heading styles */
