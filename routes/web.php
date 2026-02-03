@@ -61,6 +61,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Admin: Users
     Route::get('users', \App\Livewire\Admin\UserList::class)->name('users');
 
+    // Admin: Posts
+    Route::get('posts', \App\Livewire\Admin\PostList::class)->name('posts');
+    Route::get('posts/create', \App\Livewire\Admin\PostEdit::class)->name('posts.create');
+    Route::get('posts/{post}/edit', \App\Livewire\Admin\PostEdit::class)->name('posts.edit');
+
     // Admin: API Tester
     Route::get('api-tester', \App\Livewire\Admin\ApiTester::class)->name('api-tester');
 

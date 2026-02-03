@@ -35,6 +35,16 @@
                     Dashboard
                 </a>
 
+                <a href="{{ route('admin.posts') }}"
+                    class="flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.posts*') ? 'bg-[var(--wp-admin-sidebar-active)] text-white' : 'hover:bg-[var(--wp-admin-sidebar-hover)] hover:text-white' }}">
+                    <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 4v4h4" />
+                    </svg>
+                    Статьи
+                </a>
+
                 <a href="{{ route('admin.comments') }}"
                     class="flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.comments') ? 'bg-[var(--wp-admin-sidebar-active)] text-white' : 'hover:bg-[var(--wp-admin-sidebar-hover)] hover:text-white' }}">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
