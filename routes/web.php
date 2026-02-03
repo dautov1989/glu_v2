@@ -41,6 +41,38 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
+
+    // Admin: Comment Moderation
+    Route::get('comments', \App\Livewire\Admin\CommentModeration::class)->name('comments');
+
+    // Admin: Affiliate Links
+    Route::prefix('affiliate-links')->name('affiliate-links.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'store'])->name('store');
+        Route::get('/{affiliateLink}/edit', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'edit'])->name('edit');
+        Route::put('/{affiliateLink}', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'update'])->name('update');
+        Route::delete('/{affiliateLink}', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'destroy'])->name('destroy');
+        Route::post('/{affiliateLink}/toggle', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'toggleActive'])->name('toggle');
+    });
+
+    // Admin: Users
+    Route::get('users', \App\Livewire\Admin\UserList::class)->name('users');
+
+    // Admin: API Tester
+    Route::get('api-tester', \App\Livewire\Admin\ApiTester::class)->name('api-tester');
+
+    // Admin: Settings
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/profile', \App\Livewire\Settings\Profile::class)->name('profile');
+        Route::get('/password', \App\Livewire\Settings\Password::class)->name('password');
+        Route::get('/appearance', \App\Livewire\Settings\Appearance::class)->name('appearance');
+        Route::get('/two-factor', \App\Livewire\Settings\TwoFactor::class)->name('two-factor');
+    });
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -58,18 +90,4 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
-
-    // Admin: Comment Moderation
-    Route::get('admin/comments', \App\Livewire\Admin\CommentModeration::class)->name('admin.comments');
-
-    // Admin: Affiliate Links
-    Route::prefix('admin/affiliate-links')->name('admin.affiliate-links.')->group(function () {
-        Route::get('/', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'index'])->name('index');
-        Route::get('/create', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'create'])->name('create');
-        Route::post('/', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'store'])->name('store');
-        Route::get('/{affiliateLink}/edit', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'edit'])->name('edit');
-        Route::put('/{affiliateLink}', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'update'])->name('update');
-        Route::delete('/{affiliateLink}', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'destroy'])->name('destroy');
-        Route::post('/{affiliateLink}/toggle', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'toggleActive'])->name('toggle');
-    });
 });

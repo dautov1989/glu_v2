@@ -56,7 +56,7 @@ class TwoFactor extends Component
     {
         $enableTwoFactorAuthentication(auth()->user());
 
-        if (! $this->requiresConfirmation) {
+        if (!$this->requiresConfirmation) {
             $this->twoFactorEnabled = auth()->user()->hasEnabledTwoFactorAuthentication();
         }
 
@@ -147,7 +147,7 @@ class TwoFactor extends Component
 
         $this->resetErrorBag();
 
-        if (! $this->requiresConfirmation) {
+        if (!$this->requiresConfirmation) {
             $this->twoFactorEnabled = auth()->user()->hasEnabledTwoFactorAuthentication();
         }
     }
@@ -178,5 +178,16 @@ class TwoFactor extends Component
             'description' => __('To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app.'),
             'buttonText' => __('Continue'),
         ];
+    }
+
+    public function render()
+    {
+        $view = view('livewire.settings.two-factor');
+
+        if (str_starts_with(request()->path(), 'admin/')) {
+            return $view->extends('layouts.admin')->section('content');
+        }
+
+        return $view;
     }
 }

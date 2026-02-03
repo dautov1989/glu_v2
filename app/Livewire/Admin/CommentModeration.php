@@ -7,7 +7,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Layout;
 
-#[Layout('components.layouts.app')]
 class CommentModeration extends Component
 {
     use WithPagination;
@@ -51,6 +50,6 @@ class CommentModeration extends Component
         return view('livewire.admin.comment-moderation', [
             'comments' => $comments,
             'pendingCount' => Comment::where('is_approved', false)->count(),
-        ]);
+        ])->extends('layouts.admin')->section('content');
     }
 }

@@ -71,4 +71,15 @@ class Profile extends Component
 
         Session::flash('status', 'verification-link-sent');
     }
+
+    public function render()
+    {
+        $view = view('livewire.settings.profile');
+
+        if (str_starts_with(request()->path(), 'admin/')) {
+            return $view->extends('layouts.admin')->section('content');
+        }
+
+        return $view;
+    }
 }
