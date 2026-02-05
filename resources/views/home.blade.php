@@ -91,50 +91,11 @@
                     </a>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    @foreach($latestPosts as $post)
-                        <a href="{{ route('post.show', $post->slug) }}" class="group block bg-white dark:bg-zinc-900 rounded-xl border border-cyan-200/50 dark:border-cyan-800/30 overflow-hidden shadow-md hover:shadow-xl hover:border-cyan-400/50 dark:hover:border-cyan-600/50 transition-all duration-300 hover:scale-105 flex flex-col h-full relative">
-                            <!-- Category Header (Top Center) -->
-                            <div class="px-3 py-1.5 border-b border-cyan-100/50 dark:border-cyan-900/20 bg-zinc-50/50 dark:bg-zinc-800/30">
-                                <div class="text-[10px] font-bold uppercase tracking-wider text-center text-cyan-600 dark:text-cyan-400 truncate">
-                                    {{ $post->category->title }}
-                                </div>
-                            </div>
-
-                            <!-- Post Image -->
-                            <div class="relative w-full overflow-hidden bg-white dark:bg-zinc-800/50" style="aspect-ratio: 16/9;">
-                                @if($post->image)
-                                    <img src="{{ $post->image }}" alt="{{ $post->title }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300">
-                                @else
-                                    <img src="{{ asset('images/medical_placeholder.png') }}" alt="{{ $post->title }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 opacity-80">
-                                @endif
-                            </div>
-
-                            <!-- Post Content -->
-                            <div class="p-4 pb-14 flex-1">
-                                <h3 class="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-0 leading-tight line-clamp-5 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                                    {{ $post->title }}
-                                </h3>
-
-                                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] text-zinc-400 border-t border-cyan-100/50 dark:border-cyan-900/20 pt-3">
-                                    <div class="flex items-center gap-1.5">
-                                        <span>{{ $post->published_at->format('d.m.Y') }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                        </svg>
-                                        <span>{{ $post->views }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+                {{-- Bento Grid вместо стандартной сетки --}}
+                <x-bento-grid :bentoData="$bentoData" />
 
                 <!-- Mobile "All Articles" Button -->
-                <div class="mt-6 md:hidden">
+                <div class="mt-8 md:hidden">
                     <a href="{{ route('articles.index') }}" class="flex items-center justify-center gap-2 w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold rounded-xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/40 transition-all duration-300">
                         <span>Все статьи</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
