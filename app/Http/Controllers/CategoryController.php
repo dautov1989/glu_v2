@@ -42,7 +42,7 @@ class CategoryController extends Controller
                 $postsQuery->orderBy('published_at', 'desc');
         }
 
-        $posts = $postsQuery->paginate(9)->appends(['sort' => $sortBy]);
+        $posts = $postsQuery->paginate(10)->appends(['sort' => $sortBy]);
 
         // Подготовить данные для Bento Grid используя текущую страницу пагинации
         $bentoData = $this->prepareBentoData($posts, $posts->currentPage());
