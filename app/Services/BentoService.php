@@ -20,14 +20,18 @@ class BentoService
             ? $postsPaginator->getCollection()
             : $postsPaginator;
 
-        $processedPosts = $currentPosts->map(function ($post, $index) use ($page) {
+        // Сортируем коллекцию внутри, чтобы самые популярные из этой выборки были первыми
+        // Это обеспечит постановку самого популярного поста на место Large (Top-1)
+        $sortedPosts = $currentPosts->sortByDesc('views')->values();
+
+        $processedPosts = $sortedPosts->map(function ($post, $index) use ($page) {
             // Определяем тип блока
-            // Large только на 1-й странице и только 1-й элемент
+            // Large только на 1-й странице (или первой порции) и только 1-й по популярности элемент
             if ($page === 1 && $index === 0) {
                 $post->bentoSize = 'large';
             } elseif (
-                ($page === 1 && $index >= 1 && $index <= 3) || // Стр 1: 2-4 элементы
-                ($page > 1 && $index % 5 === 0) // Стр > 1: Каждый 5-й элемент делаем средним для разнообразия
+                ($page === 1 && $index >= 1 && $index <= 3) || // Стр 1: 2-4 по популярности элементы
+                ($page > 1 && $index % 5 === 0) // Стр > 1: Разнообразие
             ) {
                 $post->bentoSize = 'medium';
             } else {
