@@ -7,7 +7,17 @@
     modalTotalCarbs: 0,
     modalItemCount: 0,
     selectedItems: [],
+    searchQuery: '',
     foodCategories: window.glucosaFoodConfig || [],
+    
+    get filteredCategories() {
+        if (!this.searchQuery) return this.foodCategories;
+        const query = this.searchQuery.toLowerCase();
+        return this.foodCategories.map(category => ({
+            ...category,
+            items: category.items.filter(item => item.name.toLowerCase().includes(query))
+        })).filter(category => category.items.length > 0);
+    },
     
     addCarbsToModal(item) {
         this.modalTotalCarbs += item.carbs;
@@ -39,6 +49,7 @@
         this.modalTotalCarbs = 0;
         this.modalItemCount = 0;
         this.selectedItems = [];
+        this.searchQuery = '';
         this.showCarbsTable = true;
     }
 }">
