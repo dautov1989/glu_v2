@@ -64,7 +64,13 @@
     <meta property="article:author" content="{{ $author }}">
     @endif
     <meta property="article:section" content="Здоровье">
-    <meta property="article:tag" content="диабет">
+    @if($keywords)
+        @foreach(array_slice(explode(',', $keywords), 0, 3) as $tag)
+            <meta property="article:tag" content="{{ trim($tag) }}">
+        @endforeach
+    @else
+        <meta property="article:tag" content="диабет">
+    @endif
 @endif
 
 {{-- Twitter Card Meta Tags --}}
