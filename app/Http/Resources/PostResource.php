@@ -32,6 +32,7 @@ class PostResource extends JsonResource
             'meta' => [
                 'title' => $this->meta_title,
                 'description' => $this->meta_description,
+                'keywords' => $this->meta_keywords,
             ],
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),

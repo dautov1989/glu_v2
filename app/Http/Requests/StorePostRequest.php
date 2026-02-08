@@ -29,6 +29,7 @@ class StorePostRequest extends FormRequest
             'image_url' => 'nullable|url',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
+            'meta_keywords' => 'nullable|string|max:255',
             'is_published' => 'nullable|boolean',
         ];
     }
