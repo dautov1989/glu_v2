@@ -1,6 +1,11 @@
 @section('seo-meta')
-    <x-seo-meta :title="$post->meta_title ?? $post->title" :description="$post->meta_description ?? Str::limit(strip_tags($post->content), 160)" :keywords="$post->meta_keywords ?: 'диабет, ' . $post->category->title . ', ' . $post->title" type="article" :image="$post->image" :url="route('post.show', $post->slug)"
-        :publishedTime="$post->published_at->toIso8601String()" :modifiedTime="$post->updated_at->toIso8601String()" />
+    @php
+        $keywords = $post->meta_keywords ?: 'диабет, ' . $post->category->title . ', ' . $post->title;
+    @endphp
+
+    <x-seo-meta :title="$post->meta_title ?? $post->title" :description="$post->meta_description ?? Str::limit(strip_tags($post->content), 160)" :keywords="$keywords" type="article" :image="$post->image"
+        :url="route('post.show', $post->slug)" :publishedTime="$post->published_at->toIso8601String()"
+        :modifiedTime="$post->updated_at->toIso8601String()" />
 
     {{-- Article Schema --}}
     <x-schema-org type="article" :data="[
@@ -9,7 +14,8 @@
             'image' => $post->image ?? asset('images/medical_placeholder.png'),
             'published_at' => $post->published_at->toIso8601String(),
             'updated_at' => $post->updated_at->toIso8601String(),
-            'url' => route('post.show', $post->slug)
+            'url' => route('post.show', $post->slug),
+            'keywords' => $keywords
         ]" />
 
     {{-- Breadcrumb Schema --}}
@@ -36,38 +42,38 @@
 @section('content')
     <div x-data
         x-init="
-                                                                                                                                                if (window.innerWidth < 768) {
-                                                                                                                                                    setTimeout(() => {
-                                                                                                                                                        const yOffset = -100;
-                                                                                                                                                        const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                                                                                                                                                        window.scrollTo({top: y, behavior: 'smooth'});
-                                                                                                                                                    }, 300);
-                                                                                                                                                }
-                                                                                                                                            "
+                                                                                                                                                        if (window.innerWidth < 768) {
+                                                                                                                                                            setTimeout(() => {
+                                                                                                                                                                const yOffset = -100;
+                                                                                                                                                                const y = $el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                                                                                                                                                window.scrollTo({top: y, behavior: 'smooth'});
+                                                                                                                                                            }, 300);
+                                                                                                                                                        }
+                                                                                                                                                    "
         class="bg-white dark:bg-zinc-800 rounded-2xl p-4 md:p-8 border border-cyan-200/50 dark:border-cyan-800/30 shadow-sm scroll-mt-24">
         <!-- Article Header -->
         <header class="mb-6 md:mb-8">
             {{-- Smart Breadcrumbs with Arrow Navigation --}}
             <div x-data="{ 
-                                                                                                    canScrollLeft: false, 
-                                                                                                    canScrollRight: false,
-                                                                                                    updateScrollState() {
-                                                                                                        const el = this.$refs.scrollContainer;
-                                                                                                        if (!el) return;
-                                                                                                        // Добавляем микро-задержку для точности отрисовки
-                                                                                                        this.canScrollLeft = el.scrollLeft > 2;
-                                                                                                        this.canScrollRight = el.scrollWidth > (el.clientWidth + el.scrollLeft + 2);
-                                                                                                    },
-                                                                                                    scroll(direction) {
-                                                                                                        const el = this.$refs.scrollContainer;
-                                                                                                        const scrollAmount = Math.min(el.clientWidth * 0.8, 300);
-                                                                                                        el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
-                                                                                                    }
-                                                                                                }" x-init="
-                                                                                                    $nextTick(() => updateScrollState());
-                                                                                                    // Следим за изменением размера для пересчета стрелок
-                                                                                                    new ResizeObserver(() => updateScrollState()).observe($refs.scrollContainer);
-                                                                                                "
+                                                                                                            canScrollLeft: false, 
+                                                                                                            canScrollRight: false,
+                                                                                                            updateScrollState() {
+                                                                                                                const el = this.$refs.scrollContainer;
+                                                                                                                if (!el) return;
+                                                                                                                // Добавляем микро-задержку для точности отрисовки
+                                                                                                                this.canScrollLeft = el.scrollLeft > 2;
+                                                                                                                this.canScrollRight = el.scrollWidth > (el.clientWidth + el.scrollLeft + 2);
+                                                                                                            },
+                                                                                                            scroll(direction) {
+                                                                                                                const el = this.$refs.scrollContainer;
+                                                                                                                const scrollAmount = Math.min(el.clientWidth * 0.8, 300);
+                                                                                                                el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+                                                                                                            }
+                                                                                                        }" x-init="
+                                                                                                            $nextTick(() => updateScrollState());
+                                                                                                            // Следим за изменением размера для пересчета стрелок
+                                                                                                            new ResizeObserver(() => updateScrollState()).observe($refs.scrollContainer);
+                                                                                                        "
                 @resize.window.debounce.100ms="updateScrollState()" class="relative group mb-6">
 
                 {{-- Left Arrow --}}
@@ -183,15 +189,15 @@
         <div class="article-content max-w-none prose prose-zinc dark:prose-invert prose-headings:leading-tight prose-h1:text-xl prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h2:text-xl md:prose-h3:text-lg"
             x-data
             x-init="
-                                                                                                                                                                                    // Wrap tables for responsiveness
-                                                                                                                                                                                    $el.querySelectorAll('table').forEach(table => {
-                                                                                                                                                                                        if (table.parentElement.classList.contains('overflow-x-auto')) return;
-                                                                                                                                                                                        const wrapper = document.createElement('div');
-                                                                                                                                                                                        wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
-                                                                                                                                                                                        table.parentNode.insertBefore(wrapper, table);
-                                                                                                                                                                                        wrapper.appendChild(table);
-                                                                                                                                                                                    });
-                                                                                                                                                                                 ">
+                                                                                                                                                                                            // Wrap tables for responsiveness
+                                                                                                                                                                                            $el.querySelectorAll('table').forEach(table => {
+                                                                                                                                                                                                if (table.parentElement.classList.contains('overflow-x-auto')) return;
+                                                                                                                                                                                                const wrapper = document.createElement('div');
+                                                                                                                                                                                                wrapper.className = 'overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm';
+                                                                                                                                                                                                table.parentNode.insertBefore(wrapper, table);
+                                                                                                                                                                                                wrapper.appendChild(table);
+                                                                                                                                                                                            });
+                                                                                                                                                                                         ">
             {!! $linker->link($post->content) !!}
         </div>
 

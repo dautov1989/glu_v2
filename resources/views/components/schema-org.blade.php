@@ -71,7 +71,8 @@
                 'audience' => [
                     '@type' => 'PatientsAudience',
                     'audienceType' => 'Пациенты с диабетом'
-                ]
+                ],
+                'keywords' => $data['keywords'] ?? ''
             ];
             break;
 
