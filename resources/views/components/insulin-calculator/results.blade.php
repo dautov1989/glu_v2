@@ -76,14 +76,44 @@
         x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
         class="bg-white dark:bg-zinc-800 rounded-xl border-2 border-cyan-300 dark:border-cyan-700 p-6 shadow-xl mb-6">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div class="text-sm font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wide">
-                📊 Итоговая доза:
+        <!-- Special Carbs Prompt when only glucose entered and it's normal -->
+        <div x-show="result && result.showCarbsPrompt" x-cloak
+            class="bg-gradient-to-br from-cyan-500/5 to-blue-500/5 border border-cyan-100 dark:border-cyan-800/30 rounded-2xl p-8 mb-6 text-center transform hover:scale-[1.01] transition-all duration-300">
+            <div
+                class="inline-flex items-center justify-center w-20 h-20 bg-white dark:bg-zinc-800 rounded-full shadow-xl mb-6 text-4xl animate-bounce">
+                🍞
             </div>
-            <div class="text-sm font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wide hidden lg:block">
-                📊 Расшифровка:
+            <h3
+                class="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-4">
+                Инсулин на коррекцию не требуется
+            </h3>
+            <p class="text-zinc-700 dark:text-zinc-300 max-w-lg mx-auto leading-relaxed mb-6">
+                Ваш текущий сахар <span class="font-bold text-cyan-600 dark:text-cyan-400"
+                    x-text="result.glucose + ' ммоль/л'"></span> в норме.
+                Если вы собираетесь поесть, пожалуйста, <strong>введите количество углеводов</strong> для точного
+                расчета дозы на еду.
+            </p>
+            <div class="flex justify-center">
+                <button @click="document.getElementById('carbs-input')?.focus()"
+                    class="text-sm font-bold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center gap-2 group transition-colors">
+                    <span>Ввести углеводы</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                        stroke="currentColor" class="w-4 h-4 transform group-hover:-translate-y-1 transition-transform">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                    </svg>
+                </button>
             </div>
         </div>
+
+        <div x-show="!result.showCarbsPrompt">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="text-sm font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wide">
+                    📊 Итоговая доза:
+                </div>
+                <div class="text-sm font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wide hidden lg:block">
+                    📊 Расшифровка:
+                </div>
+            </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <!-- Main Result -->
@@ -118,6 +148,7 @@
                     </span>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- Disclaimer -->

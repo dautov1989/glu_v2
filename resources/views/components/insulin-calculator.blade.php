@@ -91,10 +91,10 @@
          calculate() {
              this.result = null;
              this.warning = '';
-             const carbsValue = parseFloat(this.carbs);
+             const carbsValue = this.carbs === '' ? 0 : parseFloat(this.carbs);
              const glucoseValue = parseFloat(this.glucose);
              
-             if (isNaN(carbsValue) || carbsValue < 0) {
+             if (this.carbs !== '' && (isNaN(carbsValue) || carbsValue < 0)) {
                  this.warning = '⚠️ Пожалуйста, введите корректное значение углеводов';
                  this.$nextTick(() => {
                     document.getElementById('calculator-warning')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -127,11 +127,17 @@
                  }
                  const totalDoseRaw = foodDose + correctionDose;
                  const totalDose = Math.max(0, totalDoseRaw).toFixed(1);
+                 const isEmptyCarbs = this.carbs === '';
+                 const isNormalGlucose = glucoseValue >= 4.0 && glucoseValue <= 7.0;
+ 
                  this.result = {
                      total: totalDose,
                      foodDose: foodDose.toFixed(1),
                      correctionDose: correctionDose.toFixed(1),
-                     wasRounded: totalDose !== totalDoseRaw
+                     wasRounded: totalDose !== totalDoseRaw,
+                     isEmptyCarbs: isEmptyCarbs,
+                     showCarbsPrompt: isEmptyCarbs && isNormalGlucose,
+                     glucose: glucoseValue.toFixed(1)
                  };
                  this.addToHistory({
                      carbs: carbsValue,
