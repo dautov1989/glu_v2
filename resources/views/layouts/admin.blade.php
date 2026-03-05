@@ -13,6 +13,7 @@
             --wp-admin-sidebar-active: #2271b1;
             --wp-admin-bg: #f0f0f1;
         }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 
@@ -43,6 +44,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 4v4h4" />
                     </svg>
                     Статьи
+                </a>
+
+                <a href="{{ route('admin.products.index') }}"
+                    class="flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.products*') ? 'bg-[var(--wp-admin-sidebar-active)] text-white' : 'hover:bg-[var(--wp-admin-sidebar-hover)] hover:text-white' }}">
+                    <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    Товары
                 </a>
 
                 <a href="{{ route('admin.comments') }}"
@@ -125,6 +135,8 @@
             </div>
         </main>
     </div>
+
+    @fluxScripts
 </body>
 
 </html>

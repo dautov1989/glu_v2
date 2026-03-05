@@ -67,6 +67,14 @@ class Category extends Model
     }
 
     /**
+     * Товары в категории (маркетплейс)
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    /**
      * Получить все корневые категории (уровень 0)
      */
     public static function getRootCategories()

@@ -58,6 +58,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::post('/{affiliateLink}/toggle', [\App\Http\Controllers\Admin\AffiliateLinkController::class, 'toggleActive'])->name('toggle');
     });
 
+    // Admin: Products (Marketplace)
+    Route::prefix('products')->name('products.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Admin\ProductController::class, 'store'])->name('store');
+        Route::get('/{product}/edit', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('edit');
+        Route::put('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('update');
+        Route::delete('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('destroy');
+        Route::post('/{product}/toggle', [\App\Http\Controllers\Admin\ProductController::class, 'toggleActive'])->name('toggle');
+    });
+
     // Admin: Users
     Route::get('users', \App\Livewire\Admin\UserList::class)->name('users');
 

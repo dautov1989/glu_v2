@@ -206,6 +206,14 @@
                 </div>
             </div>
 
+            {{-- Product Showcase for Categories with Products --}}
+            @php
+                $categoryProducts = $category->products()->active()->orderBy('sort_order')->get();
+            @endphp
+            @if($categoryProducts->count() > 0)
+                <x-product-showcase :category="$category" :products="$categoryProducts" />
+            @endif
+
             <!-- Posts Grid -->
             @if($posts->count() > 0)
                 <div class="mb-8" x-data="bentoLoader('{{ $posts->nextPageUrl() }}')">
