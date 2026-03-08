@@ -1,6 +1,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="verify-admitad" content="957a8d70ae" />
+<meta name="takprodam-verification" content="e1be6439-2e3d-404d-9ac8-a4a5d66c9a5b">
 
 {{-- SEO Meta Tags --}}
 @yield('seo-meta')
