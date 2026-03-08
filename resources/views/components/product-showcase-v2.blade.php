@@ -76,10 +76,24 @@
                         </svg>
                     </div>
 
-                    <!-- Info Snippet (Just Title) -->
-                    <div class="p-2 mt-auto text-center">
+                    <!-- Info Snippet (Title) -->
+                    <div class="p-2 pb-1 text-center flex-1 flex flex-col justify-center">
                         <h4 class="font-bold text-zinc-800 dark:text-zinc-200 text-[10px] sm:text-[11px] leading-tight line-clamp-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400"
                             x-text="product.title"></h4>
+                    </div>
+
+                    <!-- Bottom CTA Button (Marketplace Color) -->
+                    <div class="w-full mt-auto">
+                        <div class="w-full py-2.5 sm:py-3 text-center transition-all duration-300 group-hover:brightness-110 flex items-center justify-center gap-2"
+                            :class="product.btn_bg + ' ' + (product.btn_text || 'text-white')">
+                            <span
+                                class="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em]">Подробнее</span>
+                            <svg class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>

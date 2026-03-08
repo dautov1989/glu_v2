@@ -1,5 +1,6 @@
 <!-- MODAL CONTAINER -->
-<div x-cloak x-show="modalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 pb-20 sm:pb-6"
+<div x-cloak x-show="modalOpen"
+    class="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 sm:p-6 pt-4 pb-8 sm:pt-6"
     aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
     <!-- Backdrop -->
@@ -107,15 +108,7 @@
 
 
 
-                                        <!-- Marketplace Badge -->
-                                        <template x-if="activeProduct.marketplace">
-                                            <div
-                                                class="px-3 py-2 bg-cyan-50/50 dark:bg-cyan-900/10 border border-cyan-100/50 dark:border-cyan-800/30 rounded-lg shadow-sm flex items-center justify-center text-center">
-                                                <span
-                                                    class="text-[10px] sm:text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-tight"
-                                                    x-text="activeProduct.marketplace"></span>
-                                            </div>
-                                        </template>
+
 
                                     </div>
                                     <!-- Expert Review (Moved into 60% column) -->
