@@ -83,9 +83,9 @@
                                     Напишите нам, и мы добавим его в справочник!
                                 </p>
                                 <div class="mt-2 pt-2 border-t border-white/10">
-                                    <a href="mailto:glucosa45@gmail.com"
+                                    <a href="mailto:info@glucosa.org"
                                         class="text-white font-black text-sm hover:text-cyan-400 flex items-center gap-1 transition-colors">
-                                        glucosa45@gmail.com
+                                        info@glucosa.org
                                     </a>
                                 </div>
                                 <!-- Tooltip Arrow (Pointing UP) -->
